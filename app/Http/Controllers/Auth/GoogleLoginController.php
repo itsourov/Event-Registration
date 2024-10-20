@@ -40,7 +40,7 @@ class GoogleLoginController extends Controller
                 }
 //                event(new NewUserRegistered($new_user,$password));
 
-                return redirect()->route('my-account.profile.edit');
+                return redirect()->route('home');
             } else {
                 if ($user->deleted_at) {
                     $user->restore();

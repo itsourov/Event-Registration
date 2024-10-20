@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Models\Registration;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class RegistrationForm extends Component implements HasForms
@@ -19,6 +21,7 @@ class RegistrationForm extends Component implements HasForms
 
     public function mount(): void
     {
+
         $this->form->fill();
     }
 
@@ -45,7 +48,7 @@ class RegistrationForm extends Component implements HasForms
                             ->rules(['regex:/^[0-9-]+$/'])
                             ->placeholder('232-15-000')
                             ->required(),
-                        TextInput::make('phone_number')
+                        TextInput::make('phone')
                             ->numeric()
                             ->length(11)
                             ->prefix('+88')
@@ -53,21 +56,28 @@ class RegistrationForm extends Component implements HasForms
                             ->required(),
                         Select::make('department')
                             ->options([
-                                'CSE'
+                                'CSE' => 'CSE',
+                                'CIS' => 'CIS'
                             ])
+                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
                             ->default('CSE')
                             ->required(),
                         Select::make('section')
-                            ->searchable()
+                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
                             ->options(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
                             ->required(),
                         Select::make('lab_teacher_name')
-                            ->searchable()
+                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
                             ->options(['Person 1', 'Person 2', 'Person 3', 'Person 4', 'Person 5', 'Person 6', 'Other'])
                             ->required(),
 
-                        Select::make('t-shirt_size')
+                        Select::make('tshirt_size')
+                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
                             ->options(['M', 'L', 'XL', 'XXL', 'XXXL'])
+                            ->required(),
+                        Select::make('gender')
+                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
+                            ->options(['Male', 'Female'])
                             ->required(),
                     ]),
             ])
@@ -76,11 +86,25 @@ class RegistrationForm extends Component implements HasForms
 
     public function create(): void
     {
-        dd($this->form->getState());
+
+        if (auth()->user()->registration) {
+            auth()->user()->registration->update($this->form->getState());
+        } else {
+            auth()->user()->registration()->updateOrCreate($this->form->getState());
+        }
+        Notification::make()
+            ->title("Information Saved!")
+            ->success()
+            ->send();
+
+
     }
 
     public function render()
     {
+        if (auth()->user()->registration) {
+            $this->data = auth()->user()->registration?->toArray();
+        }
         return view('livewire.registration-form');
     }
 }
