@@ -1,7 +1,10 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
+import preset from "./vendor/filament/support/tailwind.config.preset";
+
 export default {
+    presets: [preset],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',

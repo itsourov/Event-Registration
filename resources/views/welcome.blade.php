@@ -2,38 +2,7 @@
     <div class="flex flex-col h-screen justify-between overflow-auto">
 
 
-        <header class="mt-[2%] z-10 ">
-            <div class="flow-root">
-                <div class="float-left md:w-[60%] mb-6 lg:mb-0">
-                    <div class="flex flex-row items-center"><img src="{{ asset('images/uta-logo.webp') }}"
-                                                                 class="w-28 h-14 mb-2 md:ml-[5%] ml-4 cursor-pointer"
-                                                                 alt="Logo">
-                        <div class="flex flex-col cursor-pointer">
-                            <div class="text-lg md:text-3xl leading-normal text-cyan-900 font-semibold ml-5"> UTA
-                                Registration
-                            </div>
-                            <div class="text-sm md:text-lg text-cyan-900 font-normal ml-5 leading-normal">
-                                <blockquote>
-                                    <p>Organized by: ACM Wing CPC, Department Of CSE, DIU </p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    class="w-full lg:w-[40%] mb-6 lg:mb-0 h-16 bg-cyan-900 rounded lg:rounded-l-full lg:pl-10 px-4 flex items-center justify-start">
-                    <ul
-                        class="w-full inline-flex cursor-pointer items-center justify-around md:justify-between gap-x-3 md:gap-x-6 space-x-reverse  text-white font-normal flex-wrap text-base">
-                        <li><a>Home</a></li>
-                        <li><a href="/notice">Notice</a></li>
-                        <li><a href="/complaint">Contact</a></li>
-                        <li><a>FAQ</a></li>
-                        <li><a href="/signin">Sign in</a></li>
-
-                    </ul>
-                </div>
-            </div>
-        </header>
+ @include('inc.header')
 
         {{-- Notice --}}
         <section class="md:mt-[2%] flex items-center ">
@@ -66,7 +35,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">1</span><span
                             class="text-lg md:text-xl font-medium mr-2 text-white">Primary Eligibility Check</span>
                     </div>
-                    <div
+                    <a href="{{route('registration-form')}}"
                         class="md:col-span-3 h-20 w-full bg-cyan-900  text-white inline-flex rounded-md place-items-center">
                         <span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">2</span><span
@@ -74,7 +43,7 @@
                         >Registration: Form Fill-up <x-heroicon-o-arrow-right class="w-5 h-5 inline"/> Payment <span
                                 class="text-base font-normal ng-star-inserted">(till 20th Oct)</span>
                             <!----></span>
-                    </div>
+                    </a>
                     <a href="#"
                        class="md:col-start-1 md:col-span-2 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center rounded-md place-items-center cursor-pointer"
                        tabindex="0"><span
@@ -90,11 +59,11 @@
                                 class="text-base font-normal ng-star-inserted">(25/10)</span><!----></div>
                     </div>
                     <div
-                         class="md:col-span-2 lg:col-span-1 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center rounded-md place-items-center cursor-pointer"
-                         tabindex="0"><span
+                        class="md:col-span-2 lg:col-span-1 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center rounded-md place-items-center cursor-pointer"
+                        tabindex="0"><span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">5</span>
                         <div class="flex flex-col items-center"><span
-                                class="text-lg md:text-xl font-medium mr-2">Final Round</span><span
+                                class="text-lg md:text-xl font-medium mr-2">Final</span><span
                                 class="text-base font-normal ng-star-inserted">(30/10)</span><!----></div>
                     </div>
                     <div
@@ -121,7 +90,7 @@
                             <div class="text-start text-xl mb-2 text-skin-green">
                                 Time Before Registration Ends
                             </div>
-                            <div class="flex flex-row flex-wrap md:flex-nowrap gap-6">
+                            <div class="flex flex-row flex-wrap  gap-6">
                                 <div
                                     class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white w-32 h-16">
                                     <span class="countdown"><span id="days"
@@ -154,11 +123,13 @@
                                         alt="DIU LOGO"></a>
                                 <a href="https://daffodilvarsity.edu.bd/" target="_blank"><img
                                         src="{{asset('images/diu-cse-transparent.webp')}}"
-                                        class="md:h-12 h-10 transform transition duration-500 hover:scale-150" alt="DIU CSE Logo"></a>
+                                        class="md:h-12 h-10 transform transition duration-500 hover:scale-150"
+                                        alt="DIU CSE Logo"></a>
 
                                 <a href="https://cpc.daffodilvarsity.edu.bd/" target="_blank"><img
                                         src="https://cpc.daffodilvarsity.edu.bd/static/media/CPC-Logo.769e206fb7f2ed4a7f95.png"
-                                        class="md:h-12 h-10 p-2 transform transition duration-500 hover:scale-150" alt="DIU CPC Logo"></a>
+                                        class="md:h-12 h-10 p-2 transform transition duration-500 hover:scale-150"
+                                        alt="DIU CPC Logo"></a>
 
                                 <a href="http://diuacm.com" target="_blank"><img
                                         src="{{ asset('images/diuacm-transparent.webp') }}"

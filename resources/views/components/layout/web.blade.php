@@ -8,12 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-
-
-
-
     @vite('resources/css/app.css')
-
+    @filamentStyles
 
 </head>
 
@@ -22,6 +18,10 @@
 
 {{ $slot }}
 
+
+@livewire('notifications')
+
+@filamentScripts
 @vite('resources/js/app.js')
 </body>
 </html>
