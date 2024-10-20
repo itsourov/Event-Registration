@@ -89,7 +89,7 @@
                                 class="text-lg md:text-lg font-medium mr-2">Preliminary</span><span
                                 class="text-base font-normal ng-star-inserted">(25/10)</span><!----></div>
                     </div>
-                    <div routerlink="/signin"
+                    <div
                          class="md:col-span-2 lg:col-span-1 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center rounded-md place-items-center cursor-pointer"
                          tabindex="0"><span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">5</span>
