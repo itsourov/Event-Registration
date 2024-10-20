@@ -96,7 +96,7 @@ class RegistrationForm extends Component implements HasForms
             ->title("Information Saved!")
             ->success()
             ->send();
-
+        $this->redirect(route('registration.payment.create', auth()->user()->registration));
 
     }
 

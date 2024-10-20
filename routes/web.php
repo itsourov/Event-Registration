@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Payment\RegistrationPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use Laravel\Socialite\Facades\Socialite;
@@ -27,3 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::get('/registration/{registration}/payment', [RegistrationPaymentController::class, 'payment'])->name('registration.payment.create');
+Route::get('/registration/{registration}/success', [RegistrationPaymentController::class, 'success'])->name('registration.payment.success');
+Route::get('/registration/{registration}/cancel', [RegistrationPaymentController::class, 'cancel'])->name('registration.payment.cancel');

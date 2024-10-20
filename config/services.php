@@ -39,5 +39,8 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => config('app.url') . '/auth/google/callback',
     ],
-
+    'udpay' => [
+        'api_key' => env('UDDOKTAPAY_API_KEY'),
+        'url' => env('UDDOKTAPAY_PAYMENT_DOMAIN'),
+    ],
 ];

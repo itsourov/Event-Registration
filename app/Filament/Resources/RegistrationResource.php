@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RegistrationResource\Pages;
 use App\Models\Registration;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -56,6 +57,12 @@ class RegistrationResource extends Resource
 
                 TextInput::make('gender')
                     ->required(),
+                Select::make('user_id')
+                    ->relationship('user', 'email')
+                    ->required(),
+                Placeholder::make('extra')
+                    ->content(fn(?Registration $record): string =>json_encode( $record?->extra)),
+
 
                 Placeholder::make('created_at')
                     ->label('Created Date')
@@ -94,8 +101,6 @@ class RegistrationResource extends Resource
                 TextColumn::make('gender'),
                 TextColumn::make('status'),
 
-
-                TextColumn::make('extra'),
             ])
             ->filters([
                 TrashedFilter::make(),
