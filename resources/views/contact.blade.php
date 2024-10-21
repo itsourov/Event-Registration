@@ -2,7 +2,7 @@
     @include('inc.header')
 
     <!-- Contact -->
-    <div class="max-w-7xl px-4 lg:px-6 lg:px-8 py-12 lg:py-24 mx-auto">
+    <div class="max-w-7xl px-4 lg:px-6  py-12 lg:py-24 mx-auto">
         <div class="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
             <h2 class="font-medium text-black text-2xl sm:text-4xl">
                 Contacts
