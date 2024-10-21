@@ -23,7 +23,7 @@ class RegistrationPaymentController extends Controller
             ])->post(config('services.udpay.url') . '/api/checkout-v2', [
                 'full_name' => $registration->name,
                 'email' => $registration->email,
-                'amount' => 500,
+                'amount' => 10,
                 'redirect_url' => route('registration.payment.success', $registration),
                 'cancel_url' => route('registration.payment.cancel', $registration),
                 'return_type' => 'GET',
