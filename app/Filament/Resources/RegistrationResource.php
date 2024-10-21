@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RegistrationStatuses;
 use App\Filament\Resources\RegistrationResource\Pages;
 use App\Models\Registration;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -22,6 +24,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Novadaemon\FilamentPrettyJson\PrettyJson;
 
 class RegistrationResource extends Resource
 {
@@ -57,11 +60,16 @@ class RegistrationResource extends Resource
 
                 TextInput::make('gender')
                     ->required(),
+                ToggleButtons::make('status')
+                    ->live()
+                    ->inline()
+                    ->options(RegistrationStatuses::class)
+                    ->required(),
                 Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required(),
-                Placeholder::make('extra')
-                    ->content(fn(?Registration $record): string =>json_encode( $record?->extra)),
+                PrettyJson::make('extra')->columnSpan(2),
+
 
 
                 Placeholder::make('created_at')

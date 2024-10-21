@@ -88,15 +88,19 @@ class RegistrationForm extends Component implements HasForms
     {
 
         if (auth()->user()->registration) {
-            auth()->user()->registration->update($this->form->getState());
+
+         $newReg =   auth()->user()->registration->update($this->form->getState());
         } else {
-            auth()->user()->registration()->updateOrCreate($this->form->getState());
+
+            $newReg =    auth()->user()->registration()->updateOrCreate(array_merge($this->form->getState(),[
+                'email'=>auth()->user()?->email
+            ]));
         }
         Notification::make()
             ->title("Information Saved!")
             ->success()
             ->send();
-        $this->redirect(route('registration.payment.create', auth()->user()->registration));
+        $this->redirect(route('registration.payment.create', $newReg));
 
     }
 

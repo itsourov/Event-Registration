@@ -8,8 +8,8 @@ use Filament\Support\Contracts\HasLabel;
 
 enum RegistrationStatuses: string implements HasColor, HasIcon, HasLabel
 {
-    case PENDING_PAYMENT = 'pending-payment';
     case PAYMENT_VERIFIED = 'payment-verified';
+    case PENDING_PAYMENT = 'pending-payment';
     case REJECTED = 'rejected';
 
     public function getColor(): string
@@ -17,7 +17,7 @@ enum RegistrationStatuses: string implements HasColor, HasIcon, HasLabel
         return match ($this) {
             self::PENDING_PAYMENT => 'info',
             self::PAYMENT_VERIFIED => 'success',
-            self::REJECTED => 'warning'
+            self::REJECTED => 'danger'
         };
     }
 
