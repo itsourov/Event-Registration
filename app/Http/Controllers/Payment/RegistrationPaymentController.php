@@ -42,6 +42,7 @@ class RegistrationPaymentController extends Controller
             if ($response->successful() && $response->json('payment_url')) {
                 return redirect($response->json('payment_url'));
             } else {
+                return $response->json();
                 return "There was an error connecting to the Payment API";
             }
         } catch (ConnectionException $e) {
@@ -84,7 +85,6 @@ class RegistrationPaymentController extends Controller
                     return "Information Mismatched, Please contact someone from DIU ACM. Dont worry your payment wont be lost.";
                 }
             } else {
-                return $response->json();
                 return "There was an error connecting to the Payment API. Dont get worried, you wont loss your payment";
             }
         } catch (ConnectionException $e) {
