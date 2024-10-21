@@ -3,9 +3,9 @@
     <div class="flex flex-col h-screen justify-between overflow-auto">
 
         @php
-            $registrationDeadline = Carbon\Carbon::createFromFormat('d-m-Y H:i:s', env('REGISTRATION_DEADLINE'));
-            $preliminaryDate = Carbon\Carbon::createFromFormat('d-m-Y H:i:s', env('PRELIMINARY_ROUND_DATE'));
-            $finalDate = Carbon\Carbon::createFromFormat('d-m-Y H:i:s', env('FINAL_ROUND_DATE'));
+            $registrationDeadline = Carbon\Carbon::parse( env('REGISTRATION_DEADLINE'));
+            $preliminaryDate = Carbon\Carbon::parse( env('PRELIMINARY_ROUND_DATE'));
+            $finalDate = Carbon\Carbon::parse(env('FINAL_ROUND_DATE'));
 
 
 
