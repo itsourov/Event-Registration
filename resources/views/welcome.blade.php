@@ -68,7 +68,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">4</span>
                         <div class="flex flex-wrap items-center"><span
                                 class="text-lg md:text-lg font-medium mr-2">Preliminary</span><span
-                                class="text-base font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M')}})</span>
+                                class="text-base text-nowrap font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M')}})</span>
 
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">5</span>
                         <div class="flex  flex-wrap items-center"><span
                                 class="text-lg md:text-xl font-medium mr-2">Final</span><span
-                                class="text-base font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
+                                class="text-base text-nowrap font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
                             <!---->
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">6</span>
                         <div class="flex  flex-wrap  items-center"><span class="text-lg md:text-xl font-medium mr-2">Result</span><span
-                                class="text-base font-normal">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
+                                class="text-base text-nowrap font-normal">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
                         </div>
                     </div>
                 </div>
