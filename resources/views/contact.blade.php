@@ -70,8 +70,8 @@
                                 </p>
                                 <p>
                                     <a class="relative inline-block font-medium text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 hover:before:bg-black focus:outline-none focus:before:bg-black"
-                                       href="mailto:{{env('SUPPORT_EMAIL_ADDRESS')}}">
-                                        {{env('SUPPORT_EMAIL_ADDRESS')}}
+                                       href="mailto:{{$site_settings->support_email}}">
+                                        {{$site_settings->support_email}}
 
                                     </a>
                                 </p>
@@ -93,7 +93,7 @@
                                 <p>
                                     <a class="relative inline-block font-medium text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 hover:before:bg-black focus:outline-none focus:before:bg-black"
                                        href="#">
-                                        {{env('SUPPORT_PHONE_NUMBER')}}
+                                        {{$site_settings->support_phone}}
                                     </a>
                                 </p>
                             </div>

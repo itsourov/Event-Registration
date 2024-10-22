@@ -24,7 +24,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Novadaemon\FilamentPrettyJson\PrettyJson;
+use ValentinMorice\FilamentJsonColumn\FilamentJsonColumn;
 
 class RegistrationResource extends Resource
 {
@@ -66,9 +66,10 @@ class RegistrationResource extends Resource
                     ->options(RegistrationStatuses::class)
                     ->required(),
                 Select::make('user_id')
+                    ->searchable()
                     ->relationship('user', 'email')
                     ->required(),
-                PrettyJson::make('extra')->columnSpan(2),
+                FilamentJsonColumn::make('extra')->columnSpan(2),
 
 
 
