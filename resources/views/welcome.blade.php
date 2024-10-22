@@ -11,11 +11,10 @@
                 <button class="text-lg md:text-xl text-white font-semibold pr-6">Notice</button>
             </div>
             <div class="flex-grow">
-                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"><a
-                        class="cursor-pointer text-red-500 text-lg" href="/notice"> Something important happened and
-                        you
-                        need to
-                        know that. What happened? I dont know.</a>
+                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"><span
+                        class="cursor-pointer text-red-500 text-lg">
+                        {{$site_settings->notice_text}}
+                    </span>
                 </marquee>
 
             </div>

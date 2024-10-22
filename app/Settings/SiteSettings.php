@@ -23,6 +23,8 @@ class SiteSettings extends Settings
     public string $countdown_text;
     public string $countdown_time;
 
+    public string $notice_text;
+
 
 
 

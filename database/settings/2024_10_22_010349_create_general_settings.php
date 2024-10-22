@@ -19,6 +19,7 @@ return new class extends SettingsMigration
 
         $this->migrator->add('general.countdown_text', "Time Before Registration Ends");
         $this->migrator->add('general.countdown_time', now()->addDays(30));
+        $this->migrator->add('general.notice_text', 'Notice Text can be changed from admin panel');
 
 
         $this->migrator->add('registration_form.lab_teacher_names', []);

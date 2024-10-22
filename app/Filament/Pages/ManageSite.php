@@ -80,6 +80,13 @@ class ManageSite extends SettingsPage
                             ->required(),
 
                     ]),
+                Section::make('Extra Information')
+                    ->schema([
+
+                        Forms\Components\Textarea::make('notice_text')
+                            ->required(),
+
+                    ]),
 
             ]);
     }
