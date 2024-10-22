@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-fixed bg-cover font-poppins px-2 " style="background-image: url('{{ asset('images/backdrop.png') }}')">
-
+<x-impersonate::banner />
 
 {{ $slot }}
 

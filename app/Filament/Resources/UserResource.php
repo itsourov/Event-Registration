@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource implements HasShieldPermissions
 {
@@ -68,6 +69,7 @@ class UserResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Impersonate::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
