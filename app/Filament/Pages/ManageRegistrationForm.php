@@ -20,8 +20,9 @@ class ManageRegistrationForm extends SettingsPage
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->can('page_ManageRegistrationForm');
+        return auth()->user()?->can('page_ManageRegistrationForm') ?? false;
     }
+
     public function form(Form $form): Form
     {
         return $form
@@ -43,23 +44,23 @@ class ManageRegistrationForm extends SettingsPage
 
                     ])
                 ,
-                 Section::make('Department & Sections')
-                     ->description("Option value for registration forms")
-                     ->schema([
+                Section::make('Department & Sections')
+                    ->description("Option value for registration forms")
+                    ->schema([
 
 
-                         Repeater::make('departments')
-                             ->grid(3)
-                             ->schema([
-                                 TextInput::make('name')->required(),
-                             ]),
-                         Repeater::make('sections')
-                             ->grid(3)
-                             ->schema([
-                                 TextInput::make('name')->required(),
-                             ]),
+                        Repeater::make('departments')
+                            ->grid(3)
+                            ->schema([
+                                TextInput::make('name')->required(),
+                            ]),
+                        Repeater::make('sections')
+                            ->grid(3)
+                            ->schema([
+                                TextInput::make('name')->required(),
+                            ]),
 
-                     ])
+                    ])
             ]);
     }
 }

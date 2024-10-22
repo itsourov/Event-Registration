@@ -21,7 +21,7 @@ class ManageSite extends SettingsPage
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->can('page_ManageSite');
+        return auth()->user()?->can('page_ManageSite')??false;
     }
     public function form(Form $form): Form
     {
