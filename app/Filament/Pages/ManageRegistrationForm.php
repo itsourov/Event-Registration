@@ -20,7 +20,7 @@ class ManageRegistrationForm extends SettingsPage
 
     public static function canAccess(): bool
     {
-        return auth()->user()->can('page_ManageRegistrationForm');
+        return auth()->user()?->can('page_ManageRegistrationForm');
     }
     public function form(Form $form): Form
     {
