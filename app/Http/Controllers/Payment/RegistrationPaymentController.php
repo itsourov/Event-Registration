@@ -15,8 +15,6 @@ class RegistrationPaymentController extends Controller
 {
     public function payment(Registration $registration, SiteSettings $siteSettings)
     {
-
-
         try {
             $response = Http::withHeaders([
                 'RT-UDDOKTAPAY-API-KEY' => config('services.udpay.api_key'),
@@ -40,23 +38,28 @@ class RegistrationPaymentController extends Controller
                     'tshirt_size' => $registration->tshirt_size,
                     'gender' => $registration->gender,
                 ],
-
             ]);
+
             if ($response->successful() && $response->json('payment_url')) {
                 return redirect($response->json('payment_url'));
-            } else {
-                return $response->json();
-                return "There was an error connecting to the Payment API";
             }
+
+            return response()->json([
+                'message' => 'Error processing payment request.',
+                'details' => $response->json(),
+            ], 500);
+
         } catch (ConnectionException $e) {
-            return "There was an error connecting to the Payment API. " . $e->getMessage();
+            return response()->json([
+                'message' => 'Error connecting to the Payment API.',
+                'error' => $e->getMessage(),
+            ], 503);
         }
-
     }
-
 
     public function success(Registration $registration, Request $request)
     {
+
         try {
             $response = Http::withHeaders([
                 'RT-UDDOKTAPAY-API-KEY' => config('services.udpay.api_key'),
@@ -66,90 +69,92 @@ class RegistrationPaymentController extends Controller
                 'invoice_id' => $request->invoice_id,
             ]);
 
-            if ($response->successful()) {
-                if ($response->json('status') != 'COMPLETED') {
-                    Notification::make()
-                        ->title("Payment Pending")
-                        ->info()
-                        ->send();
-                    return redirect(route('registration-form'));
-                }
-                if ($response->json('metadata')['registration_id'] == $registration->id && $response->json('status') == 'COMPLETED' && $response->json('email') == $registration->email) {
-                    $registration->status = RegistrationStatuses::PAID;
-                    $registration->extra = $response->json();
-                    $registration->save();
-                    Notification::make()
-                        ->title("Payment Successful")
-                        ->body("Your registration has been confirmed.")
-                        ->success()
-                        ->send();
-                    return redirect(route('all-registrations'));
-                }else if ($response->json('metadata')['registration_id'] == $registration->id && $response->json('status') == 'PENDING' && $response->json('email') == $registration->email) {
-                    $registration->status = RegistrationStatuses::PENDING;
-                    $registration->extra = $response->json();
-                    $registration->save();
-                    Notification::make()
-                        ->title("Payment Pending")
-                        ->body("We will verify your payment.")
-                        ->info()
-                        ->send();
-                    return redirect(route('all-registrations'));
-                }  else {
-                    return "Information Mismatched, Please contact someone from DIU ACM. Dont worry your payment wont be lost.";
-                }
-            } else {
-                return "There was an error connecting to the Payment API. Dont get worried, you wont loss your payment";
+            if (!$response->successful()) {
+                return response()->json([
+                    'message' => 'Error verifying payment.',
+                ], 500);
             }
+
+            $responseData = $response->json();
+            return $responseData;
+
+            if ($responseData['metadata']['registration_id'] !== $registration->id ||
+                $responseData['email'] !== $registration->email) {
+                return response()->json([
+                    'message' => 'Information mismatch. Please contact DIU ACM.',
+                ], 400);
+            }
+
+            if ($responseData['status'] === 'COMPLETED') {
+                $registration->status = RegistrationStatuses::PAID;
+                $registration->extra = $responseData;
+                $registration->save();
+
+                Notification::make()
+                    ->title("Payment Successful")
+                    ->body("Your registration has been confirmed.")
+                    ->success()
+                    ->send();
+
+            } elseif ($responseData['status'] === 'PENDING') {
+                $registration->status = RegistrationStatuses::PENDING;
+                $registration->extra = $responseData;
+                $registration->save();
+
+                Notification::make()
+                    ->title("Payment Pending")
+                    ->body("We will verify your payment.")
+                    ->info()
+                    ->send();
+            }
+
+            return redirect(route('all-registrations'));
+
         } catch (ConnectionException $e) {
-            return "There was an error connecting to the Payment API. Dont get worried, you wont loss your payment. " . $e->getMessage();
+            return response()->json([
+                'message' => 'Error connecting to the Payment API.',
+                'error' => $e->getMessage(),
+            ], 503);
         }
-
-
     }
 
-    public function cancel(Registration $registration, Request $request)
+    public function cancel(Registration $registration)
     {
         Notification::make()
-            ->title("Payment cancelled")
+            ->title("Payment Cancelled")
             ->info()
             ->send();
+
         return redirect(route('registration-form'));
     }
 
     public function webhookCallback(Registration $registration, Request $request)
     {
-
         $headerApi = $request->header('RT-UDDOKTAPAY-API-KEY');
 
-        // Verify the API key
         if ($headerApi !== config('services.udpay.api_key')) {
-            return response()->json(['message' => 'Unauthorized Action'], 401); // Unauthorized
+            return response()->json(['message' => 'Unauthorized Action'], 401);
         }
 
-        // Get the JSON data from the request body
         $data = $request->json()->all();
 
-        // Check if JSON data was successfully parsed
         if (empty($data)) {
-            return response()->json(['message' => 'Invalid JSON data'], 400); // Bad Request
+            return response()->json(['message' => 'Invalid JSON data'], 400);
         }
 
+        if ($data['metadata']['registration_id'] === $registration->id &&
+            $data['email'] === $registration->email) {
 
-      if($data['metadata']['registration_id'] == $registration->id && $data['email'] == $registration->email) {
+            if ($data['status'] === 'COMPLETED') {
+                $registration->status = RegistrationStatuses::PAID;
+            } elseif ($data['status'] === 'PENDING') {
+                $registration->status = RegistrationStatuses::PENDING;
+            }
 
-          if( $data['status'] == 'COMPLETED'){
+            $registration->extra = $data;
+            $registration->save();
+        }
 
-              $registration->status = RegistrationStatuses::PAID;
-              $registration->extra = $data;
-              $registration->save();
-          }
-         else if( $data['status'] == 'PENDING'){
-
-              $registration->status = RegistrationStatuses::PENDING;
-              $registration->extra = $data;
-              $registration->save();
-          }
-      }
         return response()->json(['message' => 'Webhook data processed successfully']);
     }
 }
