@@ -35,7 +35,7 @@
                     </form>
 
                 @else
-                    <li><a href="{{route('login')}}">Signin</a></li>
+                    <li><a href="{{route('login')}}">Sign In</a></li>
 
                 @endauth
 
