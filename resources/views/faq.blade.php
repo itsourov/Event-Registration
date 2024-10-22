@@ -37,11 +37,11 @@
     ],
     [
         'q' => 'What should I do if I entered the wrong information during registration?',
-        'a' => 'If you entered incorrect information, please contact our support team immediately at [support email]. Be sure to include your registration details and the correction needed.'
+        'a' => 'If you entered incorrect information, please contact our support team immediately at ['.$site_settings->support_email.']. Be sure to include your registration details and the correction needed.'
     ],
     [
         'q' => 'Is there a deadline for registration?',
-        'a' => 'Yes, the deadline for registration is '.Carbon\Carbon::createFromFormat('d-m-Y H:i:s', env('REGISTRATION_DEADLINE'))->format('d M Y').'. Make sure you register and complete your payment by this date to secure your spot in the contest.'
+        'a' => 'Yes, the deadline for registration is '.Carbon\Carbon::parse($site_settings->registration_deadline)->format('d M Y').'. Make sure you register and complete your payment by this date to secure your spot in the contest.'
     ],
 
 
