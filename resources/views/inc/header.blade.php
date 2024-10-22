@@ -21,7 +21,7 @@
             <ul
                 class="w-full inline-flex cursor-pointer items-center justify-around md:justify-between gap-x-3 md:gap-x-6 space-x-reverse  text-white font-normal flex-wrap text-base">
                 <li><a href="{{route('home')}}">Home</a></li>
-                <li><a href="{{route('all-registrations')}}">Registrations</a></li>
+                <li><a href="{{route('all-registrations')}}">All Registrations</a></li>
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 <li><a href="{{route('faq')}}">FAQ</a></li>
                 @auth
