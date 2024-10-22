@@ -18,6 +18,10 @@ class ManageRegistrationForm extends SettingsPage
     protected static string $settings = RegistrationFormSettings::class;
     protected static ?string $navigationGroup = 'Settings';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->can('page_ManageRegistrationForm');
+    }
     public function form(Form $form): Form
     {
         return $form

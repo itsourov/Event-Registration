@@ -19,6 +19,10 @@ class ManageSite extends SettingsPage
     protected static string $settings = SiteSettings::class;
     protected static ?string $navigationGroup = 'Settings';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->can('page_ManageSite');
+    }
     public function form(Form $form): Form
     {
         return $form
