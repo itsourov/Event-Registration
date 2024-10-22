@@ -123,7 +123,7 @@ class RegistrationPaymentController extends Controller
                     ->send();
             }
 
-            return redirect(route('all-registrations'));
+            return redirect(route('registration.my-registration'));
 
         } catch (ConnectionException $e) {
             return response()->json([
