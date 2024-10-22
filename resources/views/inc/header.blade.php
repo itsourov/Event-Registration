@@ -5,12 +5,12 @@
                                                          class="w-28 h-14 mb-2 md:ml-[5%] ml-4 cursor-pointer"
                                                          alt="Logo">
                 <div class="flex flex-col cursor-pointer">
-                    <div class="text-lg md:text-3xl leading-normal text-cyan-900 font-semibold ml-5"> UTA
-                        Registration
+                    <div class="text-lg md:text-3xl leading-normal text-cyan-900 font-semibold ml-5">
+                        {{$site_settings->site_title}}
                     </div>
                     <div class="text-sm md:text-lg text-cyan-900 font-normal ml-5 leading-normal">
                         <blockquote>
-                            <p>Organized by: ACM Wing CPC, Department Of CSE, DIU </p>
+                            <p>  {{$site_settings->site_tagline}} </p>
                         </blockquote>
                     </div>
                 </div>

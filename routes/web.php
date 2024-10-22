@@ -12,7 +12,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/registration-form', function () {
-    if(auth()->user()->registration?->status==\App\Enums\RegistrationStatuses::PAYMENT_VERIFIED->value){
+    if(auth()->user()->registration?->status==\App\Enums\RegistrationStatuses::PAID->value){
         Notification::make()
             ->title("Already Registered")
             ->body("Your already registered and paid.")

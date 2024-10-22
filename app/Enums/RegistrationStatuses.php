@@ -8,34 +8,34 @@ use Filament\Support\Contracts\HasLabel;
 
 enum RegistrationStatuses: string implements HasColor, HasIcon, HasLabel
 {
-    case PAYMENT_VERIFIED = 'payment-verified';
-    case PENDING_PAYMENT = 'pending-payment';
-    case REJECTED = 'rejected';
+    case PAID = 'paid';
+    case PENDING = 'pending';
+    case UNPAID = 'unpaid';
 
     public function getColor(): string
     {
         return match ($this) {
-            self::PENDING_PAYMENT => 'info',
-            self::PAYMENT_VERIFIED => 'success',
-            self::REJECTED => 'danger'
+            self::PENDING => 'info',
+            self::PAID => 'success',
+            self::UNPAID => 'danger'
         };
     }
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::PENDING_PAYMENT => 'Pending payment',
-            self::PAYMENT_VERIFIED => 'Payment verified',
-            self::REJECTED => 'Rejected',
+            self::PENDING => 'Pending',
+            self::PAID => 'Paid',
+            self::UNPAID => 'Unpaid',
         };
     }
 
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::PENDING_PAYMENT => 'heroicon-o-clock',
-            self::PAYMENT_VERIFIED => 'heroicon-o-check-badge',
-            self::REJECTED => 'heroicon-o-x-circle',
+            self::PENDING => 'heroicon-o-clock',
+            self::PAID => 'heroicon-o-check-badge',
+            self::UNPAID => 'heroicon-o-x-circle',
         };
     }
 	public static function toArray(): array

@@ -11,7 +11,7 @@ class RegistrationList extends Component
 {
     use WithPagination;
 
-    public $activeTab = RegistrationStatuses::PAYMENT_VERIFIED->value, $search;
+    public $activeTab = RegistrationStatuses::PAID->value, $search;
     protected $queryString = [
         'activeTab',
         'search' => ['except' => ''],

@@ -2,22 +2,6 @@
 
     <div class="flex flex-col h-screen justify-between overflow-auto">
 
-        @php
-            $registrationDeadline = Carbon\Carbon::parse( env('REGISTRATION_DEADLINE'));
-            $preliminaryDate = Carbon\Carbon::parse( env('PRELIMINARY_ROUND_DATE'));
-            $finalDate = Carbon\Carbon::parse(env('FINAL_ROUND_DATE'));
-
-
-
-
-            $diff = now()->diff($registrationDeadline);
-
-
-            $days = $diff->d;
-            $hours = $diff->h;
-            $minutes = $diff->i;
-
-        @endphp
 
         @include('inc.header')
 
@@ -41,9 +25,7 @@
             <div class="grow flex flex-col justify-between md:mx-0">
                 <div class="ml-4 md:ml-[13%] md:mt-[3%] text-2xl md:text-4xl font-semibold  text-slate-800">
                     <blockquote>
-                        <span class="leading-relaxed">Online registration for<span class="text-yellow-600"> Unlock the
-                                Algorithm </span></span><br class="hidden lg:block"><span> Programming Contest, Fall
-                            2024</span>
+                        <span class="leading-relaxed">Online registration for<span class="text-yellow-600">  {{$site_settings->contest_name}} </span></span><br class="hidden lg:block"><span> Programming Contest, {{$site_settings->semester}}</span>
                     </blockquote>
                 </div>
                 <div class="grid md:grid-cols-5 gap-4 md:mt-3 mt-2 md:ml-[13%] mr-0 md:mr-12">
@@ -51,11 +33,11 @@
                     <a href="{{auth()->user()?'#':route('login')}}"
                        class="md:col-span-2 h-20 w-full bg-cyan-900 {{auth()->user()?'cursor-not-allowed':''}}  text-white flex rounded-md place-items-center">
                           <span
-                              class="rounded-full bg-yellow-500 {{auth()->user()?'bg-green-500':''}} h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{auth()->user()? svg('heroicon-o-check',class: 'h-5 w-5') :'1'}}</span>
+                              class="rounded-full  {{auth()->user()?'bg-green-500':'bg-yellow-500'}} h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{auth()->user()? svg('heroicon-o-check',class: 'h-5 w-5') :'1'}}</span>
 
                         <div>
                                <span
-                                   class="text-lg md:text-xl font-medium mr-2 text-white">Primary Eligibility Check</span>
+                                   class="text-lg md:text-xl font-medium mr-2 text-white">Connect DIU email</span>
                             @auth
                                 <p>{{auth()->user()->email}}</p>
                             @endauth
@@ -69,7 +51,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">2</span><span
                             class="text-lg md:text-xl font-medium mr-2 text-white"
                         >Registration: Form Fill-up <x-heroicon-o-arrow-right class="w-5 h-5 inline"/> Payment <span
-                                class="text-base font-normal ng-star-inserted">(till {{$registrationDeadline->format('d M')}})</span>
+                                class="text-base font-normal ng-star-inserted">(till {{Carbon\Carbon::parse($site_settings->registration_deadline)->format('d M')}})</span>
                             <!----></span>
                     </a>
                     <a href="#"
@@ -84,7 +66,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">4</span>
                         <div class="flex flex-col items-center"><span
                                 class="text-lg md:text-lg font-medium mr-2">Preliminary</span><span
-                                class="text-base font-normal ng-star-inserted">({{$preliminaryDate->format('d M')}})</span>
+                                class="text-base font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M')}})</span>
                             <!----></div>
                     </div>
                     <div
@@ -93,7 +75,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">5</span>
                         <div class="flex flex-col items-center"><span
                                 class="text-lg md:text-xl font-medium mr-2">Final</span><span
-                                class="text-base font-normal ng-star-inserted">({{$finalDate->format('d M')}})</span>
+                                class="text-base font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
                             <!----></div>
                     </div>
                     <div
@@ -102,7 +84,8 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">6</span>
                         <div class="flex flex-col"><span
                                 class="text-lg md:text-xl font-medium mr-2">Result</span><span
-                                class="text-base font-normal">({{$finalDate->format('d M')}})</span></div>
+                                class="text-base font-normal">({{Carbon\Carbon::parse($site_settings->final_date)->format('d M')}})</span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-3 md:mt-6">
@@ -113,30 +96,30 @@
                             class="flex bg-yellow-500 rounded-md md:rounded-l-none md:rounded-r-full w-full md:w-[418px] h-16 justify-end p-0 md:pr-10 ">
                             <button id="btn_primary_eligibility"
                                     class="text-lg md:text-2xl font-bold w-full text-white {{auth()->user()?'cursor-not-allowed':''}}">
-                                Primary Eligibility Check
+                                Connect DIU email
                             </button>
                         </a>
                         <div id="countDown" class="flex flex-col md:pl-10 md:-mt-6">
                             <div class="text-start text-xl mb-2 text-skin-green">
-                                Time Before Registration Ends
+                                {{$site_settings->countdown_text}}
                             </div>
-                            <div class="flex flex-row flex-wrap  gap-6">
+                            <div class="flex flex-row flex-wrap  gap-6" x-data="countdown('{{$site_settings->countdown_time}}')">
                                 <div
                                     class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white w-32 h-16">
                                     <span class="countdown"><span id="days"
-                                                                  class="text-xl md:text-3xl font-bold">{{$days}}</span><span
+                                                                  class="text-xl md:text-3xl font-bold"><span x-text="daysLeft"></span></span><span
                                             class="text-lg ml-2">Days</span></span>
                                 </div>
                                 <div
                                     class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white w-32 h-16">
                                     <span class="countdown"><span id="hours"
-                                                                  class="text-xl md:text-3xl font-bold">{{$minutes}}</span><span
+                                                                  class="text-xl md:text-3xl font-bold"><span x-text="hoursLeft"></span></span><span
                                             class="text-lg ml-2">Hours</span></span>
                                 </div>
                                 <div
                                     class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white w-32 h-16">
                                     <span class="countdown"><span id="minutes"
-                                                                  class="text-xl md:text-3xl font-bold">{{$hours}}</span><span
+                                                                  class="text-xl md:text-3xl font-bold"><span x-text="minutesLeft"></span></span><span
                                             class="text-lg ml-2">Minutes</span></span>
                                 </div>
                             </div>
@@ -193,4 +176,36 @@
                     alt="government" class="w-[50%] md:w-[100%]"></div>
         </div>
     </div>
+
+
+    <script>
+        function countdown(targetDate) {
+            return {
+                targetDate: new Date(targetDate), // Convert the target date string to a Date object
+                daysLeft: null,
+                hoursLeft: null,
+                minutesLeft: null,
+
+                init() {
+                    this.calculateTimeLeft();
+                    setInterval(() => this.calculateTimeLeft(), 1000); // Update every second
+                },
+
+                calculateTimeLeft() {
+                    const now = new Date();
+                    const timeDiff = this.targetDate - now; // Get the time difference in milliseconds
+
+                    if (timeDiff > 0) {
+                        this.daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // Days left
+                        this.hoursLeft = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Hours left
+                        this.minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)); // Minutes left
+                    } else {
+                        this.daysLeft = 0;
+                        this.hoursLeft = 0;
+                        this.minutesLeft = 0;
+                    }
+                }
+            }
+        }
+    </script>
 </x-web-layout>

@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('lab_teacher_name')->nullable();
             $table->string('tshirt_size')->nullable();
             $table->string('gender');
-            $table->enum('status', RegistrationStatuses::toArray())->default(RegistrationStatuses::PENDING_PAYMENT);
+            $table->enum('status', RegistrationStatuses::toArray())->default(RegistrationStatuses::UNPAID);
             $table->json('extra')->nullable();
             $table->timestamps();
             $table->softDeletes();

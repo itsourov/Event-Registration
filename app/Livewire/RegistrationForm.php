@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Registration;
+use App\Settings\RegistrationFormSettings;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -11,17 +11,19 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Livewire\Component;
+use Exception;
 
 class RegistrationForm extends Component implements HasForms
 {
-
     use InteractsWithForms;
 
+    public ?array $registrationFormSettings;
     public ?array $data = [];
 
-    public function mount(): void
-    {
 
+    public function mount(RegistrationFormSettings $registrationFormSettings): void
+    {
+        $this->registrationFormSettings = $registrationFormSettings->toArray();
         $this->form->fill();
     }
 
@@ -31,10 +33,7 @@ class RegistrationForm extends Component implements HasForms
             ->schema([
                 Section::make("Registration Form")
                     ->extraAttributes(['style' => 'background-color:#fdfee9'])
-                    ->columns([
-                        'sm' => 2,
-
-                    ])
+                    ->columns(['sm' => 2])
                     ->schema([
                         TextInput::make('name')
                             ->default(auth()->user()?->name)
@@ -55,29 +54,21 @@ class RegistrationForm extends Component implements HasForms
                             ->suffixIcon('heroicon-o-phone')
                             ->required(),
                         Select::make('department')
-                            ->options([
-                                'CSE' => 'CSE',
-                                'CIS' => 'CIS'
-                            ])
-                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
+                            ->options($this->getDepartmentOptions())
                             ->default('CSE')
                             ->required(),
                         Select::make('section')
-                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
-                            ->options(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
-                            ->required(),
-                        Select::make('lab_teacher_name')
-                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
-                            ->options(['Person 1', 'Person 2', 'Person 3', 'Person 4', 'Person 5', 'Person 6', 'Other'])
-                            ->required(),
-
-                        Select::make('tshirt_size')
-                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
-                            ->options(['M', 'L', 'XL', 'XXL', 'XXXL'])
+                            ->options($this->getSectionOptions())
                             ->required(),
                         Select::make('gender')
-                            ->in(fn(Select $component): array => array_keys($component->getEnabledOptions()))
-                            ->options(['Male', 'Female'])
+                            ->options($this->getGenderOptions())
+                            ->required(),
+                        Select::make('tshirt_size')
+                            ->options($this->getTShirtSizeOptions())
+                            ->required(),
+                        Select::make('lab_teacher_name')
+                            ->visible($this->registrationFormSettings['lab_teacher_names_enabled'] ?? false)
+                            ->options($this->getLabTeacherOptions())
                             ->required(),
                     ]),
             ])
@@ -86,29 +77,75 @@ class RegistrationForm extends Component implements HasForms
 
     public function create(): void
     {
+        $user = auth()->user();
+        $user->registration
+            ? $user->registration->update($this->form->getState())
+            : $user->registration()->updateOrCreate(array_merge($this->form->getState(), ['email' => $user?->email]));
 
-        if (auth()->user()->registration) {
-
-         $newReg =   auth()->user()->registration->update($this->form->getState());
-        } else {
-
-            $newReg =    auth()->user()->registration()->updateOrCreate(array_merge($this->form->getState(),[
-                'email'=>auth()->user()?->email
-            ]));
-        }
         Notification::make()
-            ->title("Information Saved!")
-            ->success()
-            ->send();
-        $this->redirect(route('registration.payment.create', $newReg));
+                ->title("Information Saved!")
+                ->success()
+                ->send();
+        if(!$user->registration)
+            redirect()->route('registration-form');
 
     }
 
+    public function payNow(){
+        if (auth()->user()->registration)
+            redirect()->route('registration.payment.create', auth()->user()->registration);
+        else {
+            Notification::make()
+                ->title("Registration Not Found!")
+                ->warning()
+                ->send();
+        }
+    }
     public function render()
     {
         if (auth()->user()->registration) {
-            $this->data = auth()->user()->registration?->toArray();
+            $this->data = auth()->user()->registration->toArray();
         }
         return view('livewire.registration-form');
+    }
+
+
+    private function getDepartmentOptions(): array
+    {
+        return array_combine(
+            array_column($this->registrationFormSettings['departments'] ?? [], 'name'),
+            array_column($this->registrationFormSettings['departments'] ?? [], 'name')
+        );
+    }
+
+    private function getSectionOptions(): array
+    {
+        return array_combine(
+            array_column($this->registrationFormSettings['sections'] ?? [], 'name'),
+            array_column($this->registrationFormSettings['sections'] ?? [], 'name')
+        );
+    }
+
+    private function getGenderOptions(): array
+    {
+        return [
+            'Male' => 'Male',
+            'Female' => 'Female',
+            'Other' => 'Other',
+        ];
+    }
+
+    private function getTShirtSizeOptions(): array
+    {
+        return ['M', 'L', 'XL', 'XXL', 'XXXL'];
+    }
+
+    private function getLabTeacherOptions(): array
+    {
+        $labTeachers = $this->registrationFormSettings['lab_teacher_names'] ?? [];
+        return array_combine(
+            array_column($labTeachers, 'initial'),
+            array_column($labTeachers, 'full_name')
+        );
     }
 }
