@@ -76,7 +76,7 @@ class RegistrationPaymentController extends Controller
             }
 
             $responseData = $response->json();
-            return $responseData;
+
 
             if ($responseData['metadata']['registration_id'] !== $registration->id ||
                 $responseData['email'] !== $registration->email) {
