@@ -5,7 +5,7 @@
 
         <div class="flex h-full">
             <div class="grow flex flex-col justify-between md:mx-0">
-                <div class=" md:ml-[13%] md:mt-[3%] text-2xl md:text-4xl font-semibold  text-slate-800">
+                <div class=" md:ml-[13%] md:mt-[3%] text-2xl md:text-4xl font-semibold  text-slate-800 pb-20">
                     <livewire:registration-form/>
                 </div>
             </div>
