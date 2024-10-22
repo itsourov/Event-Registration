@@ -29,6 +29,12 @@ class UserResource extends Resource
                     ->email()
                     ->required(),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->visible(auth()->user()->hasPermissionTo('manage_role_user'))
+                    ->multiple()
+                    ->preload()
+                    ->searchable()
             ]);
     }
 
