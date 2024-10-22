@@ -1,5 +1,5 @@
 <div>
-    <div class="space-y-3 mt-4 container mx-auto">
+    <div class="space-y-3 mt-4 mx-auto">
 
 
         <x-filament::input.wrapper class="max-w-sm mx-auto"
