@@ -83,15 +83,16 @@ class RegistrationForm extends Component implements HasForms
             : $user->registration()->updateOrCreate(array_merge($this->form->getState(), ['email' => $user?->email]));
 
         Notification::make()
-                ->title("Information Saved!")
-                ->success()
-                ->send();
-        if(!$user->registration)
-            redirect()->route('registration-form');
+            ->title("Information Saved!")
+            ->success()
+            ->send();
+        if (!$user->registration)
+            redirect()->route('registration.create');
 
     }
 
-    public function payNow(){
+    public function payNow()
+    {
         if (auth()->user()->registration)
             redirect()->route('registration.payment.create', auth()->user()->registration);
         else {
@@ -101,6 +102,7 @@ class RegistrationForm extends Component implements HasForms
                 ->send();
         }
     }
+
     public function render()
     {
         if (auth()->user()->registration) {
@@ -137,7 +139,7 @@ class RegistrationForm extends Component implements HasForms
 
     private function getTShirtSizeOptions(): array
     {
-        return ['M', 'L', 'XL', 'XXL', 'XXXL'];
+        return ['M' => 'M', 'L' => 'L', 'XL' => 'XL', 'XXL' => 'XXL', 'XXXL' => 'XXXL'];
     }
 
     private function getLabTeacherOptions(): array

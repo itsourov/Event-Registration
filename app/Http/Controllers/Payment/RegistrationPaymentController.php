@@ -15,6 +15,21 @@ class RegistrationPaymentController extends Controller
 {
     public function payment(Registration $registration, SiteSettings $siteSettings)
     {
+        if($registration->status==RegistrationStatuses::PAID ){
+            Notification::make()
+                ->title("Already Paid")
+                ->info()
+                ->send();
+            return redirect(route('home'));
+        }
+        if($registration->status==RegistrationStatuses::PENDING ){
+            Notification::make()
+                ->title("Pending Payment")
+                ->body("Please allow us some time to verify your payment.")
+                ->info()
+                ->send();
+            return redirect(route('home'));
+        }
         try {
             $response = Http::withHeaders([
                 'RT-UDDOKTAPAY-API-KEY' => config('services.udpay.api_key'),
@@ -125,7 +140,7 @@ class RegistrationPaymentController extends Controller
             ->info()
             ->send();
 
-        return redirect(route('registration-form'));
+        return redirect(route('registration.create'));
     }
 
     public function webhookCallback(Registration $registration, Request $request)

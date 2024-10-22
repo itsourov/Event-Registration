@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RegistrationStatuses;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,12 +23,14 @@ class Registration extends Model
         'tshirt_size',
         'gender',
         'extra',
+        'status',
     ];
 
     protected function casts(): array
     {
         return [
             'extra' => 'array',
+            'status' => RegistrationStatuses::class,
         ];
     }
 

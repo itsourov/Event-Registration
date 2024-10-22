@@ -45,7 +45,7 @@
                         </div>
 
                     </a>
-                    <a href="{{route('registration-form')}}"
+                    <a href="{{route('registration.create')}}"
                        class="md:col-span-3 h-20 w-full bg-cyan-900  text-white inline-flex rounded-md place-items-center">
                         <span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">2</span><span

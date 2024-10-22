@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Payment\RegistrationPaymentController;
-use Filament\Notifications\Notification;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use Laravel\Socialite\Facades\Socialite;
@@ -11,17 +11,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/registration-form', function () {
-    if(auth()->user()->registration?->status==\App\Enums\RegistrationStatuses::PAID->value){
-        Notification::make()
-            ->title("Already Registered")
-            ->body("Your already registered and paid.")
-            ->success()
-            ->send();
-        return redirect(route('home'));
-    }
-    return view('registration-form');
-})->middleware(['auth', 'verified'])->name('registration-form');
+Route::get('/registration/create', [RegistrationController::class,'create'])->middleware(['auth', 'verified'])->name('registration.create');
+Route::get('/registration/my-registration', [RegistrationController::class,'myRegistration'])->middleware(['auth', 'verified'])->name('registration.my-registration');
 
 Route::get('/registrations', function () {
 
