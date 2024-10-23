@@ -11,6 +11,9 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/',[PageController::class, 'home'] )->name('home');
 
+Route::get('/php', function () {
+    return phpinfo();
+})->name('php');
 
 
 //Route::get('/registration/create', [RegistrationController::class,'create'])->middleware(['auth', 'verified'])->name('registration.create');
