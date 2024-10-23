@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -61,5 +62,9 @@ class Contest extends Model implements HasMedia
             ->addMediaConversion('medium')
             ->fit(Fit::Crop, 1000, 700)
             ->queued();
+    }
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class);
     }
 }
