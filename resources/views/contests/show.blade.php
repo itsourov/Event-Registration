@@ -36,8 +36,7 @@
                        class="md:col-span-3 h-20 w-full bg-cyan-900  text-white inline-flex rounded-md place-items-center">
                         <span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">2</span><span
-                            class="text-lg md:text-xl font-medium mr-2 text-white">Registration: Form Fill-up
-                            <x-heroicon-o-arrow-right class="w-5 h-5 inline"/> Payment <span
+                            class="text-lg md:text-xl font-medium mr-2 text-white">Register Now <span
                                 class="text-base font-normal ng-star-inserted">(till
                                 {{Carbon\Carbon::parse($contest->registration_deadline)->format('d M, y')}})</span>
                             <!----></span>
@@ -59,7 +58,7 @@
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{$cnt++}}</span>
                             <div class="flex flex-wrap items-center"><span
                                     class="text-lg md:text-lg font-medium mr-2">{{$date['round_name']??''}}</span><span
-                                    class="text-base text-nowrap font-normal ng-star-inserted">({{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M, y')}})</span>
+                                    class="text-base text-nowrap font-normal ng-star-inserted">{{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M, y')}})</span>
 
                             </div>
                         </div>
@@ -69,7 +68,7 @@
                 </div>
                 <div class="mt-3 md:mt-6 flex justify-center">
                     <div id="countDown" class="flex flex-col md:pl-10 md:-mt-6">
-                        <div class="text-start text-xl mb-2 text-skin-green">
+                        <div class="text-start text-xl mb-2 text-skin-green text-center">
                             {{$contest->countdown_text}}
                         </div>
 
