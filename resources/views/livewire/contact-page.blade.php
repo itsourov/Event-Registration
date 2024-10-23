@@ -26,7 +26,7 @@
                                 required="true"
                                 class="sr-only" />
                             <x-input.text
-                                wire:model="name"
+                                wire:model.lazy="name"
                                 type="text"
                                 class="mt-1 block w-full"
                                 autocomplete="name"
@@ -40,7 +40,7 @@
                                 required="true"
                                 class="sr-only" />
                             <x-input.text
-                                wire:model="email"
+                                wire:model.lazy="email"
                                 type="email"
                                 class="mt-1 block w-full"
                                 autocomplete="email"
@@ -52,7 +52,7 @@
                                 :value="__('Phone') . ' (' . __('optional') . ')'"
                                 class="sr-only" />
                             <x-input.text
-                                wire:model="phone"
+                                wire:model.lazy="phone"
                                 type="text"
                                 class="mt-1 block w-full"
                                 autocomplete="phone"
@@ -65,7 +65,7 @@
                                 required="true"
                                 class="sr-only" />
                             <x-input.textarea
-                                wire:model="message"
+                                wire:model.lazy="message"
                                 type="text"
                                 class="mt-1 block w-full"
                                 rows="4"
@@ -278,8 +278,8 @@
                         </p>
                         <a
                             class="mt-2 inline-flex items-center gap-x-2 text-sm font-medium text-gray-600 hover:text-gray-800 dark:text-neutral-400 dark:hover:text-neutral-200"
-                            href="mailto: {{ $site_settings->support_email }}">
-                            {{ $site_settings->support_email }}
+                            href="mailto:{{ config("mail.from.address") }}">
+                            {{ config("mail.from.address") }}
                         </a>
                     </div>
                 </div>
