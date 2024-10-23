@@ -42,7 +42,7 @@ class RegistrationForm extends Component implements HasForms
         return $form
             ->schema([
                 Section::make("Registration Form")
-                    ->description("asd")
+                    ->description($this->contest->name)
 //                    ->extraAttributes(['style' => 'background-color:#fdfee9'])
                     ->columns(['sm' => 2])
                     ->schema([
