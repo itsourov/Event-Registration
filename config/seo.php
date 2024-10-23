@@ -12,7 +12,7 @@ return [
     /**
      * Use this setting to specify the site name that will be used in OpenGraph tags.
      */
-    'site_name' => null,
+    'site_name' => config('app.name'),
 
     /**
      * Use this setting to specify the path to the sitemap of your website. This exact path will outputted, so
@@ -59,7 +59,7 @@ return [
      *
      * You can use the following filetypes: ico, png, gif, jpeg, svg.
      */
-    'favicon' => null,
+    'favicon' => ('favicon.ico'),
 
     'title' => [
         /**
@@ -75,14 +75,14 @@ return [
          * Use this setting to provide a suffix that will be added after the title on each page.
          * If you don't want a suffix, you should specify an empty string.
          */
-        'suffix' => '',
+        'suffix' => ' | ' . config('app.name'),
 
         /**
          * Use this setting to provide a custom title for the homepage. We will not use the suffix on the homepage,
          * so you'll need to add the suffix manually if you want that. If set to null, we'll determine the title
          * just like the other pages.
          */
-        'homepage_title' => null,
+        'homepage_title' => config('app.name') . " | Online Contest Registration Platform powered by DIU ACM",
     ],
 
     'description' => [
@@ -101,7 +101,7 @@ return [
          * This should be a path to an image. The url to the path is generated using the `secure_url()` function
          * (`secure_url($yourProvidedPath)`), so make sure the image is accessible from the public folder.
          */
-        'fallback' => null,
+        'fallback' => ('images/diuacm.jpeg'),
     ],
 
     'author' => [
