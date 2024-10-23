@@ -66,11 +66,13 @@ class RegistrationResource extends Resource
                     ->options(RegistrationStatuses::class)
                     ->required(),
                 Select::make('user_id')
+                    ->preload()
                     ->searchable()
                     ->relationship('user', 'email')
                     ->required(),
 
                 Select::make('contest_id')
+                    ->preload()
                     ->searchable()
                     ->relationship('contest', 'name')
                     ->required(),
@@ -103,16 +105,10 @@ class RegistrationResource extends Resource
                 TextColumn::make('student_id'),
 
                 TextColumn::make('phone'),
+                TextColumn::make('contest.name'),
 
-                TextColumn::make('section'),
 
-                TextColumn::make('department'),
 
-                TextColumn::make('lab_teacher_name'),
-
-                TextColumn::make('tshirt_size'),
-
-                TextColumn::make('gender'),
                 TextColumn::make('status'),
 
             ])

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContestResource\Pages;
+use App\Filament\Resources\ContestResource\RelationManagers\RegistrationsRelationManager;
 use App\Models\Contest;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
@@ -194,6 +195,12 @@ class ContestResource extends Resource
             ]);
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            RegistrationsRelationManager::class,
+        ];
+    }
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'slug'];

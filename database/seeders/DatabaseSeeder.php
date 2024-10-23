@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Contest;
+use App\Models\Registration;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
