@@ -160,11 +160,11 @@
                                     <x-slot name="content">
 
 
-                                        @if(auth()->user()->hasRole('panel_user') || auth()->user()->hasRole('super_admin'))
-                                            <x-dropdown-link :href="route('filament.admin.pages.dashboard')">
-                                                {{ __('Admin Panel') }}
-                                            </x-dropdown-link>
-                                        @endif
+{{--                                        @if(auth()->user()->hasRole('panel_user') || auth()->user()->hasRole('super_admin'))--}}
+{{--                                            <x-dropdown-link :href="route('filament.admin.pages.dashboard')">--}}
+{{--                                                {{ __('Admin Panel') }}--}}
+{{--                                            </x-dropdown-link>--}}
+{{--                                        @endif--}}
 
 
                                         <!-- Authentication -->
