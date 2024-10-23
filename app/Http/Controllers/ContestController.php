@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contest;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -14,7 +15,7 @@ class ContestController extends Controller
     {
         $contests = Contest::query()->with(['media'])
             ->paginate(9);
-        return view('contests.index',compact('contests'));
+        return view('contests.index', compact('contests'));
     }
 
     /**
@@ -38,7 +39,9 @@ class ContestController extends Controller
      */
     public function show(Contest $contest)
     {
-      return view('contests.show', compact('contest'));
+        $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
+
+        return view('contests.show', compact('contest', 'registered'));
     }
 
 

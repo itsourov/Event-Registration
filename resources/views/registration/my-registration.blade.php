@@ -1,10 +1,16 @@
 <x-web-layout>
 
-    <div class="max-w-md mx-auto px-2 my-20">
+    <div class="container mx-auto px-2 my-20">
 
 
         <x-card class=" p-4 space-y-1 ">
+             <div class="max-w-md mx-auto">
+                <div class="aspect-w-16 aspect-h-9">
+                    {{ $registration->contest->getFirstMedia("contest-banner-images") ?->img()->attributes(["class" => "w-full object-cover rounded-xl"]) }}
+                </div>
+            </div>
             <h3 class="font-bold text-center text-lg underline">My Registration</h3>
+
             <p>
                 Name: <span class="font-semibold">{{$registration->name}}</span>
             </p>
@@ -49,7 +55,10 @@
             </p>
 
 
-
         </x-card>
+
+        <div class="mt-4 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert" tabindex="-1" aria-labelledby="hs-soft-color-info-label">
+            <span id="hs-soft-color-info-label" class="font-bold">Attention.</span> Please wait up to 24 hours if your payment is not reflected here.
+        </div>
     </div>
 </x-web-layout>

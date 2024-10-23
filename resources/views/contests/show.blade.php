@@ -3,98 +3,122 @@
     <div class="flex flex-col h-screen justify-between overflow-auto">
 
 
-
-
-
-
         <div class="flex h-full px-2 py-10">
             <div class="grow flex flex-col justify-between md:mx-0">
-                <div class="ml-4 md:ml-[13%] md:mt-[3%] text-xl md:text-4xl font-semibold  text-slate-800 dark:text-slate-100">
+                <div
+                    class="ml-4 md:ml-[13%] md:mt-[3%] text-xl md:text-4xl font-semibold  text-slate-800 dark:text-slate-100">
                     <blockquote>
                         <span class="leading-relaxed">Online registration for<span class="text-yellow-600">
                                 {{$contest->name}} </span></span><br class="hidden lg:block"><span>
                             Programming Contest, {{$contest->semester}}</span>
                     </blockquote>
                 </div>
-                <div class="grid md:grid-cols-5 gap-4 md:mt-3 mt-2 md:ml-[13%] mr-0 md:mr-12">
 
+                <div class="flex flex-wrap gap-2 md:ml-[13%] md:mt-[3%]">
                     <a href="{{auth()->user() ? '#' : route('login')}}"
-                       class="md:col-span-2 h-20 w-full bg-cyan-900 {{auth()->user() ? 'cursor-not-allowed' : ''}}  text-white flex rounded-md place-items-center">
-                        <span
-                            class="rounded-full  {{auth()->user() ? 'bg-green-500' : 'bg-yellow-500'}} h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{auth()->user() ? svg('heroicon-o-check', class: 'h-5 w-5') : '1'}}</span>
+                       class="bg-cyan-900 flex-grow rounded-md px-3 py-4 flex items-center {{auth()->user() ? 'cursor-not-allowed' : ''}}">
+                         <span
+                             class="rounded-full  {{auth()->user() ? 'bg-green-500' : 'bg-yellow-500'}} h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{auth()->user() ? svg('heroicon-o-check', class: 'h-5 w-5') : '1'}}</span>
 
                         <div>
                             <span class="text-lg md:text-xl font-medium mr-2 text-white">Connect DIU email</span>
-                            @auth
-                                <p>{{auth()->user()->email}}</p>
-                            @endauth
-
+                            <p class="text-white">sourov2305101004@diu.edu.bd</p>
                         </div>
-
                     </a>
                     <a href="{{route('contests.registration.form',$contest)}}"
-                       class="md:col-span-3 h-20 w-full bg-cyan-900  text-white inline-flex rounded-md place-items-center">
+                       class="bg-cyan-900 flex-grow rounded-md px-3 py-4 flex items-center">
+                        @if($registered)
+                            <span
+                                class="rounded-full  {{auth()->user() ? 'bg-green-500' : 'bg-yellow-500'}} h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{auth()->user() ? svg('heroicon-o-check', class: 'h-5 w-5') : '1'}}</span>
+
+                        @else
+                            <span
+                                class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">
+                            2
+                        </span>
+                        @endif
+
+                        <div>
+                            <span class="text-lg md:text-xl font-medium mr-2 text-white">
+                                Register Now
+                            </span>
+                            <p class="text-white">Last Date: {{$contest->registration_deadline->format('d M Y')}}</p>
+                        </div>
+                    </a>
+
+                    <a href="{{route('contests.registration.form',$contest)}}"
+                       class="bg-cyan-900 flex-grow rounded-md px-3 py-4 flex items-center">
                         <span
-                            class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">2</span><span
-                            class="text-lg md:text-xl font-medium mr-2 text-white">Register Now <span
-                                class="text-base font-normal ng-star-inserted">(till
-                                {{Carbon\Carbon::parse($contest->registration_deadline)->format('d M, y')}})</span>
-                            <!----></span>
+                            class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">
+                            3
+                        </span>
+                        <div>
+                            <span class="text-lg md:text-xl font-medium mr-2 text-white">
+                                Check registration status
+                            </span>
+
+                        </div>
                     </a>
-                    <a href="{{route('contests.registration.myRegistration',$contest)}}"
-                       class="md:col-start-1 md:col-span-2 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center rounded-md place-items-center"
-                       tabindex="0"><span
-                            class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">3</span><span
-                            class="text-lg md:text-xl font-medium mr-2">Check Registration Status</span>
-                    </a>
+
 
                     @php
                         $cnt =4;
                     @endphp
                     @foreach($contest->dates as $date)
-                        <div
-                            class="md:col-span-3 lg:col-span-1 h-20 w-full bg-cyan-900  text-start py-7 text-white inline-flex items-center flex-shrink-0 rounded-md place-items-center ">
-                        <span
-                            class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">{{$cnt++}}</span>
-                            <div class="flex flex-wrap items-center"><span
-                                    class="text-lg md:text-lg font-medium mr-2">{{$date['round_name']??''}}</span><span
-                                    class="text-base text-nowrap font-normal ng-star-inserted">{{Carbon\Carbon::parse($site_settings->preliminary_date)->format('d M, y')}})</span>
-
+                        <a href="{{($date['link']??false) ? $date['link'] :'#'}}"
+                           class="bg-cyan-900 flex-grow rounded-md px-3 py-4 flex items-center">
+                            <span
+                                class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">
+                               {{$cnt}}
+                            </span>
+                            <div>
+                                <span
+                                    class="text-lg md:text-xl font-medium mr-2 text-white">{{$date['round_name']??''}}</span>
+                                <p class="text-white">
+                                    Date: {{Carbon\Carbon::parse($date['round_date'])?->format('d M Y')}}</p>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
-
-
                 </div>
+
+
                 <div class="mt-3 md:mt-6 flex justify-center">
                     <div id="countDown" class="flex flex-col md:pl-10 md:-mt-6">
-                        <div class="text-start text-xl mb-2 text-skin-green text-center">
+                        <div class=" text-xl mb-2 text-skin-green text-center">
                             {{$contest->countdown_text}}
                         </div>
 
 
-                        <div class="flex flex-row flex-wrap  gap-2 "
-                             x-data="countdown('{{$contest->countdown_time->format('Y-m-d\TH:i:s.u\Z')}}')">
+                        <div class="flex flex-row flex-wrap justify-center  gap-2 "
+                             x-data="countdown('{{$contest->countdown_time}}')">
                             <div
-                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white px-2.5">
+                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white p-2.5">
                                     <span class="countdown"><span id="days"
                                                                   class="text-base md:text-3xl font-bold"><span
                                                 x-text="daysLeft"></span></span><span
                                             class="text-lg ml-2">Days</span></span>
                             </div>
                             <div
-                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white px-2.5">
+                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white p-2.5">
                                     <span class="countdown"><span id="hours"
                                                                   class="text-base md:text-3xl font-bold"><span
                                                 x-text="hoursLeft"></span></span><span
                                             class="text-lg ml-2">Hours</span></span>
                             </div>
                             <div
-                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white px-2.5">
+                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white p-2.5">
                                     <span class="countdown"><span id="minutes"
                                                                   class="text-base md:text-3xl font-bold"><span
                                                 x-text="minutesLeft"></span></span><span
                                             class="text-lg ml-2">Minutes</span></span>
+                            </div>
+
+                            <div
+                                class="flex flex-col items-center justify-center bg-yellow-500 rounded-lg text-white p-2.5">
+                                    <span class="countdown"><span id="seconds"
+                                                                  class="text-base md:text-3xl font-bold"><span
+                                                x-text="secondsLeft"></span></span><span
+                                            class="text-lg ml-2">Seconds</span></span>
                             </div>
                         </div>
                     </div>
@@ -153,10 +177,12 @@
     <script>
         function countdown(targetDate) {
             return {
-                targetDate: new Date(targetDate), // Convert the target date string to a Date object
+                // Create the target date assuming it's in BST (Asia/Dhaka)
+                targetDate: new Date(targetDate + ' +06:00'), // Append '+06:00' to ensure it's treated as BST
                 daysLeft: null,
                 hoursLeft: null,
                 minutesLeft: null,
+                secondsLeft: null,
 
                 init() {
                     this.calculateTimeLeft();
@@ -164,20 +190,23 @@
                 },
 
                 calculateTimeLeft() {
-                    const now = new Date();
+                    const now = new Date(); // Get the current local time
                     const timeDiff = this.targetDate - now; // Get the time difference in milliseconds
 
                     if (timeDiff > 0) {
                         this.daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // Days left
                         this.hoursLeft = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Hours left
                         this.minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60)); // Minutes left
+                        this.secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000); // Seconds left
                     } else {
                         this.daysLeft = 0;
                         this.hoursLeft = 0;
                         this.minutesLeft = 0;
+                        this.secondsLeft = 0;
                     }
                 }
             }
         }
+
     </script>
 </x-web-layout>

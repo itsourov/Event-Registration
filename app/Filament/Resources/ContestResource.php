@@ -52,7 +52,7 @@ class ContestResource extends Resource
 
                 SpatieMediaLibraryFileUpload::make('Banner Image')
                     ->hint("use https://imagecompressor.com/ compressor if larger file size.")
-                    ->columnSpan(2)
+
                     ->disk('contest-banner-images')
                     ->collection('contest-banner-images')
                     ->preserveFilenames()
@@ -72,6 +72,7 @@ class ContestResource extends Resource
                     ->integer(),
 
                 DateTimePicker::make('registration_deadline')
+                    ->timezone('Asia/Damascus')
                     ->required()
                 ->seconds(false),
 

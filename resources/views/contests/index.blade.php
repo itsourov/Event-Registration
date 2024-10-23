@@ -18,7 +18,7 @@
                                     <div class="my-6">
                                         <h3
                                             class="line-clamp-2 text-xl font-semibold text-gray-800 dark:text-neutral-300 dark:group-hover:text-white">
-                                            {{ $contest->name }}
+                                            {{ $contest->name }} Programming Contest, {{$contest->semester}}
                                         </h3>
                                         <p
                                             class="mt-5 text-gray-600 dark:text-neutral-400">
