@@ -24,7 +24,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use ValentinMorice\FilamentJsonColumn\FilamentJsonColumn;
+use Novadaemon\FilamentPrettyJson\PrettyJson;
 
 class RegistrationResource extends Resource
 {
@@ -76,7 +76,7 @@ class RegistrationResource extends Resource
                     ->searchable()
                     ->relationship('contest', 'name')
                     ->required(),
-                FilamentJsonColumn::make('extra')->columnSpan(2),
+                PrettyJson::make('extra')->columnSpan(2),
 
 
 

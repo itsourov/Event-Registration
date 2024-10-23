@@ -17,9 +17,9 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
+        "novadaemon/filament-pretty-json": "^2.3",
         "ralphjsmit/laravel-seo": "^1.6",
-        "stechstudio/filament-impersonate": "^3.14",
-        "valentin-morice/filament-json-column": "^1.5"
+        "stechstudio/filament-impersonate": "^3.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

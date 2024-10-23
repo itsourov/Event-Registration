@@ -72,11 +72,13 @@ class ContestResource extends Resource
                     ->integer(),
 
                 DateTimePicker::make('registration_deadline')
+                    ->required()
                 ->seconds(false),
 
                 MarkdownEditor::make('countdown_text'),
 
                 DateTimePicker::make('countdown_time')
+                    ->required()
                     ->seconds(false),
 
                 TextInput::make('registration_limit')
