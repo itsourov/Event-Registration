@@ -13,7 +13,7 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </button>
-            @if(auth()->user()->registration)
+            @if($hasRegistration)
                 <button wire:target="payNow" wire:click.prevent="payNow" wire:loading.attr="disabled"
                         class="bg-green-500 disabled:bg-gray-400 rounded-lg text-base p-2.5 text-white mt-2 flex items-center gap-1">
 

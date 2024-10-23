@@ -13,6 +13,7 @@ class Registration extends Model
 
     protected $fillable = [
         'user_id',
+        'contest_id',
         'name',
         'email',
         'student_id',
@@ -40,5 +41,12 @@ class Registration extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    /**
+     * Get the user that owns the phone.
+     */
+    public function contest(): BelongsTo
+    {
+        return $this->belongsTo(Contest::class);
     }
 }

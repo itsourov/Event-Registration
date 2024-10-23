@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Contest;
+use App\Models\Registration;
 use App\Settings\RegistrationFormSettings;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -17,14 +19,22 @@ class RegistrationForm extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public ?array $registrationFormSettings;
+    public Contest $contest;
+
     public ?array $data = [];
+    public bool $hasRegistration = false;
 
 
-    public function mount(RegistrationFormSettings $registrationFormSettings): void
+    public function mount(Contest $contest): void
     {
-        $this->registrationFormSettings = $registrationFormSettings->toArray();
-        $this->form->fill();
+
+        $this->contest = $contest;
+        $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $this->contest->id)->first();
+        if ($registration) {
+            $this->hasRegistration = true;
+        }
+        $this->form->fill($registration?->toArray());
+
     }
 
     public function form(Form $form): Form
@@ -32,7 +42,8 @@ class RegistrationForm extends Component implements HasForms
         return $form
             ->schema([
                 Section::make("Registration Form")
-                    ->extraAttributes(['style' => 'background-color:#fdfee9'])
+                    ->description("asd")
+//                    ->extraAttributes(['style' => 'background-color:#fdfee9'])
                     ->columns(['sm' => 2])
                     ->schema([
                         TextInput::make('name')
@@ -67,34 +78,40 @@ class RegistrationForm extends Component implements HasForms
                             ->options($this->getTShirtSizeOptions())
                             ->required(),
                         Select::make('lab_teacher_name')
-                            ->visible($this->registrationFormSettings['lab_teacher_names_enabled'] ?? false)
                             ->options($this->getLabTeacherOptions())
                             ->required(),
                     ]),
             ])
+            ->model(Registration::class)
             ->statePath('data');
     }
 
     public function create(): void
     {
         $user = auth()->user();
-        $user->registration
-            ? $user->registration->update($this->form->getState())
-            : $user->registration()->updateOrCreate(array_merge($this->form->getState(), ['email' => $user?->email]));
+        Registration::updateOrCreate([
+            'user_id' => $user->id,
+            'contest_id' => $this->contest->id,
+        ], array_merge($this->form->getState(), ['email' => $user?->email]));
 
+
+        $this->hasRegistration = true;
         Notification::make()
             ->title("Information Saved!")
             ->success()
             ->send();
-        if (!$user->registration)
-            redirect()->route('registration.create');
+
 
     }
 
-    public function payNow()
+    public function payNow(): void
     {
-        if (auth()->user()->registration)
-            redirect()->route('registration.payment.create', auth()->user()->registration);
+        $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $this->contest->id)->first();
+
+        if ($registration)
+            redirect()->route('registration.payment.create',$registration,[
+                'redirect_url'=>route('contests.registration.myRegistration',$this->contest),
+            ]);
         else {
             Notification::make()
                 ->title("Registration Not Found!")
@@ -115,16 +132,16 @@ class RegistrationForm extends Component implements HasForms
     private function getDepartmentOptions(): array
     {
         return array_combine(
-            array_column($this->registrationFormSettings['departments'] ?? [], 'name'),
-            array_column($this->registrationFormSettings['departments'] ?? [], 'name')
+            array_column($this->contest->departments, 'name'),
+            array_column($this->contest->departments, 'name')
         );
     }
 
     private function getSectionOptions(): array
     {
         return array_combine(
-            array_column($this->registrationFormSettings['sections'] ?? [], 'name'),
-            array_column($this->registrationFormSettings['sections'] ?? [], 'name')
+            array_column($this->contest->sections, 'name'),
+            array_column($this->contest->sections, 'name')
         );
     }
 
@@ -144,7 +161,7 @@ class RegistrationForm extends Component implements HasForms
 
     private function getLabTeacherOptions(): array
     {
-        $labTeachers = $this->registrationFormSettings['lab_teacher_names'] ?? [];
+        $labTeachers = $this->contest->lab_teacher_names;
         return array_combine(
             array_column($labTeachers, 'initial'),
             array_column($labTeachers, 'full_name')

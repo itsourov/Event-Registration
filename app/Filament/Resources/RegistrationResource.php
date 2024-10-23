@@ -69,6 +69,11 @@ class RegistrationResource extends Resource
                     ->searchable()
                     ->relationship('user', 'email')
                     ->required(),
+
+                Select::make('contest_id')
+                    ->searchable()
+                    ->relationship('contest', 'name')
+                    ->required(),
                 FilamentJsonColumn::make('extra')->columnSpan(2),
 
 

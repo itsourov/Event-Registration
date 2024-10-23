@@ -8,6 +8,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,8 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     /**
      * Get the registration associated with the user.
      */
-    public function registration(): HasOne
+    public function registrations(): HasMany
     {
-        return $this->hasOne(Registration::class);
+        return $this->hasMany(Registration::class);
     }
 }

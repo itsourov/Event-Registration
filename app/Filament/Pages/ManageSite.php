@@ -36,28 +36,28 @@ class ManageSite extends SettingsPage
                         TextInput::make('site_tagline')
                             ->required(),
                     ]),
-                Section::make('Contest info')
-                    ->columns(2)
-                    ->schema([
-
-                        TextInput::make('contest_name')
-                            ->required(),
-                        TextInput::make('semester')
-                            ->required(),
-                        TextInput::make('registration_fee')
-                            ->numeric()
-                            ->required(),
-                        DateTimePicker::make('registration_deadline')
-                            ->seconds(false)
-                            ->required(),
-
-                        DateTimePicker::make('preliminary_date')
-                            ->seconds(false)
-                            ->required(),
-                        DateTimePicker::make('final_date')
-                            ->seconds(false)
-                            ->required(),
-                    ]),
+//                Section::make('Contest info')
+//                    ->columns(2)
+//                    ->schema([
+//
+//                        TextInput::make('contest_name')
+//                            ->required(),
+//                        TextInput::make('semester')
+//                            ->required(),
+//                        TextInput::make('registration_fee')
+//                            ->numeric()
+//                            ->required(),
+//                        DateTimePicker::make('registration_deadline')
+//                            ->seconds(false)
+//                            ->required(),
+//
+//                        DateTimePicker::make('preliminary_date')
+//                            ->seconds(false)
+//                            ->required(),
+//                        DateTimePicker::make('final_date')
+//                            ->seconds(false)
+//                            ->required(),
+//                    ]),
                 Section::make('Support Information')
                     ->columns(2)
                     ->schema([
@@ -68,18 +68,18 @@ class ManageSite extends SettingsPage
                             ->required(),
 
                     ]),
-                Section::make('Countdown information')
-                    ->description("Homepage Countdown Setting")
-                    ->columns(2)
-                    ->schema([
-
-                        TextInput::make('countdown_text')
-                            ->required(),
-                        DateTimePicker::make('countdown_time')
-                            ->seconds(false)
-                            ->required(),
-
-                    ]),
+//                Section::make('Countdown information')
+//                    ->description("Homepage Countdown Setting")
+//                    ->columns(2)
+//                    ->schema([
+//
+//                        TextInput::make('countdown_text')
+//                            ->required(),
+//                        DateTimePicker::make('countdown_time')
+//                            ->seconds(false)
+//                            ->required(),
+//
+//                    ]),
                 Section::make('Extra Information')
                     ->schema([
 

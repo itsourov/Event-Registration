@@ -1,13 +1,9 @@
 <x-web-layout>
-    @include('inc.header')
-
 
     <div class="max-w-md mx-auto px-2 my-20">
-        @php
-            $registration= auth()->user()->registration
-        @endphp
 
-        <div class="bg-lime-100 rounded p-4 space-y-1 ">
+
+        <x-card class=" p-4 space-y-1 ">
             <h3 class="font-bold text-center text-lg underline">My Registration</h3>
             <p>
                 Name: <span class="font-semibold">{{$registration->name}}</span>
@@ -54,6 +50,6 @@
 
 
 
-        </div>
+        </x-card>
     </div>
 </x-web-layout>

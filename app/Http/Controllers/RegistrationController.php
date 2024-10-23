@@ -3,26 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RegistrationStatuses;
+use App\Models\Contest;
+use App\Models\Registration;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
-    public function create()
+    public function create(Contest $contest)
     {
-        if (auth()->user()->registration?->status == RegistrationStatuses::PAID || auth()->user()->registration?->status == RegistrationStatuses::PENDING) {
+        $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $contest->id)->first();
 
-            return redirect(route('registration.my-registration'));
+        if ($registration?->status == RegistrationStatuses::PAID || $registration?->status == RegistrationStatuses::PENDING) {
+
+            return redirect(route('contests.registration.myRegistration',$contest));
         }
-        return view('registration-form');
+        return view('contests.registration.create', compact('contest'));
     }
 
-    public function myRegistration()
+    public function myRegistration(Contest $contest)
     {
 
-        if (!auth()->user()->registration) {
-            return view('registration-form');
+        $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $contest->id)->first();
+
+        if(!$registration){
+            return redirect(route('contests.registration.form',$contest));
         }
-        return view('registration.my-registration');
+        return view('registration.my-registration',compact('registration'));
     }
 }
