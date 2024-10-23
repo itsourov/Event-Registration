@@ -10,7 +10,7 @@
                 @foreach ($contests as $contest)
                     <a class="" href="{{ route("contests.show", $contest->slug) }}">
                         <x-card class="group flex h-full flex-col">
-                            <div class="aspect-w-16 aspect-h-11">
+                            <div class="aspect-w-16 aspect-h-9">
                                 {{ $contest->getFirstMedia("contest-banner-images") ?->img()->attributes(["class" => "w-full object-cover rounded-xl"]) }}
                             </div>
                             <div class="my-6">
