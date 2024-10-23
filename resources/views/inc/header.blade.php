@@ -51,13 +51,13 @@
             <div class="border-t border-gray-200 dark:border-gray-700 py-6 px-4 space-y-1">
 
                 @auth
-                    @if(auth()->user()->hasRole('panel_user') || auth()->user()->hasRole('super_admin'))
-                        <x-nav-link :href="route('filament.admin.pages.dashboard', auth()->user()->username)">
-                            <x-svg.user-circle class="inline w-4 h-4" />{{ __('Admin Panel') }}
+{{--                    @if(auth()->user()->hasRole('panel_user') || auth()->user()->hasRole('super_admin'))
+{{--                        <x-nav-link :href="route('filament.admin.pages.dashboard', auth()->user()->username)">--}}
+{{--                            <x-svg.user-circle class="inline w-4 h-4" />{{ __('Admin Panel') }}--}}
 
 
-                        </x-nav-link>
-                    @endif
+{{--                        </x-nav-link>--}}
+{{--                    @endif--}}
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
