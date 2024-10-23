@@ -11,15 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/',[PageController::class, 'home'] )->name('home');
 
-Route::prefix('contests')->name('contests.')->group(callback: function () {
-    Route::get('/', [ContestController::class, 'index'])->name('index');
-    Route::get('/{contest:slug}', [ContestController::class, 'show'])->middleware([])->name('show');
-    Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth','verified'])->group(callback: function () {
-        Route::get('/form', [RegistrationController::class, 'create'])->middleware([])->name('form');
-        Route::get('/myRegistration', [RegistrationController::class, 'myRegistration'])->middleware([])->name('myRegistration');
 
-    });
-  });
 
 //Route::get('/registration/create', [RegistrationController::class,'create'])->middleware(['auth', 'verified'])->name('registration.create');
 //Route::get('/registration/my-registration', [RegistrationController::class,'myRegistration'])->middleware(['auth', 'verified'])->name('registration.my-registration');
@@ -52,4 +44,14 @@ Route::prefix('pages')->middleware([])->group(function () {
     Route::get('contact', [PageController::class, 'contact'])->name('pages.contact');
     Route::get('privacy-policy', [PageController::class, 'privacyPolicy'])->name('pages.privacy-policy');
     Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('pages.terms-and-conditions');
+});
+
+Route::name('contests.')->group(callback: function () {
+    Route::get('/all', [ContestController::class, 'index'])->name('index');
+    Route::get('/{contest:slug}', [ContestController::class, 'show'])->middleware([])->name('show');
+    Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth','verified'])->group(callback: function () {
+        Route::get('/form', [RegistrationController::class, 'create'])->middleware([])->name('form');
+        Route::get('/myRegistration', [RegistrationController::class, 'myRegistration'])->middleware([])->name('myRegistration');
+
+    });
 });
