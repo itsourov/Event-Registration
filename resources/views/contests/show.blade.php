@@ -39,7 +39,7 @@
                             class="text-lg md:text-xl font-medium mr-2 text-white">Registration: Form Fill-up
                             <x-heroicon-o-arrow-right class="w-5 h-5 inline"/> Payment <span
                                 class="text-base font-normal ng-star-inserted">(till
-                                {{Carbon\Carbon::parse($site_settings->registration_deadline)->format('d M')}})</span>
+                                {{Carbon\Carbon::parse($contest->registration_deadline)->format('d M')}})</span>
                             <!----></span>
                     </a>
                     <a href="{{route('contests.registration.myRegistration',$contest)}}"
