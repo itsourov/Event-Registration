@@ -14,7 +14,7 @@ Route::get('/',[PageController::class, 'home'] )->name('home');
 Route::prefix('contests')->name('contests.')->group(callback: function () {
     Route::get('/', [ContestController::class, 'index'])->name('index');
     Route::get('/{contest:slug}', [ContestController::class, 'show'])->middleware([])->name('show');
-    Route::prefix('{contest:slug}/registration')->name('registration.')->group(callback: function () {
+    Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth','verified'])->group(callback: function () {
         Route::get('/form', [RegistrationController::class, 'create'])->middleware([])->name('form');
         Route::get('/myRegistration', [RegistrationController::class, 'myRegistration'])->middleware([])->name('myRegistration');
 
