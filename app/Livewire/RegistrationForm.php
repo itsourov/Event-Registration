@@ -162,9 +162,15 @@ class RegistrationForm extends Component implements HasForms
     private function getLabTeacherOptions(): array
     {
         $labTeachers = $this->contest->lab_teacher_names;
-        return array_combine(
-            array_column($labTeachers, 'full_name'),
-            array_column($labTeachers, 'full_name')
-        );
+
+        // Use array_map to transform each lab teacher's data
+        $formattedTeachers = array_map(function ($teacher) {
+            $formattedName = "{$teacher['full_name']} ({$teacher['initial']})";
+            return [$formattedName => $formattedName];
+        }, $labTeachers);
+
+        // Merge all formatted entries into a single array
+        return array_merge(...$formattedTeachers);
     }
+
 }
