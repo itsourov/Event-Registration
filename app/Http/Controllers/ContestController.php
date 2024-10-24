@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contest;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ContestController extends Controller
 {
@@ -41,7 +42,11 @@ class ContestController extends Controller
     {
         $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
 
-        return view('contests.show', compact('contest', 'registered'));
+        $SEOData = new \RalphJSmit\Laravel\SEO\Support\SEOData(
+            title: $contest->name,
+            description:  Str::limit(strip_tags($contest->description)) ,
+        );
+        return view('contests.show', compact('contest', 'registered','SEOData'));
     }
 
 
