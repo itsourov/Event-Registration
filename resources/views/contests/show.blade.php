@@ -1,7 +1,10 @@
 <x-web-layout>
+
     @section("seo")
-        {!! seo($SEOData) !!}
+        {!! seo()->for($contest) !!}
     @endsection
+
+
     <div class="flex flex-col h-screen justify-between overflow-auto">
 
 

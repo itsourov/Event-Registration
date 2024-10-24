@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -13,6 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Contest extends Model implements HasMedia
 {
+    use HasSEO;
     use SoftDeletes, HasFactory;
     use InteractsWithMedia;
     protected $fillable = [
@@ -66,5 +70,16 @@ class Contest extends Model implements HasMedia
     public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class);
+    }
+    public function getDynamicSEOData(): SEOData
+    {
+
+
+        // Override only the properties you want:
+        return new SEOData(
+            title: $this->name,
+            description:  Str::limit(strip_tags($this->description)) ,
+            image: $this->getFirstMediaUrl('contest-banner-images'),
+        );
     }
 }
