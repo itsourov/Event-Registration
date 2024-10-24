@@ -16,6 +16,7 @@ Route::get('/php', function () {
     return phpinfo();
 })->name('php');
 
+require __DIR__ . '/auth.php';
 
 //Route::get('/registration/create', [RegistrationController::class,'create'])->middleware(['auth', 'verified'])->name('registration.create');
 //Route::get('/registration/my-registration', [RegistrationController::class,'myRegistration'])->middleware(['auth', 'verified'])->name('registration.my-registration');
@@ -23,19 +24,7 @@ Route::get('/php', function () {
 
 
 
-Route::middleware('guest')->group(function () {
-    Route::get('/auth/google/redirect', function () {
-        return Socialite::driver('google')->redirect();
-    })->name('login');
 
-    Route::get('/auth/google/callback', [GoogleLoginController::class, 'googleCallback']);
-
-
-});
-Route::middleware('auth')->group(function () {
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
-});
 
 Route::get('/registration/{registration}/payment', [RegistrationPaymentController::class, 'payment'])->name('registration.payment.create');
 Route::get('/registration/{registration}/success', [RegistrationPaymentController::class, 'success'])->name('registration.payment.success');
@@ -59,3 +48,5 @@ Route::name('contests.')->group(callback: function () {
 
     });
 });
+
+
