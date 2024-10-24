@@ -26,7 +26,7 @@
 
                         <div>
                             <span class="text-lg md:text-xl font-medium mr-2 text-white">Connect DIU email</span>
-                            <p class="text-white">sourov2305101004@diu.edu.bd</p>
+                            <p class="text-white">{{auth()->user()?->email}}</p>
                         </div>
                     </a>
                     <a href="{{route('contests.registration.form',$contest)}}"
