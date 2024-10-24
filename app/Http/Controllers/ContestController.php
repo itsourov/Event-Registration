@@ -45,6 +45,7 @@ class ContestController extends Controller
         $SEOData = new \RalphJSmit\Laravel\SEO\Support\SEOData(
             title: $contest->name,
             description:  Str::limit(strip_tags($contest->description)) ,
+            image: $contest->getFirstMediaUrl('contest-banner-images'),
         );
         return view('contests.show', compact('contest', 'registered','SEOData'));
     }
