@@ -139,7 +139,7 @@ class RegistrationPaymentController extends Controller
             ->info()
             ->send();
 
-        return redirect(route('registration.create'));
+        return redirect(route('home'));
     }
 
     public function webhookCallback(Registration $registration, Request $request)
