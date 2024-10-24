@@ -42,7 +42,12 @@ class ContestController extends Controller
     {
         $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
 
-        return view('contests.show', compact('contest', 'registered'));
+        $SEOData = new \RalphJSmit\Laravel\SEO\Support\SEOData(
+            title: $contest->name,
+            description:  Str::limit(strip_tags($contest->description)) ,
+            image: $contest->getFirstMediaUrl('contest-banner-images'),
+        );
+        return view('contests.show', compact('contest', 'registered','SEOData'));
     }
 
 

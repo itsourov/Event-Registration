@@ -1,7 +1,7 @@
 <x-web-layout>
 
     @section("seo")
-        {!! seo()->for($contest) !!}
+        {!! seo($SEOData) !!}
     @endsection
 
 
