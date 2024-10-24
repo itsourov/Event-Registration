@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Payment;
 use App\Enums\RegistrationStatuses;
 use App\Http\Controllers\Controller;
 use App\Models\Registration;
-use App\Settings\SiteSettings;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 
 class RegistrationPaymentController extends Controller
 {
-    public function payment(Registration $registration, SiteSettings $siteSettings)
+    public function payment(Registration $registration)
     {
         if($registration->status==RegistrationStatuses::PAID ){
             Notification::make()
