@@ -1,40 +1,44 @@
 <?php
 
-	namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
 
-    use App\Models\Contest;
+use App\Models\Contest;
 
 
-	class PageController extends Controller
-	{
-        public function home()
-        {
-            $contests = Contest::take(2)->with(['media'])->get();
-            return view('home',compact('contests'));
+class PageController extends Controller
+{
+    public function home()
+    {
+        $contests = cache()->remember('home', 7200, function () {
+            return Contest::take(2)->with(['media'])->get();
+        });
+
+            return view('home', compact('contests'));
         }
-		public function faq()
-		{
-			return view('pages.faq');
-		}
 
-		public function about()
-		{
-			return view('pages.about');
-		}
+    public function faq()
+    {
+        return view('pages.faq');
+    }
 
-		public function contact()
-		{
-			return view('pages.contact');
-		}
+    public function about()
+    {
+        return view('pages.about');
+    }
 
-		public function privacyPolicy()
-		{
-			return view('pages.privacy-policy');
-		}
+    public function contact()
+    {
+        return view('pages.contact');
+    }
 
-		public function termsAndConditions()
-		{
-			return view('pages.terms-and-conditions');
-		}
-	}
+    public function privacyPolicy()
+    {
+        return view('pages.privacy-policy');
+    }
+
+    public function termsAndConditions()
+    {
+        return view('pages.terms-and-conditions');
+    }
+}
