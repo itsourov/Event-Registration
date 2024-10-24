@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\GoogleLoginController;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/',[PageController::class, 'home'] )->name('home');
+Route::get('/temp',[PageController::class, 'temp'] )->name('temp');
 
 Route::get('/php', function () {
     return phpinfo();
