@@ -163,7 +163,7 @@ class RegistrationForm extends Component implements HasForms
     {
         $labTeachers = $this->contest->lab_teacher_names;
         return array_combine(
-            array_column($labTeachers, 'initial'),
+            array_column($labTeachers, 'full_name'),
             array_column($labTeachers, 'full_name')
         );
     }

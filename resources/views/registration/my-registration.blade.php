@@ -38,7 +38,7 @@
             </p>
 
             <p>
-                Lab Teacher Initial: <span class="font-semibold">{{$registration->lab_teacher_name}}</span>
+                Lab Teacher Name: <span class="font-semibold">{{$registration->lab_teacher_name}}</span>
             </p>
             <p>
                 Charged amount: <span class="font-semibold">{{$registration->extra['charged_amount']??''}}</span>
