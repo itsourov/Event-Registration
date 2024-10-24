@@ -9,8 +9,10 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -65,7 +67,7 @@ class ContestResource extends Resource
                 TextInput::make('semester')
                     ->required(),
 
-                TextInput::make('description'),
+                Textarea::make('description'),
 
                 TextInput::make('registration_fee')
                     ->required()
@@ -76,7 +78,7 @@ class ContestResource extends Resource
                     ->required()
                 ->seconds(false),
 
-                MarkdownEditor::make('countdown_text'),
+                RichEditor::make('countdown_text'),
 
                 DateTimePicker::make('countdown_time')
                     ->required()
