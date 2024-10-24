@@ -5,11 +5,8 @@
     @endsection
 
 
-    <div class="flex flex-col h-screen justify-between overflow-auto">
-
-
-        <div class="flex h-full px-2 py-10">
-            <div class="grow flex flex-col justify-between md:mx-0">
+        <div class="flex h-full px-2 py-10 ">
+            <div class="grow flex flex-col justify-between md:mx-0 space-y-14">
                 <div
                     class="ml-4 md:ml-[13%] md:mt-[3%] text-xl md:text-4xl font-semibold  text-slate-800 dark:text-slate-100">
                     <blockquote>
@@ -175,7 +172,7 @@
                     src="https://s3.ap-south-1.amazonaws.com/www.prepbytes.com/images/summer-program/mastheads/competitive.png"
                     alt="government" class="w-[50%] md:w-[100%]"></div>
         </div>
-    </div>
+
 
 
     <script>
