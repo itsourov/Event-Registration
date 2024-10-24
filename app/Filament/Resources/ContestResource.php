@@ -78,7 +78,7 @@ class ContestResource extends Resource
                     ->required()
                 ->seconds(false),
 
-                RichEditor::make('countdown_text'),
+                Textarea::make('countdown_text'),
 
                 DateTimePicker::make('countdown_time')
                     ->required()
