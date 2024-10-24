@@ -9,8 +9,7 @@
                     class="ml-4 md:ml-[13%] md:mt-[3%] text-xl md:text-4xl font-semibold  text-slate-800 dark:text-slate-100">
                     <blockquote>
                         <span class="leading-relaxed">Online registration for<span class="text-yellow-600">
-                                {{$contest->name}} </span></span><br class="hidden lg:block"><span>
-                            Programming Contest, {{$contest->semester}}</span>
+                                {{$contest->name}} </span></span>
                     </blockquote>
                 </div>
 
