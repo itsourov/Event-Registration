@@ -166,11 +166,14 @@ class RegistrationForm extends Component implements HasForms
 
     private function getPickupPoints(): array
     {
+        $pickupPoints = $this->contest->pickup_points ?? []; // Default to empty array if null
+
         return array_combine(
-            array_column($this->contest->pickup_points, 'name'),
-            array_column($this->contest->pickup_points, 'name')
-        );
+            array_column($pickupPoints, 'name'),
+            array_column($pickupPoints, 'name')
+        ) ?: []; // Return an empty array if array_combine fails
     }
+
 
     private function getSectionOptions(): array
     {
