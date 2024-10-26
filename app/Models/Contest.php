@@ -28,6 +28,9 @@ class Contest extends Model implements HasMedia
         'sections',
         'departments',
         'lab_teacher_names',
+        'student_id_rules',
+        'student_id_rules_guide',
+        'pickup_points',
         'dates',
         'room_data',
         'extra',
@@ -44,6 +47,7 @@ class Contest extends Model implements HasMedia
             'lab_teacher_names' => 'array',
             'dates' => 'array',
             'room_data' => 'array',
+            'pickup_points' => 'array',
             'extra' => 'array',
         ];
     }

@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use App\Models\Contest;
 use App\Models\Registration;
-use App\Settings\RegistrationFormSettings;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -55,7 +55,6 @@ class RegistrationForm extends Component implements HasForms
                             ->disabled()
                             ->required(),
                         TextInput::make('student_id')
-                            ->rules(['regex:/^[0-9-]+$/'])
                             ->placeholder('232-15-000')
                             ->required(),
                         TextInput::make('phone')
@@ -77,6 +76,17 @@ class RegistrationForm extends Component implements HasForms
                         Select::make('tshirt_size')
                             ->options($this->getTShirtSizeOptions())
                             ->required(),
+                        Select::make('transportation_service')
+                            ->options([
+                                'Yes' => 'Yes',
+                                'No' => 'No',
+                            ])
+                            ->reactive()
+                            ->required(),
+                        Select::make('pickup_point')
+                            ->options($this->getPickupPoints())
+                            ->visible(fn(callable $get) => $get('transportation_service') === 'Yes')
+                            ->required(),
                         Select::make('lab_teacher_name')
                             ->options($this->getLabTeacherOptions())
                             ->required(),
@@ -89,28 +99,45 @@ class RegistrationForm extends Component implements HasForms
     public function create(): void
     {
         $user = auth()->user();
-        Registration::updateOrCreate([
-            'user_id' => $user->id,
-            'contest_id' => $this->contest->id,
-        ], array_merge($this->form->getState(), ['email' => $user?->email]));
 
+        // Validate input
+        $data = $this->validate([
+            'data.student_id' => $this->contest->student_id_rules,
+        ], [
+            'data.student_id.regex' => $this->contest->student_id_rules_guide,
+        ]);
 
+        // Check if transportation_service is "No" and clear pickup_point if needed
+        $formData = $this->form->getState();
+        if ($formData['transportation_service'] === 'No') {
+            $formData['pickup_point'] = null; // Clear pickup_point if transportation_service is "No"
+        }
+
+        // Save to the database
+        Registration::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'contest_id' => $this->contest->id,
+            ],
+            array_merge($formData, ['email' => $user?->email])
+        );
+
+        // Update the registration status and show success notification
         $this->hasRegistration = true;
         Notification::make()
             ->title("Information Saved!")
             ->success()
             ->send();
-
-
     }
+
 
     public function payNow(): void
     {
         $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $this->contest->id)->first();
 
         if ($registration)
-            redirect()->route('registration.payment.create',$registration,[
-                'redirect_url'=>route('contests.registration.myRegistration',$this->contest),
+            redirect()->route('registration.payment.create', $registration, [
+                'redirect_url' => route('contests.registration.myRegistration', $this->contest),
             ]);
         else {
             Notification::make()
@@ -134,6 +161,14 @@ class RegistrationForm extends Component implements HasForms
         return array_combine(
             array_column($this->contest->departments, 'name'),
             array_column($this->contest->departments, 'name')
+        );
+    }
+
+    private function getPickupPoints(): array
+    {
+        return array_combine(
+            array_column($this->contest->pickup_points, 'name'),
+            array_column($this->contest->pickup_points, 'name')
         );
     }
 

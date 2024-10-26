@@ -25,6 +25,8 @@ class Registration extends Model
         'gender',
         'extra',
         'status',
+        'transportation_service',
+        'pickup_point',
     ];
 
     protected function casts(): array

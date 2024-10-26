@@ -54,7 +54,6 @@ class ContestResource extends Resource
 
                 SpatieMediaLibraryFileUpload::make('Banner Image')
                     ->hint("use https://imagecompressor.com/ compressor if larger file size.")
-
                     ->disk('contest-banner-images')
                     ->collection('contest-banner-images')
                     ->preserveFilenames()
@@ -76,7 +75,7 @@ class ContestResource extends Resource
                 DateTimePicker::make('registration_deadline')
                     ->timezone('Asia/Damascus')
                     ->required()
-                ->seconds(false),
+                    ->seconds(false),
 
                 Textarea::make('countdown_text'),
 
@@ -105,21 +104,36 @@ class ContestResource extends Resource
                     ]),
 
                 Section::make('Form Options')
+                    ->columns(2)
                     ->description("Option value for registration forms")
                     ->schema([
+                        TextInput::make('student_id_rules')
+                            ->placeholder('regex:/^[0-9-]+$/')
+                            ->startsWith('regex:'),
+                        TextInput::make('student_id_rules_guide')
+                            ->placeholder('Student Id Must...'),
 
-
+                        Repeater::make('pickup_points')
+                            ->columnSpan(2)
+                            ->grid(3)
+                            ->schema([
+                                TextInput::make('name')->required(),
+                            ]),
                         Repeater::make('departments')
+                            ->columnSpan(2)
                             ->grid(3)
                             ->schema([
                                 TextInput::make('name')->required(),
                             ]),
                         Repeater::make('sections')
+                            ->columnSpan(2)
                             ->grid(3)
                             ->schema([
                                 TextInput::make('name')->required(),
                             ]),
+
                         Repeater::make('lab_teacher_names')
+                            ->columnSpan(2)
                             ->grid(2)
                             ->columns(2)
                             ->schema([
@@ -206,6 +220,7 @@ class ContestResource extends Resource
             RegistrationsRelationManager::class,
         ];
     }
+
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'slug'];

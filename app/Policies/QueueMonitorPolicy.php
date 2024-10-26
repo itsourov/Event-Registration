@@ -27,7 +27,7 @@ class QueueMonitorPolicy
     }
 
     /**
-     * Determine whether the user can create models ok.
+     * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {

@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('department')->nullable();
             $table->string('lab_teacher_name')->nullable();
             $table->string('tshirt_size')->nullable();
+            $table->string('transportation_service')->default('No');
+            $table->string('pickup_point')->nullable();
             $table->string('gender');
             $table->enum('status', RegistrationStatuses::toArray())->default(RegistrationStatuses::UNPAID);
             $table->json('extra')->nullable();
