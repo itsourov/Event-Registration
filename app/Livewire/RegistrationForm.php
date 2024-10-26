@@ -133,6 +133,7 @@ class RegistrationForm extends Component implements HasForms
 
     public function payNow(): void
     {
+        $this->create();
         $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $this->contest->id)->first();
 
         if ($registration)
