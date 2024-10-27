@@ -60,6 +60,7 @@ class PageController extends Controller
                 'payment_transaction_id' => $transactionID,
                 'status' => RegistrationStatuses::PENDING->value,
                 'created_at' => $value['Timestamp'] ?? "10/17/3000 22:43:17",
+                'extra'=>null,
             ]);
         }
 
