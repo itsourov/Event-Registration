@@ -75,7 +75,7 @@ class PageController extends Controller
 
             $registration = Registration::updateOrCreate([
                 'user_id' => $usr->id,
-                'contest_id' => 1,
+                'contest_id' => 2,
             ], $value);
             $registration->created_at = Carbon::createFromFormat('m/d/Y H:i:s', $value['created_at'], 'Asia/Dhaka');
             $registration->save();
