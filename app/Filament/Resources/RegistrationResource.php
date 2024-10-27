@@ -38,6 +38,8 @@ class RegistrationResource extends Resource
     {
         return $form
             ->schema([
+                Placeholder::make('timestamp')
+                   ->content(fn(?Registration $record): string => $record?->created_at?->format('d/m/Y h:i:s') ?? '-'),
                 TextInput::make('name')
                     ->required(),
 
