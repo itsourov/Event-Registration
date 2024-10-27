@@ -129,7 +129,7 @@
                         <footer class="py-4">
                             <div class="inline-flex space-x-4 md:space-x-8"><a href="https://daffodilvarsity.edu.bd/"
                                                                                target="_blank"><img
-                                        src="https://icpc.daffodilvarsity.edu.bd/images/diu-logo.png"
+                                        src="{{asset('images/diu-logo.png')}}"
                                         class="md:h-12 h-10 transform transition duration-500 hover:scale-150"
                                         alt="DIU LOGO"></a>
                                 <a href="https://daffodilvarsity.edu.bd/" target="_blank"><img
@@ -138,7 +138,7 @@
                                         alt="DIU CSE Logo"></a>
 
                                 <a href="https://cpc.daffodilvarsity.edu.bd/" target="_blank"><img
-                                        src="https://cpc.daffodilvarsity.edu.bd/static/media/CPC-Logo.769e206fb7f2ed4a7f95.png"
+                                        src="{{asset('images/CPC-Logo.png')}}"
                                         class="md:h-12 h-10 p-2 transform transition duration-500 hover:scale-150"
                                         alt="DIU CPC Logo"></a>
 
@@ -169,7 +169,7 @@
             </div>
 
             <div class="md:w-[25%] items-end justify-end hidden md:flex flex-col"><img
-                    src="https://s3.ap-south-1.amazonaws.com/www.prepbytes.com/images/summer-program/mastheads/competitive.png"
+                    src="{{asset('images/competitive.png')}}"
                     alt="government" class="w-[50%] md:w-[100%]"></div>
         </div>
 
