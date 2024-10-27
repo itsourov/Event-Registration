@@ -160,7 +160,7 @@
                                         </path>
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                     </svg>
-                                    <a href="mailto:info@diuacm.com" class="ml-2 text-red-500">info@diuacm.com</a>
+                                    <a href="mailto:acm.diu@gmail.com" class="ml-2 text-red-500">acm.diu@gmail.com</a>
                                 </p>
                             </div>
                         </footer>
