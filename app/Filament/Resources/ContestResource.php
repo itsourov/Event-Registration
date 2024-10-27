@@ -126,6 +126,7 @@ class ContestResource extends Resource
                                 TextInput::make('name')->required(),
                             ]),
                         Repeater::make('manual_payment_methods')
+                            ->required()
                             ->columnSpan(2)
                             ->grid(2)
                             ->schema([
