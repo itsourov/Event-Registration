@@ -117,7 +117,11 @@
                     <div class="ml-4 flex lg:ml-0">
                         <a target="_blank" href="https://diuacm.com">
                             <span class="sr-only">DIU ACM</span>
-                            <h3 class="font-marry font-bold text-lg">{{config('app.name')}}</h3>
+                            <div class="flex items-center gap-2">
+                                <img class="size-14" src="{{asset('images/diuacm-transparent.webp')}}"/>
+                                <h3 class="font-marry font-bold text-lg">{{config('app.name')}}</h3>
+                            </div>
+
                             {{--                            <x-svg.logo class="w-auto h-9 dark:fill-white fill-black"/>--}}
                         </a>
                     </div>
