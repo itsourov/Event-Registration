@@ -18,7 +18,7 @@
                 Email: <span class="font-semibold">{{$registration->email}}</span>
             </p>
             <p>
-                Student ID: <span class="font-semibold">{{$registration->id}}</span>
+                Student ID: <span class="font-semibold">{{$registration->student_id}}</span>
             </p>
             <p>
                 Phone: <span class="font-semibold">{{$registration->phone}}</span>
@@ -40,14 +40,17 @@
             <p>
                 Lab Teacher Name: <span class="font-semibold">{{$registration->lab_teacher_name}}</span>
             </p>
+{{--            <p>--}}
+{{--                Charged amount: <span class="font-semibold">{{$registration->extra['charged_amount']??''}}</span>--}}
+{{--            </p>--}}
             <p>
-                Charged amount: <span class="font-semibold">{{$registration->extra['charged_amount']??''}}</span>
+                payment method: <span class="font-semibold">{{$registration->payment_method}}</span>
             </p>
             <p>
-                payment method: <span class="font-semibold">{{$registration->extra['payment_method']??''}}</span>
+                payment phone number: <span class="font-semibold">{{$registration->payment_phone}}</span>
             </p>
             <p>
-                Transaction id: <span class="font-semibold">{{$registration->extra['transaction_id']??''}}</span>
+                Transaction id: <span class="font-semibold">{{$registration->payment_transaction_id}}</span>
             </p>
 {{--            <div class="text-success-500 text-info-500"></div>--}}
             <p>

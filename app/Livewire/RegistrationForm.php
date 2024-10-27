@@ -2,18 +2,24 @@
 
 namespace App\Livewire;
 
+use App\Enums\RegistrationStatuses;
 use App\Models\Contest;
 use App\Models\Registration;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 use Livewire\Component;
-use Exception;
+;
+use Filament\Forms\Components\Wizard;
+
 
 class RegistrationForm extends Component implements HasForms
 {
@@ -41,56 +47,90 @@ class RegistrationForm extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make("Registration Form")
-                    ->description($this->contest->name)
-//                    ->extraAttributes(['style' => 'background-color:#fdfee9'])
-                    ->columns(['sm' => 2])
-                    ->schema([
-                        TextInput::make('name')
-                            ->default(auth()->user()?->name)
-                            ->required(),
-                        TextInput::make('email')
-                            ->default(auth()->user()?->email)
-                            ->suffixIcon('heroicon-o-at-symbol')
-                            ->disabled()
-                            ->required(),
-                        TextInput::make('student_id')
-                            ->placeholder('232-15-000')
-                            ->required(),
-                        TextInput::make('phone')
-                            ->numeric()
-                            ->length(11)
-                            ->prefix('+88')
-                            ->suffixIcon('heroicon-o-phone')
-                            ->required(),
-                        Select::make('department')
-                            ->options($this->getDepartmentOptions())
-                            ->default('CSE')
-                            ->required(),
-                        Select::make('section')
-                            ->options($this->getSectionOptions())
-                            ->required(),
-                        Select::make('gender')
-                            ->options($this->getGenderOptions())
-                            ->required(),
-                        Select::make('tshirt_size')
-                            ->options($this->getTShirtSizeOptions())
-                            ->required(),
-                        Select::make('transportation_service')
-                            ->options([
-                                'Yes' => 'Yes',
-                                'No' => 'No',
-                            ])
-                            ->reactive()
-                            ->required(),
-                        Select::make('pickup_point')
-                            ->options($this->getPickupPoints())
-                            ->visible(fn(callable $get) => $get('transportation_service') === 'Yes')
-                            ->required(),
-                        Select::make('lab_teacher_name')
-                            ->options($this->getLabTeacherOptions())
-                            ->required(),
-                    ]),
+                Wizard::make([
+                    Wizard\Step::make('Basic Information')
+
+                        ->columns(['sm' => 2])
+                        ->schema([
+                            TextInput::make('name')
+                                ->default(auth()->user()?->name)
+                                ->required(),
+                            TextInput::make('email')
+                                ->default(auth()->user()?->email)
+                                ->suffixIcon('heroicon-o-at-symbol')
+                                ->disabled()
+                                ->required(),
+                            TextInput::make('student_id')
+                                ->placeholder('232-15-000')
+                                ->required(),
+                            TextInput::make('phone')
+                                ->numeric()
+                                ->length(11)
+                                ->prefix('+88')
+                                ->suffixIcon('heroicon-o-phone')
+                                ->required(),
+                            Select::make('department')
+                                ->options($this->getDepartmentOptions())
+                                ->default('CSE')
+                                ->required(),
+                            Select::make('section')
+                                ->options($this->getSectionOptions())
+                                ->required(),
+                            Select::make('gender')
+                                ->options($this->getGenderOptions())
+                                ->required(),
+                            Select::make('tshirt_size')
+                                ->options($this->getTShirtSizeOptions())
+                                ->required(),
+
+                            Select::make('lab_teacher_name')
+                                ->options($this->getLabTeacherOptions())
+                                ->required(),
+                        ]),
+                    Wizard\Step::make('Extra')
+                        ->columns(['sm' => 2])
+                        ->schema([
+                            Select::make('transportation_service')
+                                ->options([
+                                    'Yes' => 'Yes',
+                                    'No' => 'No',
+                                ])
+                                ->reactive()
+                                ->required(),
+                            Select::make('pickup_point')
+                                ->options($this->getPickupPoints())
+                                ->visible(fn(callable $get) => $get('transportation_service') === 'Yes')
+                                ->required(),
+                        ]),
+                    Wizard\Step::make('Payment')
+                        ->columns(['sm' => 2])
+                        ->schema([
+                            ToggleButtons::make('payment_method')
+                                ->columnSpan(['sm' => 2])
+                                ->inline()
+                                ->reactive()
+                                ->required()
+                            ->options($this->getManualPaymentOptions()),
+                            Placeholder::make('instructions')
+                                ->columnSpan(['sm' => 2])
+                                ->content(fn() => new HtmlString($this->getSelectedPaymentInfo())),
+                            TextInput::make('payment_phone')
+                                ->label(($this->data['payment_method']??"") .' Mobile Number (Used for Payment)')
+                                ->numeric()
+                                ->length(11)
+                                ->prefix('+88')
+                                ->suffixIcon('heroicon-o-phone')
+                                ->required(),
+                            TextInput::make('payment_transaction_id')
+                                ->label(($this->data['payment_method']??"") .' Transaction ID')
+                                ->required(),
+
+                        ]),
+
+                ])
+
+                    ->skippable()
+                    ->submitAction(view('registration.form-submit-button'))
             ])
             ->model(Registration::class)
             ->statePath('data');
@@ -119,7 +159,7 @@ class RegistrationForm extends Component implements HasForms
                 'user_id' => $user->id,
                 'contest_id' => $this->contest->id,
             ],
-            array_merge($formData, ['email' => $user?->email])
+            array_merge($formData, ['email' => $user?->email,'status'=>RegistrationStatuses::PENDING])
         );
 
         // Update the registration status and show success notification
@@ -128,6 +168,7 @@ class RegistrationForm extends Component implements HasForms
             ->title("Information Saved!")
             ->success()
             ->send();
+        $this->redirect(route('contests.registration.myRegistration',$this->contest));
     }
 
 
@@ -210,6 +251,22 @@ class RegistrationForm extends Component implements HasForms
 
         // Merge all formatted entries into a single array
         return array_merge(...$formattedTeachers);
+    }
+
+    private function getManualPaymentOptions():array
+    {
+        return array_combine(
+            array_column($this->contest->manual_payment_methods, 'name'),
+            array_column($this->contest->manual_payment_methods, 'name')
+        );
+    }
+
+    public function getSelectedPaymentInfo()
+    {
+        $selectedMethod = $this->data['payment_method'] ?? null;
+
+        return collect($this->contest->manual_payment_methods)
+            ->firstWhere('name', $selectedMethod)['info'] ?? 'Please select a payment method to see the instructions.';
     }
 
 }

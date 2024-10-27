@@ -23,6 +23,9 @@ return new class extends Migration {
             $table->string('transportation_service')->default('No');
             $table->string('pickup_point')->nullable();
             $table->string('gender');
+            $table->string('payment_method')->nullable();
+            $table->string('payment_phone')->nullable();
+            $table->string('payment_transaction_id')->nullable();
             $table->enum('status', RegistrationStatuses::toArray())->default(RegistrationStatuses::UNPAID);
             $table->json('extra')->nullable();
             $table->timestamps();

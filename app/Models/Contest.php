@@ -34,6 +34,7 @@ class Contest extends Model implements HasMedia
         'dates',
         'room_data',
         'extra',
+        'manual_payment_methods',
         'registration_limit',
     ];
 
@@ -44,6 +45,7 @@ class Contest extends Model implements HasMedia
             'countdown_time' => 'datetime',
             'sections' => 'array',
             'departments' => 'array',
+            'manual_payment_methods' => 'array',
             'lab_teacher_names' => 'array',
             'dates' => 'array',
             'room_data' => 'array',

@@ -25,10 +25,10 @@ require __DIR__ . '/auth.php';
 
 
 
-
-Route::get('/registration/{registration}/payment', [RegistrationPaymentController::class, 'payment'])->name('registration.payment.create');
-Route::get('/registration/{registration}/success', [RegistrationPaymentController::class, 'success'])->name('registration.payment.success');
-Route::get('/registration/{registration}/cancel', [RegistrationPaymentController::class, 'cancel'])->name('registration.payment.cancel');
+//
+//Route::get('/registration/{registration}/payment', [RegistrationPaymentController::class, 'payment'])->name('registration.payment.create');
+//Route::get('/registration/{registration}/success', [RegistrationPaymentController::class, 'success'])->name('registration.payment.success');
+//Route::get('/registration/{registration}/cancel', [RegistrationPaymentController::class, 'cancel'])->name('registration.payment.cancel');
 
 
 Route::prefix('pages')->middleware([])->group(function () {

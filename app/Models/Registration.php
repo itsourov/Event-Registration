@@ -27,6 +27,9 @@ class Registration extends Model
         'status',
         'transportation_service',
         'pickup_point',
+        'payment_method',
+        'payment_phone',
+        'payment_transaction_id',
     ];
 
     protected function casts(): array

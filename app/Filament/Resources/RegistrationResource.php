@@ -37,7 +37,6 @@ class RegistrationResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-
             ->schema([
                 TextInput::make('name')
                     ->required(),
@@ -74,6 +73,13 @@ class RegistrationResource extends Resource
                     ->inline()
                     ->options(RegistrationStatuses::class)
                     ->required(),
+
+                TextInput::make('payment_method')
+                    ->required(),
+                TextInput::make('payment_phone')
+                    ->required(),
+                TextInput::make('payment_transaction_id')
+                    ->required(),
                 Select::make('user_id')
                     ->preload()
                     ->searchable()
@@ -86,9 +92,8 @@ class RegistrationResource extends Resource
                     ->relationship('contest', 'name')
                     ->required(),
                 PrettyJson::make('extra')->columnSpan([
-                    'md'=>2
+                    'md' => 2
                 ]),
-
 
 
                 Placeholder::make('created_at')
@@ -117,7 +122,6 @@ class RegistrationResource extends Resource
 
                 TextColumn::make('phone'),
                 TextColumn::make('contest.name'),
-
 
 
                 TextColumn::make('status'),

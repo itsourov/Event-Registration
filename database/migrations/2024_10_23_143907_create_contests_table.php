@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->json('departments');
             $table->json('sections');
             $table->json('lab_teacher_names');
+            $table->json('manual_payment_methods')->nullable();
             $table->string('student_id_rules')->default('regex:/^232[0-9-]*$/')->nullable();
             $table->string('student_id_rules_guide')->default('Student Id Must start with 232 and can only contain numbers and dashes')->nullable();
             $table->json('pickup_points')->nullable();

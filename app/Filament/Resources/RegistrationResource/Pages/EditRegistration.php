@@ -17,8 +17,8 @@ class EditRegistration extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('pay')
-                ->url(fn (Registration $registration): string => route('registration.payment.create', ['registration' => $registration])),
+//            Action::make('pay')
+//                ->url(fn (Registration $registration): string => route('registration.payment.create', ['registration' => $registration])),
             DeleteAction::make(),
             ForceDeleteAction::make(),
             RestoreAction::make(),
