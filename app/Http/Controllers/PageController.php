@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\RegistrationStatuses;
 use App\Models\Contest;
 use App\Models\Registration;
 use App\Models\User;
@@ -31,6 +32,18 @@ class PageController extends Controller
         $res = Http::get('https://livetvbd.me/csvjson.json')->json();
         $newArray = [];
         foreach ($res as $key => $value) {
+            $payment_phone ="";
+            $transactionID ="";
+            if($value['Choose your payment method']=='bkash'){
+                $payment_phone = $value['bKash Mobile No (Which used for payment)'];
+                $transactionID = $value['bKash Transaction Id'];
+            }else if($value['Choose your payment method']=='Nagad'){
+                $payment_phone = $value['Nagad Mobile No (Which used for payment)'];
+                $transactionID = $value['Nagad Transaction Id'];
+            }else if($value['Choose your payment method']=='Rocket'){
+                $payment_phone = $value['Rocket Mobile No (Which used for payment)'];
+                $transactionID = $value['Rocket Transaction Id'];
+            }
             array_push($newArray, [
                 'name'=>$value['Name']??"",
                 'email'=>$value['Email Address']??"",
@@ -41,8 +54,13 @@ class PageController extends Controller
                 'tshirt_size'=>$value['T-Shirt Size']??"",
                 'gender'=>"N/A",
                 'department'=>"CSE",
+                'payment_method'=>($value['Choose your payment method']=='bkash')?'Bkash':$value['Choose your payment method'],
+                'payment_phone'=> $payment_phone,
+                'payment_transaction_id'=> $transactionID,
+                'status'=> RegistrationStatuses::PENDING->value,
             ]);
         }
+
 
         foreach ($newArray as $key => $value) {
          $usr =   User::updateOrCreate([
