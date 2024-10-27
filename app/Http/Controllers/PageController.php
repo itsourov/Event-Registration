@@ -32,7 +32,10 @@ class PageController extends Controller
     {
         $res = Http::get('https://livetvbd.me/csvjson.json')->json();
         $newArray = [];
+        $i =0;
         foreach ($res as $key => $value) {
+            $i++;
+            if($i<80)continue;
             $payment_phone = "";
             $transactionID = "";
             if ($value['Choose your payment method'] == 'bkash') {
