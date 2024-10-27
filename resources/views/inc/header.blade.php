@@ -115,8 +115,8 @@
 
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="{{ route('home') }}">
-                            <span class="sr-only">Workflow</span>
+                        <a target="_blank" href="https://diuacm.com">
+                            <span class="sr-only">DIU ACM</span>
                             <h3 class="font-marry font-bold text-lg">{{config('app.name')}}</h3>
                             {{--                            <x-svg.logo class="w-auto h-9 dark:fill-white fill-black"/>--}}
                         </a>
