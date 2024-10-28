@@ -115,7 +115,7 @@
 
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a target="_blank" href="https://diuacm.com">
+                        <a target="_blank" href="{{route('home')}}">
                             <span class="sr-only">DIU ACM</span>
                             <div class="flex items-center gap-2">
                                 <img class="size-14" src="{{asset('images/diuacm-transparent.webp')}}"/>
