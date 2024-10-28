@@ -169,8 +169,8 @@
             </div>
 
             <div class="md:w-[25%] items-end justify-end hidden md:flex flex-col"><img
-                    src="{{asset('images/diuacm-transparent.webp')}}"
-                    alt="government" class="w-[50%] md:w-[100%] p-10"></div>
+                    src="{{asset('images/competitive.png')}}"
+                    alt="government" class="w-[50%] md:w-[100%]"></div>
         </div>
 
 
