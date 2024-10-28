@@ -50,11 +50,11 @@ class ContestController extends Controller
         // Check if the host matches 'cpc.daffodilvarsity.edu.bd'
         if ($host === 'cpc.daffodilvarsity.edu.bd') {
 
-            Notification::make()
-                ->title("Positive Advice")
-                ->body("What's the point of being so jealous?")
-                ->info()
-                ->send();
+//            Notification::make()
+//                ->title("Positive Advice")
+//                ->body("What's the point of being so jealous?")
+//                ->info()
+//                ->send();
             // Redirect to another route, e.g., 'home'
             return redirect()->route('home');
         }
