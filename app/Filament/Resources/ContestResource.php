@@ -16,6 +16,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Pages\Page;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -39,6 +41,7 @@ class ContestResource extends Resource
     protected static ?string $slug = 'contests';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
@@ -211,9 +214,18 @@ class ContestResource extends Resource
             'index' => Pages\ListContests::route('/'),
             'create' => Pages\CreateContest::route('/create'),
             'edit' => Pages\EditContest::route('/{record}/edit'),
+            'registrations' => Pages\ManageContestRegistrations::route('/{record}/registrations'),
+
         ];
     }
 
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\EditContest::class,
+            Pages\ManageContestRegistrations::class,
+        ]);
+    }
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -222,12 +234,12 @@ class ContestResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            RegistrationsRelationManager::class,
-        ];
-    }
+//    public static function getRelations(): array
+//    {
+//        return [
+//            RegistrationsRelationManager::class,
+//        ];
+//    }
 
     public static function getGloballySearchableAttributes(): array
     {
