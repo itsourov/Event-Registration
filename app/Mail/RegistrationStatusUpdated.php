@@ -51,6 +51,8 @@ class RegistrationStatusUpdated extends Mailable   implements ShouldQueue
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            $this->registration->contest->getFirstMediaUrl("contest-banner-images"),
+        ];
     }
 }
