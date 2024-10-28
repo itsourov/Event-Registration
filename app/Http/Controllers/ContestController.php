@@ -52,7 +52,7 @@ class ContestController extends Controller
 
             Notification::make()
                 ->title("Positive Advice")
-                ->body("Stealing Credit from other will never bring anything good.")
+                ->body("What's the point of being so jealous?")
                 ->info()
                 ->send();
             // Redirect to another route, e.g., 'home'
