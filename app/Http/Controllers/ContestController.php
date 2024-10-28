@@ -51,7 +51,7 @@ class ContestController extends Controller
 
             // Redirect to another route, e.g., 'home'
             return redirect()->route('home',[
-                'wow'=>"What's the point of being so jealous of DIU ACM?"
+                'wow'=>"What's+the+point+of+being+so+jealous+of+DIU+ACM?"
             ]);
         }
 
