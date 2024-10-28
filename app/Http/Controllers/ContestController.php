@@ -48,16 +48,16 @@ class ContestController extends Controller
         $host = parse_url($previousUrl, PHP_URL_HOST);
 
 //        // Check if the host matches 'cpc.daffodilvarsity.edu.bd'
-//        if ($host === 'cpc.daffodilvarsity.edu.bd') {
-//
-////            Notification::make()
-////                ->title("Positive Advice")
-////                ->body("What's the point of being so jealous?")
-////                ->info()
-////                ->send();
-//            // Redirect to another route, e.g., 'home'
-//            return redirect()->route('home');
-//        }
+        if ($host === 'cpc.daffodilvarsity.edu.bd') {
+
+//            Notification::make()
+//                ->title("Positive Advice")
+//                ->body("What's the point of being so jealous?")
+//                ->info()
+//                ->send();
+            // Redirect to another route, e.g., 'home'
+            return redirect()->route('home');
+        }
 
         $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
 
