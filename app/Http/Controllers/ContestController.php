@@ -50,9 +50,7 @@ class ContestController extends Controller
         if ($host === 'cpc.daffodilvarsity.edu.bd') {
 
             // Redirect to another route, e.g., 'home'
-            return redirect()->route('home',[
-                'wow'=>"What+is+the+point+of+being+so+jealous+of+DIU+ACM?"
-            ]);
+            return redirect()->route('home');
         }
 
         $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
