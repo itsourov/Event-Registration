@@ -48,8 +48,11 @@ class ContestController extends Controller
 
         // Check if the host matches 'cpc.daffodilvarsity.edu.bd'
         if ($host === 'cpc.daffodilvarsity.edu.bd') {
+
             // Redirect to another route, e.g., 'home'
-            return redirect()->route('home');
+            return redirect()->route('home',[
+                'wow'=>"What's the point of being so jealous of DIU ACM?"
+            ]);
         }
 
         $registered = Registration::where('user_id', auth()->user()?->id)->where('contest_id', $contest->id)->count();
