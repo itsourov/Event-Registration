@@ -35,7 +35,7 @@ class PageController extends Controller
         $i =0;
         foreach ($res as $key => $value) {
             $i++;
-            if($i<80)continue;
+//            if($i<80)continue;
             $payment_phone = "";
             $transactionID = "";
             if ($value['Choose your payment method'] == 'bkash') {
@@ -61,7 +61,7 @@ class PageController extends Controller
                 'payment_method' => ($value['Choose your payment method'] == 'bkash') ? 'Bkash' : $value['Choose your payment method'],
                 'payment_phone' => $payment_phone,
                 'payment_transaction_id' => $transactionID,
-                'status' => RegistrationStatuses::PENDING->value,
+                'status' =>$value['Payment']=='Done'?RegistrationStatuses::PAID->value: RegistrationStatuses::PENDING->value,
                 'created_at' => $value['Timestamp'] ?? "10/17/3000 22:43:17",
                 'extra'=>null,
             ]);

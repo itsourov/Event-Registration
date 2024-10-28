@@ -39,7 +39,7 @@ class RegistrationResource extends Resource
         return $form
             ->schema([
                 Placeholder::make('timestamp')
-                   ->content(fn(?Registration $record): string => $record?->created_at?->format('d/m/Y h:i:s') ?? '-'),
+                    ->content(fn(?Registration $record): string => $record?->created_at?->format('d/m/Y h:i:s') ?? '-'),
                 TextInput::make('name')
                     ->required(),
 
@@ -115,23 +115,39 @@ class RegistrationResource extends Resource
             ->columns([
                 TextColumn::make('created_at')
                     ->label('Time Stamp')
-                    ->searchable()
                     ->sortable(),
                 TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
+                    ->toggleable()
+                    ->searchable(),
+
+                TextColumn::make('student_id')
+                    ->toggleable()
+                    ->searchable(),
+
+                TextColumn::make('payment_method')
+                    ->label('Method')
+                    ->toggleable(),
+                TextColumn::make('payment_transaction_id')
+                    ->label('Transaction ID')
+                    ->toggleable(),
+                TextColumn::make('payment_phone')
+                    ->label('Payment Phone')
+                    ->toggleable(),
+                TextColumn::make('status')
+                    ->toggleable(),
 
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('student_id'),
 
-                TextColumn::make('phone'),
-                TextColumn::make('contest.name'),
+                TextColumn::make('phone')
+                    ->toggleable(),
 
+                TextColumn::make('contest.name')
+                    ->toggledHiddenByDefault(false)
+                    ->toggleable(),
 
-                TextColumn::make('status'),
 
             ])
             ->filters([

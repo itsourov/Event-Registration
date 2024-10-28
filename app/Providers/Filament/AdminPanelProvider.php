@@ -48,7 +48,9 @@ class AdminPanelProvider extends PanelProvider
                 FilamentEnvEditorPlugin::make()->authorize(
                     fn() => auth()->user()?->hasPermissionTo('page_ViewEnv')
                 )
-                , FilamentJobsMonitorPlugin::make()
+                , FilamentJobsMonitorPlugin::make()->enableNavigation(
+                    fn() => auth()->user()?->hasPermissionTo('view_any_queue::monitor')
+                )
             ])
             ->middleware([
                 EncryptCookies::class,
