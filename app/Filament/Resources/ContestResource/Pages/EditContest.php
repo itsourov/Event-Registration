@@ -12,8 +12,15 @@ class EditContest extends EditRecord
 {
     protected static string $resource = ContestResource::class;
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+           ContestResource\Widgets\RegistrationsOverview::class,
+        ];
+    }
     protected function getHeaderActions(): array
     {
+
         return [
             DeleteAction::make(),
             ForceDeleteAction::make(),
