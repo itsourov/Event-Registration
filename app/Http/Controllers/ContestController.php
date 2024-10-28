@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contest;
 use App\Models\Registration;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -49,6 +50,11 @@ class ContestController extends Controller
         // Check if the host matches 'cpc.daffodilvarsity.edu.bd'
         if ($host === 'cpc.daffodilvarsity.edu.bd') {
 
+            Notification::make()
+                ->title("Positive Advice")
+                ->body("Stealing Credit from other will never bring anything good.")
+                ->info()
+                ->send();
             // Redirect to another route, e.g., 'home'
             return redirect()->route('home');
         }
