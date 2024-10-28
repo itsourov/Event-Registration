@@ -53,7 +53,6 @@ class RegistrationForm extends Component implements HasForms
                         ->columns(['sm' => 2])
                         ->schema([
                             TextInput::make('name')
-                                ->default(auth()->user()?->name)
                                 ->required(),
                             TextInput::make('email')
                                 ->default(auth()->user()?->email)
