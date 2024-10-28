@@ -35,7 +35,7 @@ class PageController extends Controller
         $i =0;
         foreach ($res as $key => $value) {
             $i++;
-            if($i<80)continue;
+            if($i<150)continue;
             $payment_phone = "";
             $transactionID = "";
             if ($value['Choose your payment method'] == 'bkash') {
