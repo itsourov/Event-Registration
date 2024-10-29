@@ -10,7 +10,10 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
-use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\ForceDeleteBulkAction;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -42,26 +45,6 @@ class ManageContestRegistrations extends ManageRelatedRecords
 
     public function table(Table $table): Table
     {
-        return $table
-            ->recordTitleAttribute('name')
-            ->columns(RegistrationResource::table($table)->getColumns())
-            ->filters([
-                Tables\Filters\TrashedFilter::make()
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-                Tables\Actions\ExportAction::make()
-                    ->fileDisk('export-file')
-                    ->exporter(RegistrationExporter::class),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
-            ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]));
+       return RegistrationResource::table($table);
     }
 }
