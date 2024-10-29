@@ -60,7 +60,6 @@ class RegistrationForm extends Component implements HasForms
                                 ->disabled()
                                 ->required(),
                             TextInput::make('student_id')
-                                ->hint($this->contest->student_id_rules_guide)
                                 ->placeholder('xxx-xx-xxx')
                                 ->required(),
                             TextInput::make('phone')
@@ -142,15 +141,9 @@ class RegistrationForm extends Component implements HasForms
                                 if ($currentStepIndex == 0) {
                                     // Step 1: Basic Information
                                     $this->validate([
-//                                        'data.name' => 'required|string',
-//                                        'data.email' => 'required|email',
-                                        'data.student_id' => 'required|'. $this->contest->student_id_rules, // Adjust regex as needed
-//                                        'data.phone' => 'required|numeric|digits:11',
-//                                        'data.department' => 'required|string',
-//                                        'data.section' => 'required|string',
-//                                        'data.gender' => 'required|string',
-//                                        'data.tshirt_size' => 'required|string',
-//                                        'data.lab_teacher_name' => 'required|string',
+                                        'data.student_id' => $this->contest->student_id_rules,
+                                    ], [
+                                        'data.student_id.regex' => $this->contest->student_id_rules_guide,
                                     ]);
                                 }
 
