@@ -145,4 +145,10 @@
             </div>
         </x-auth.card>
     </div>
+    <script>
+        if (window.navigator.userAgent.includes("FBAN") || window.navigator.userAgent.includes("FBAV")) {
+            alert("Please open this link in a main browser for the best experience.");
+        }
+
+    </script>
 </x-web-layout>
