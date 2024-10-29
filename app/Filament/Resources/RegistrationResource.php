@@ -5,38 +5,31 @@ namespace App\Filament\Resources;
 use App\Enums\RegistrationStatuses;
 use App\Filament\Exports\RegistrationExporter;
 use App\Filament\Resources\RegistrationResource\Pages;
+use App\Filament\Resources\RegistrationResource\RelationManagers;
 use App\Models\Registration;
-use Filament\Actions\Exports\Enums\ExportFormat;
+use Filament\Forms;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
-use Filament\Tables\Actions\ForceDeleteAction;
-use Filament\Tables\Actions\ForceDeleteBulkAction;
-use Filament\Tables\Actions\RestoreAction;
-use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Novadaemon\FilamentPrettyJson\PrettyJson;
 
 class RegistrationResource extends Resource
 {
     protected static ?string $model = Registration::class;
 
-    protected static ?string $slug = 'registrations';
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
 
     public static function form(Form $form): Form
     {
@@ -97,7 +90,7 @@ class RegistrationResource extends Resource
                     ->searchable()
                     ->relationship('contest', 'name')
                     ->required(),
-                PrettyJson::make('extra')->columnSpan([
+                Textarea::make('extra')->columnSpan([
                     'md' => 2
                 ]),
 
@@ -163,16 +156,16 @@ class RegistrationResource extends Resource
                     ->exporter(RegistrationExporter::class),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-                RestoreAction::make(),
-                ForceDeleteAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                     ExportBulkAction::make()
                         ->label("export Data")
                         ->fileDisk('export-file')
@@ -184,9 +177,7 @@ class RegistrationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRegistrations::route('/'),
-            'create' => Pages\CreateRegistration::route('/create'),
-            'edit' => Pages\EditRegistration::route('/{record}/edit'),
+            'index' => Pages\ManageRegistrations::route('/'),
         ];
     }
 
@@ -196,10 +187,5 @@ class RegistrationResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
-    }
-
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['name', 'email'];
     }
 }
