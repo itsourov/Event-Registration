@@ -145,12 +145,18 @@
             </div>
         </x-auth.card>
     </div>
-    <script>
-        if (window.navigator.userAgent.includes("FBAN") || window.navigator.userAgent.includes("FBAV")) {
-            alert("Please open this link in a main browser for the best experience. You are using facebook embedded browser which does not allow google login");
-        }
 
+    <script>
+        if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
+            // Replace with your actual Google OAuth URL
+            const oauthUrl = "{{route('auth.google.redirect')}}";
+            const intentUrl = "intent://" + oauthUrl.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
+
+            // Redirect to the intent URL, which should open in Chrome
+            window.location.href = intentUrl;
+        }
     </script>
+
 
 
 </x-web-layout>
