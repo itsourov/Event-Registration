@@ -64,9 +64,9 @@ class ManageContestRegistrations extends ManageRelatedRecords
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make()
-                        ->fileDisk('export-file')
-                        ->exporter(RegistrationExporter::class),
+//                    Tables\Actions\ExportBulkAction::make()
+//                        ->fileDisk('export-file')
+//                        ->exporter(RegistrationExporter::class),
                 ]),
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([
