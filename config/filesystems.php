@@ -44,6 +44,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'export-file' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/export-file'),
+            'url' => env('APP_URL').'/storage/export-file',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

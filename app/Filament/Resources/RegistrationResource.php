@@ -3,8 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Enums\RegistrationStatuses;
+use App\Filament\Exports\RegistrationExporter;
 use App\Filament\Resources\RegistrationResource\Pages;
 use App\Models\Registration;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -15,6 +17,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ForceDeleteAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreAction;
@@ -153,6 +156,11 @@ class RegistrationResource extends Resource
             ->filters([
                 TrashedFilter::make(),
             ])
+            ->headerActions([
+                ExportAction::make()
+                    ->fileDisk('export-file')
+                    ->exporter(RegistrationExporter::class),
+            ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
@@ -164,6 +172,9 @@ class RegistrationResource extends Resource
                     DeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                     ForceDeleteBulkAction::make(),
+                    ExportAction::make()
+                        ->fileDisk('export-file')
+                        ->exporter(RegistrationExporter::class),
                 ]),
             ]);
     }
