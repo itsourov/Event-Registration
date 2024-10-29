@@ -135,7 +135,7 @@ class RegistrationForm extends Component implements HasForms
                                     return;
                                 }
 
-                                $livewire = $component->getLivewire();
+
 
                                 // Validation rules for each step
                                 if ($currentStepIndex == 0) {
@@ -147,8 +147,7 @@ class RegistrationForm extends Component implements HasForms
                                     ]);
                                 }
 
-                                // Scroll to top of page
-                                $livewire->js('window.scrollTo(0, 0)');
+
                             },
                         ],
                     ])
