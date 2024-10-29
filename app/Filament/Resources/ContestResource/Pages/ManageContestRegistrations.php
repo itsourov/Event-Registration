@@ -26,6 +26,7 @@ class ManageContestRegistrations extends ManageRelatedRecords
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+
     public static function getNavigationLabel(): string
     {
         return 'Registrations';
@@ -46,5 +47,13 @@ class ManageContestRegistrations extends ManageRelatedRecords
     public function table(Table $table): Table
     {
        return RegistrationResource::table($table);
+    }
+
+    public function getTitle(): string
+    {
+        // Retrieve the related Contest record and set the title based on its name
+        $contest = $this->getOwnerRecord();
+
+        return $contest ? "{$contest->name} - Registrations" : 'Registrations';
     }
 }
