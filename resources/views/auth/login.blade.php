@@ -146,11 +146,14 @@
         </x-auth.card>
     </div>
     <script>
+        // Check if user is in Facebook's in-app browser
         if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
-            // Construct the intent URL
-            const intentUrl = "intent://" + window.location.href.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
-            window.location.href = intentUrl;
+            // Try forcing the link to open in the default browser
+            setTimeout(() => {
+                window.open(window.location.href, '_blank');
+            }, 100);
         }
     </script>
+
 
 </x-web-layout>
