@@ -146,13 +146,10 @@
         </x-auth.card>
     </div>
     <script>
-        // Check if user is in Facebook's in-app browser
-        if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
-            // Try forcing the link to open in the default browser
-            setTimeout(() => {
-                window.open(window.location.href, '_blank');
-            }, 100);
+        if (window.navigator.userAgent.includes("FBAN") || window.navigator.userAgent.includes("FBAV")) {
+            alert("Please open this link in a main browser for the best experience.");
         }
+
     </script>
 
 
