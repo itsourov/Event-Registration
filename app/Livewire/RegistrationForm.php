@@ -61,7 +61,6 @@ class RegistrationForm extends Component implements HasForms
                                 ->required(),
                             TextInput::make('student_id')
                                 ->hint($this->contest->student_id_rules_guide)
-                                ->placeholder('232-15-000')
                                 ->required(),
                             TextInput::make('phone')
                                 ->numeric()
