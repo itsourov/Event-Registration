@@ -146,9 +146,11 @@
         </x-auth.card>
     </div>
     <script>
-        if (window.navigator.userAgent.includes("FBAN") || window.navigator.userAgent.includes("FBAV")) {
-            alert("Please open this link in a main browser for the best experience.");
+        if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
+            // Construct the intent URL
+            const intentUrl = "intent://" + window.location.href.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
+            window.location.href = intentUrl;
         }
-
     </script>
+
 </x-web-layout>
