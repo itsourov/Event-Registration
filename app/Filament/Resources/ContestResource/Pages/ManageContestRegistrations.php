@@ -49,9 +49,9 @@ class ManageContestRegistrations extends ManageRelatedRecords
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
-                Tables\Actions\ExportAction::make()
-                    ->fileDisk('export-file')
-                    ->exporter(RegistrationExporter::class),
+//                Tables\Actions\ExportAction::make()
+//                    ->fileDisk('export-file')
+//                    ->exporter(RegistrationExporter::class),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
