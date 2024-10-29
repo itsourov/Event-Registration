@@ -147,7 +147,7 @@
     </div>
     <script>
         if (window.navigator.userAgent.includes("FBAN") || window.navigator.userAgent.includes("FBAV")) {
-            alert("Please open this link in a main browser for the best experience.");
+            alert("Please open this link in a main browser for the best experience. You are using facebook embedded browser which does not allow google login");
         }
 
     </script>
