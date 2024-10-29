@@ -157,9 +157,9 @@ class RegistrationResource extends Resource
                 TrashedFilter::make(),
             ])
             ->headerActions([
-//                ExportAction::make()
-//                    ->fileDisk('export-file')
-//                    ->exporter(RegistrationExporter::class),
+                ExportAction::make()
+                    ->fileDisk('export-file')
+                    ->exporter(RegistrationExporter::class),
             ])
             ->actions([
                 EditAction::make(),
@@ -172,9 +172,9 @@ class RegistrationResource extends Resource
                     DeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                     ForceDeleteBulkAction::make(),
-//                    ExportAction::make()
-//                        ->fileDisk('export-file')
-//                        ->exporter(RegistrationExporter::class),
+                    ExportAction::make()
+                        ->fileDisk('export-file')
+                        ->exporter(RegistrationExporter::class),
                 ]),
             ]);
     }
