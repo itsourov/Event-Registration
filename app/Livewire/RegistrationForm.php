@@ -141,22 +141,16 @@ class RegistrationForm extends Component implements HasForms
                                 // Validation rules for each step
                                 if ($currentStepIndex == 0) {
                                     // Step 1: Basic Information
-                                    $livewire->validate([
-                                        'data.name' => 'required|string',
-                                        'data.email' => 'required|email',
+                                    $this->validate([
+//                                        'data.name' => 'required|string',
+//                                        'data.email' => 'required|email',
                                         'data.student_id' => 'required|'. $this->contest->student_id_rules, // Adjust regex as needed
-                                        'data.phone' => 'required|numeric|digits:11',
-                                        'data.department' => 'required|string',
-                                        'data.section' => 'required|string',
-                                        'data.gender' => 'required|string',
-                                        'data.tshirt_size' => 'required|string',
-                                        'data.lab_teacher_name' => 'required|string',
-                                    ]);
-                                } elseif ($currentStepIndex == 1) {
-                                    // Step 2: Extra Information
-                                    $livewire->validate([
-                                        'data.transportation_service' => 'required|string',
-                                        'data.pickup_point' => 'required_if:data.transportation_service,Yes|string',
+//                                        'data.phone' => 'required|numeric|digits:11',
+//                                        'data.department' => 'required|string',
+//                                        'data.section' => 'required|string',
+//                                        'data.gender' => 'required|string',
+//                                        'data.tshirt_size' => 'required|string',
+//                                        'data.lab_teacher_name' => 'required|string',
                                     ]);
                                 }
 
