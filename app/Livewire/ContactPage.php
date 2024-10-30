@@ -50,7 +50,7 @@ class ContactPage extends Component
         $this->validate();
         try {
             $this->rateLimit(3, 60 * 5);
-            Mail::to('sourov2305101004@diu.edu.bd')->send(
+            Mail::to('diuacm.web@gmail.com')->send(
                 new ContactFormMail(
                     name: $this->name,
                     email: $this->email,
