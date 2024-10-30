@@ -141,7 +141,7 @@ class RegistrationForm extends Component implements HasForms
                                 if ($currentStepIndex == 0) {
                                     // Step 1: Basic Information
                                     $this->validate([
-                                        'data.student_id' => $this->contest->student_id_rules,
+                                        'data.student_id' => [$this->contest->student_id_rules],
                                     ], [
                                         'data.student_id.regex' => $this->contest->student_id_rules_guide,
                                     ]);
@@ -165,7 +165,7 @@ class RegistrationForm extends Component implements HasForms
 
         // Validate input
         $data = $this->validate([
-            'data.student_id' => $this->contest->student_id_rules,
+            'data.student_id' => [$this->contest->student_id_rules],
         ], [
             'data.student_id.regex' => $this->contest->student_id_rules_guide,
         ]);
