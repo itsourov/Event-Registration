@@ -33,7 +33,7 @@ class ContactFormMail extends Mailable implements ShouldQueue
     {
         return new Envelope(
             replyTo: $this->email,
-            subject: 'Contact Form Response - '.$this->subject,
+            subject: 'Contact Form Response',
         );
     }
 
