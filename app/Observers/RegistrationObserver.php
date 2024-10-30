@@ -13,7 +13,7 @@ class RegistrationObserver
      */
     public function created(Registration $registration): void
     {
-
+        Mail::to($registration->email)->send(new RegistrationStatusUpdated($registration));
     }
 
     /**
