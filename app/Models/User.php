@@ -27,14 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
 
 
-    use LogsActivity;
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logAll()
-            ->logOnlyDirty();
-    }
-
     /**
      * The attributes that are mass assignable.
      *
