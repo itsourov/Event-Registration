@@ -116,7 +116,8 @@ class RegistrationForm extends Component implements HasForms
                             TextInput::make('payment_phone')
                                 ->label(($this->data['payment_method']??"") .' Mobile Number (Used for Payment)')
                                 ->numeric()
-                                ->length(11)
+                                ->minLength(11)
+                                ->maxLength(12)
                                 ->prefix('+88')
                                 ->suffixIcon('heroicon-o-phone')
                                 ->required(),
