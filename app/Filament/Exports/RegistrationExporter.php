@@ -32,6 +32,9 @@ class RegistrationExporter extends Exporter
             ExportColumn::make('payment_transaction_id'),
             ExportColumn::make('status')
                 ->getStateUsing(fn ($record) => $record->status->getLabel()),
+            ExportColumn::make('contest_id'),
+            ExportColumn::make('user.id')
+                ->label("User id"),
             ExportColumn::make('extra')
                 ->listAsJson(),
         ];
