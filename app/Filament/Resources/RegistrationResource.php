@@ -14,8 +14,10 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
@@ -133,6 +135,32 @@ class RegistrationResource extends Resource
                     ->label('Payment Phone')
                     ->toggleable(),
                 TextColumn::make('status')
+                    ->action(Action::make('update_status')
+                        ->form([
+                            Placeholder::make('payment_method')
+                                ->inlineLabel()
+                                ->content(fn(Registration $record) => $record->payment_method),
+                            Placeholder::make('payment_phone')
+                                ->inlineLabel()
+                                ->content(fn(Registration $record) => $record->payment_phone),
+                            Placeholder::make('payment_transaction_id')
+                                ->inlineLabel()
+                                ->content(fn(Registration $record) => $record->payment_transaction_id),
+                            ToggleButtons::make('status')
+                                ->options(RegistrationStatuses::class)
+                                ->default(fn(Registration $record) => $record->status)
+                                ->inline()
+                                ->required(),
+                        ])
+                        ->action(function (array $data, Registration $record): void {
+                            $record->status = $data['status'];
+                            $record->save();
+
+                            Notification::make()
+                                ->title('Saved successfully')
+                                ->success()
+                                ->send();
+                        }))
                     ->toggleable(),
 
                 TextColumn::make('email')
@@ -158,6 +186,7 @@ class RegistrationResource extends Resource
                     ->exporter(RegistrationExporter::class),
             ])
             ->actions([
+
                 ActivityLogTimelineTableAction::make('Activities'),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
