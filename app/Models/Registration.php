@@ -6,10 +6,20 @@ use App\Enums\RegistrationStatuses;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Registration extends Model
 {
     use SoftDeletes;
+
+    use LogsActivity;
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty();
+    }
 
     protected $fillable = [
         'user_id',
@@ -31,6 +41,7 @@ class Registration extends Model
         'payment_phone',
         'payment_transaction_id',
     ];
+
 
     protected function casts(): array
     {

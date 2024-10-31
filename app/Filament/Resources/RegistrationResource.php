@@ -23,6 +23,8 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
+use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 
 class RegistrationResource extends Resource
 {
@@ -156,10 +158,12 @@ class RegistrationResource extends Resource
                     ->exporter(RegistrationExporter::class),
             ])
             ->actions([
+                ActivityLogTimelineTableAction::make('Activities'),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -178,6 +182,13 @@ class RegistrationResource extends Resource
     {
         return [
             'index' => Pages\ManageRegistrations::route('/'),
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            ActivitylogRelationManager::class,
         ];
     }
 
