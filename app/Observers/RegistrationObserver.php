@@ -25,7 +25,7 @@ class RegistrationObserver
         // Check if the state value has changed
         if ($registration->isDirty('status')) {
             // Send the email
-            Mail::to($registration->email)->send(new RegistrationStatusUpdated($registration));
+            Mail::to($registration->email)->later(rand(10,1000),new RegistrationStatusUpdated($registration));
         }
     }
 

@@ -87,6 +87,23 @@ class PageController extends Controller
         return Registration::all();
 
     }
+    public function updatePayment ()
+    {
+        $res = Http::get('https://livetvbd.me/payment-status.json')->json('Sheet1');
+        foreach ($res as $key => $value) {
+            $reg = Registration::where('user_id',$value['User id']) ->where('contest_id',$value['Contest id'])->first();
+            if(!$reg){
+                dump($value);
+                continue;
+            }
+            if($reg->email == $value['Email']){
+                $reg->update([
+                    'status' => ($value['Status']=='Paid')?RegistrationStatuses::PAID:RegistrationStatuses::PENDING,
+                ]);
+            }
+        }
+        return $res;
+    }
 
     public function about()
     {
