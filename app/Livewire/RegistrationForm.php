@@ -17,7 +17,9 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
+
 ;
+
 use Filament\Forms\Components\Wizard;
 
 
@@ -49,7 +51,6 @@ class RegistrationForm extends Component implements HasForms
             ->schema([
                 Wizard::make([
                     Wizard\Step::make('Basic Information')
-
                         ->columns(['sm' => 2])
                         ->schema([
                             TextInput::make('name')
@@ -109,12 +110,12 @@ class RegistrationForm extends Component implements HasForms
                                 ->inline()
                                 ->reactive()
                                 ->required()
-                            ->options($this->getManualPaymentOptions()),
+                                ->options($this->getManualPaymentOptions()),
                             Placeholder::make('instructions')
                                 ->columnSpan(['sm' => 2])
                                 ->content(fn() => new HtmlString($this->getSelectedPaymentInfo())),
                             TextInput::make('payment_phone')
-                                ->label(($this->data['payment_method']??"") .' Mobile Number (Used for Payment)')
+                                ->label(($this->data['payment_method'] ?? "") . ' Mobile Number (Used for Payment)')
                                 ->numeric()
                                 ->minLength(11)
                                 ->maxLength(12)
@@ -122,7 +123,7 @@ class RegistrationForm extends Component implements HasForms
                                 ->suffixIcon('heroicon-o-phone')
                                 ->required(),
                             TextInput::make('payment_transaction_id')
-                                ->label(($this->data['payment_method']??"") .' Transaction ID')
+                                ->label(($this->data['payment_method'] ?? "") . ' Transaction ID')
                                 ->required(),
 
                         ]),
@@ -135,7 +136,6 @@ class RegistrationForm extends Component implements HasForms
                                 if ($statePath !== $component->getStatePath()) {
                                     return;
                                 }
-
 
 
                                 // Validation rules for each step
@@ -152,7 +152,6 @@ class RegistrationForm extends Component implements HasForms
                             },
                         ],
                     ])
-
                     ->skippable()
                     ->submitAction(view('registration.form-submit-button'))
             ])
@@ -163,6 +162,8 @@ class RegistrationForm extends Component implements HasForms
     public function create(): void
     {
         $user = auth()->user();
+        if (!$this->hasRegistration)
+            activity()->disableLogging();
 
         // Validate input
         $data = $this->validate([
@@ -183,7 +184,7 @@ class RegistrationForm extends Component implements HasForms
                 'user_id' => $user->id,
                 'contest_id' => $this->contest->id,
             ],
-            array_merge($formData, ['email' => $user?->email,'status'=>RegistrationStatuses::PENDING])
+            array_merge($formData, ['email' => $user?->email, 'status' => RegistrationStatuses::PENDING])
         );
 
         // Update the registration status and show success notification
@@ -192,7 +193,7 @@ class RegistrationForm extends Component implements HasForms
             ->title("Information Saved!")
             ->success()
             ->send();
-        $this->redirect(route('contests.registration.myRegistration',$this->contest));
+        $this->redirect(route('contests.registration.myRegistration', $this->contest));
     }
 
 
@@ -277,7 +278,7 @@ class RegistrationForm extends Component implements HasForms
         return array_merge(...$formattedTeachers);
     }
 
-    private function getManualPaymentOptions():array
+    private function getManualPaymentOptions(): array
     {
         return array_combine(
             array_column($this->contest->manual_payment_methods, 'name'),
