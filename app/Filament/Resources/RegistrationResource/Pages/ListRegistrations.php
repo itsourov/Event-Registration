@@ -4,9 +4,9 @@ namespace App\Filament\Resources\RegistrationResource\Pages;
 
 use App\Filament\Resources\RegistrationResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 
-class ManageRegistrations extends ManageRecords
+class ListRegistrations extends ListRecords
 {
     protected static string $resource = RegistrationResource::class;
 

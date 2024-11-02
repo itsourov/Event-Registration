@@ -34,7 +34,6 @@ class RegistrationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -108,7 +107,6 @@ class RegistrationResource extends Resource
                     ->content(fn(?Registration $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -186,13 +184,11 @@ class RegistrationResource extends Resource
                     ->exporter(RegistrationExporter::class),
             ])
             ->actions([
-
                 ActivityLogTimelineTableAction::make('Activities'),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -207,17 +203,19 @@ class RegistrationResource extends Resource
             ]);
     }
 
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ManageRegistrations::route('/'),
-        ];
-    }
-
     public static function getRelations(): array
     {
         return [
             ActivitylogRelationManager::class,
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListRegistrations::route('/'),
+            'create' => Pages\CreateRegistration::route('/create'),
+            'edit' => Pages\EditRegistration::route('/{record}/edit'),
         ];
     }
 
