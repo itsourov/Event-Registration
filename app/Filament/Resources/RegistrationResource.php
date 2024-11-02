@@ -107,6 +107,7 @@ class RegistrationResource extends Resource
                     ->content(fn(?Registration $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -183,6 +184,7 @@ class RegistrationResource extends Resource
                     ->fileDisk('export-file')
                     ->exporter(RegistrationExporter::class),
             ])
+            ->paginated([10, 25, 50])
             ->actions([
                 ActivityLogTimelineTableAction::make('Activities'),
                 Tables\Actions\EditAction::make(),
