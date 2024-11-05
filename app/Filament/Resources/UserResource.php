@@ -69,7 +69,7 @@ class UserResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Impersonate::make()->authorize(fn ($user) => $user->can('manage_role_user')),
+                Impersonate::make()->authorize(fn () => auth()->user()?->can('manage_role_user')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
