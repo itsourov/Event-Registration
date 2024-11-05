@@ -1,5 +1,8 @@
 <x-web-layout>
     <div class="container mx-auto px-2 py-7">
+        <div class="mt-2 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert" tabindex="-1" aria-labelledby="hs-soft-color-info-label">
+            Use Google Chrome browser to avoid any issues
+        </div>
         <x-auth.card>
             <div class="text-center">
                 <h1
