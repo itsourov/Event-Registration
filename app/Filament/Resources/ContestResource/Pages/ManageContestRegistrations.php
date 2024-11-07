@@ -36,6 +36,7 @@ class ManageContestRegistrations extends ManageRelatedRecords
     {
         return [
             ContestResource\Widgets\RegistrationsOverview::class,
+            ContestResource\Widgets\ContstRegistrationChart::class,
         ];
     }
 
