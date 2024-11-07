@@ -112,8 +112,10 @@ class ContestResource extends Resource
                     ->schema([
                         TextInput::make('student_id_rules')
                             ->placeholder('regex:/^[0-9-]+$/')
+                            ->columnSpan(2)
                             ->startsWith('regex:'),
                         TextInput::make('student_id_rules_guide')
+                            ->columnSpan(2)
                             ->placeholder('Student Id Must...'),
 
                         Repeater::make('pickup_points')

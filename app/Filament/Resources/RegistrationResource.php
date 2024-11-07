@@ -21,6 +21,12 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -177,8 +183,29 @@ class RegistrationResource extends Resource
 
             ])
             ->filters([
-                TrashedFilter::make(),
-            ])
+
+                QueryBuilder::make()
+                    ->constraints([
+                        TextConstraint::make('name'),
+                        TextConstraint::make('email'),
+                        TextConstraint::make('student_id'),
+                        TextConstraint::make('phone'),
+                        TextConstraint::make('section'),
+                        TextConstraint::make('department'),
+                        TextConstraint::make('lab_teacher_name'),
+                        TextConstraint::make('tshirt_size'),
+                        TextConstraint::make('gender'),
+                        TextConstraint::make('transportation_service'),
+                        TextConstraint::make('pickup_point'),
+                        TextConstraint::make('payment_method'),
+                        TextConstraint::make('payment_phone'),
+                        TextConstraint::make('payment_transaction_id'),
+                        SelectConstraint::make('status')
+                            ->options(RegistrationStatuses::class)
+                            ->multiple(),
+
+                    ])
+            ],layout: FiltersLayout::AboveContent)
             ->headerActions([
                 ExportAction::make()
                     ->fileDisk('export-file')
