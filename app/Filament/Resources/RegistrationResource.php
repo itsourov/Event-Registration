@@ -205,7 +205,7 @@ class RegistrationResource extends Resource
                             ->multiple(),
 
                     ]),
-                TrashedFilter::make(),
+                TrashedFilter::make() ,
             ],layout: FiltersLayout::AboveContent)
             ->headerActions([
                 ExportAction::make()
