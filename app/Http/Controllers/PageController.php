@@ -32,10 +32,10 @@ class PageController extends Controller
     {
         $res = Http::get('https://livetvbd.me/csvjson.json')->json();
         $newArray = [];
-        $i =0;
+        $i = 0;
         foreach ($res as $key => $value) {
             $i++;
-            if($i<150)continue;
+            if ($i < 150) continue;
             $payment_phone = "";
             $transactionID = "";
             if ($value['Choose your payment method'] == 'bkash') {
@@ -61,9 +61,9 @@ class PageController extends Controller
                 'payment_method' => ($value['Choose your payment method'] == 'bkash') ? 'Bkash' : $value['Choose your payment method'],
                 'payment_phone' => $payment_phone,
                 'payment_transaction_id' => $transactionID,
-                'status' =>$value['Payment']=='Done'?RegistrationStatuses::PAID->value: RegistrationStatuses::PENDING->value,
+                'status' => $value['Payment'] == 'Done' ? RegistrationStatuses::PAID->value : RegistrationStatuses::PENDING->value,
                 'created_at' => $value['Timestamp'] ?? "10/17/3000 22:43:17",
-                'extra'=>null,
+                'extra' => null,
             ]);
         }
 
@@ -87,18 +87,19 @@ class PageController extends Controller
         return Registration::all();
 
     }
-    public function updatePayment ()
+
+    public function updatePayment()
     {
         $res = Http::get('https://livetvbd.me/payment-status.json')->json('Sheet1');
         foreach ($res as $key => $value) {
-            $reg = Registration::where('user_id',$value['User id']) ->where('contest_id',$value['Contest id'])->first();
-            if(!$reg){
+            $reg = Registration::where('user_id', $value['User id'])->where('contest_id', $value['Contest id'])->first();
+            if (!$reg) {
                 dump($value);
                 continue;
             }
-            if($reg->email == $value['Email']){
+            if ($reg->email == $value['Email']) {
                 $reg->update([
-                    'status' => ($value['Status']=='Paid')?RegistrationStatuses::PAID:RegistrationStatuses::PENDING,
+                    'status' => (($value['Status'] ?? "") == 'Paid') ? RegistrationStatuses::PAID : RegistrationStatuses::PENDING,
                 ]);
             }
         }
