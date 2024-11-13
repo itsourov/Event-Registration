@@ -11,7 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/',[PageController::class, 'home'] )->name('home');
 //Route::get('/temp',[PageController::class, 'temp'] )->name('temp');
-Route::get('/update-payment',[PageController::class, 'updatePayment'] )->middleware(['auth','verified'])->name('update-payment');
+//Route::get('/update-payment',[PageController::class, 'updatePayment'] )->middleware(['auth','verified'])->name('update-payment');
 
 Route::get('/php', function () {
     return phpinfo();
