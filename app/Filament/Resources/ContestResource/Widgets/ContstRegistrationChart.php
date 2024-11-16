@@ -16,7 +16,10 @@ class ContstRegistrationChart extends ChartWidget
         // Get the count of each section in the Registration model
         $sectionCounts = Registration::where('contest_id', $this->record->id)
             ->get()
-            ->groupBy('section')
+            ->groupBy(function ( $registration) {
+                // Group sections by their main category (e.g., A, B, etc.)
+                return preg_replace('/\d+$/', '', $registration->section);
+            })
             ->map(fn($group) => $group->count())
             ->sortKeys() // Sorts by section name (key)
             ->toArray();
@@ -29,7 +32,7 @@ class ContstRegistrationChart extends ChartWidget
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'section',
+                    'label' => 'Sections',
                     'data' => $data,
                     'backgroundColor' => '#4ade80', // Customize bar color
                 ],
