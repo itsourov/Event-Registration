@@ -90,7 +90,7 @@ class PageController extends Controller
 
     public function updatePayment()
     {
-        $res = Http::get('https://livetvbd.me/payment-status.json')->json('Sheet1');
+        $res = Http::get('https://livetvbd.me/payment-status.json?asd')->json('Sheet1');
         foreach ($res as $key => $value) {
             $reg = Registration::where('user_id', $value['User id'])->where('contest_id', $value['Contest id'])->first();
             if (!$reg) {
