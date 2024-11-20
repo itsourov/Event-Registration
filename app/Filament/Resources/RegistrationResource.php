@@ -137,9 +137,11 @@ class RegistrationResource extends Resource
                     ->label('Method')
                     ->toggleable(),
                 TextColumn::make('payment_transaction_id')
+                    ->searchable()
                     ->label('Transaction ID')
                     ->toggleable(),
                 TextColumn::make('payment_phone')
+                    ->searchable()
                     ->label('Payment Phone')
                     ->toggleable(),
                 TextColumn::make('status')
