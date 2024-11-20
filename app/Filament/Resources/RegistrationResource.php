@@ -114,6 +114,9 @@ class RegistrationResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -183,30 +186,31 @@ class RegistrationResource extends Resource
 
             ])
             ->filters([
-
-                QueryBuilder::make()
-                    ->constraints([
-                        TextConstraint::make('name'),
-                        TextConstraint::make('email'),
-                        TextConstraint::make('student_id'),
-                        TextConstraint::make('phone'),
-                        TextConstraint::make('section'),
-                        TextConstraint::make('department'),
-                        TextConstraint::make('lab_teacher_name'),
-                        TextConstraint::make('tshirt_size'),
-                        TextConstraint::make('gender'),
-                        TextConstraint::make('transportation_service'),
-                        TextConstraint::make('pickup_point'),
-                        TextConstraint::make('payment_method'),
-                        TextConstraint::make('payment_phone'),
-                        TextConstraint::make('payment_transaction_id'),
-                        SelectConstraint::make('status')
-                            ->options(RegistrationStatuses::class)
-                            ->multiple(),
-
-                    ]),
-                TrashedFilter::make() ,
-            ],layout: FiltersLayout::AboveContent)
+                SelectFilter::make('status')
+                    ->options(RegistrationStatuses::class),
+//                QueryBuilder::make()
+//                    ->constraints([
+//                        TextConstraint::make('name'),
+//                        TextConstraint::make('email'),
+//                        TextConstraint::make('student_id'),
+//                        TextConstraint::make('phone'),
+//                        TextConstraint::make('section'),
+//                        TextConstraint::make('department'),
+//                        TextConstraint::make('lab_teacher_name'),
+//                        TextConstraint::make('tshirt_size'),
+//                        TextConstraint::make('gender'),
+//                        TextConstraint::make('transportation_service'),
+//                        TextConstraint::make('pickup_point'),
+//                        TextConstraint::make('payment_method'),
+//                        TextConstraint::make('payment_phone'),
+//                        TextConstraint::make('payment_transaction_id'),
+//                        SelectConstraint::make('status')
+//                            ->options(RegistrationStatuses::class)
+//                            ->multiple(),
+//
+//                    ]),
+//                TrashedFilter::make(),
+            ], layout: FiltersLayout::AboveContent)
             ->headerActions([
                 ExportAction::make()
                     ->fileDisk('export-file')
