@@ -91,6 +91,14 @@ class RegistrationResource extends Resource
                 Select::make('user_id')
                     ->preload()
                     ->searchable()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->unique()
+                            ->email()
+                            ->required(),
+                    ])
                     ->relationship('user', 'email')
                     ->required(),
 

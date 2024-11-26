@@ -28,6 +28,7 @@ class UserResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('name')
                     ->required(),
                 Forms\Components\TextInput::make('email')
+                    ->unique(ignoreRecord: true)
                     ->email()
                     ->required(),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
