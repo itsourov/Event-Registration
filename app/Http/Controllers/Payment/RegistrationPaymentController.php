@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Payment;
 use App\Enums\RegistrationStatuses;
 use App\Http\Controllers\Controller;
 use App\Models\Registration;
-use App\Settings\SiteSettings;
 use Filament\Notifications\Notification;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 
 class RegistrationPaymentController extends Controller
 {
-    public function payment(Registration $registration, SiteSettings $siteSettings)
+    public function payment(Registration $registration)
     {
         if($registration->status==RegistrationStatuses::PAID ){
             Notification::make()
@@ -38,7 +37,7 @@ class RegistrationPaymentController extends Controller
             ])->post(config('services.udpay.url') . '/api/checkout-v2', [
                 'full_name' => $registration->name,
                 'email' => $registration->email,
-                'amount' => $siteSettings->registration_fee,
+                'amount' => $registration->contest->registration_fee,
                 'redirect_url' => route('registration.payment.success', $registration),
                 'cancel_url' => route('registration.payment.cancel', $registration),
                 'webhook_url' => route('registration.payment.webhook', $registration),
@@ -123,7 +122,7 @@ class RegistrationPaymentController extends Controller
                     ->send();
             }
 
-            return redirect(route('registration.my-registration'));
+            return redirect(route('contests.registration.myRegistration',$registration->contest));
 
         } catch (ConnectionException $e) {
             return response()->json([
@@ -140,7 +139,7 @@ class RegistrationPaymentController extends Controller
             ->info()
             ->send();
 
-        return redirect(route('registration.create'));
+        return redirect(route('home'));
     }
 
     public function webhookCallback(Registration $registration, Request $request)

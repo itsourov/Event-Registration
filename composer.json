@@ -8,14 +8,20 @@
         "php": "^8.2",
         "bezhansalleh/filament-shield": "^3.2",
         "blade-ui-kit/blade-heroicons": "^2.4",
+        "croustibat/filament-jobs-monitor": "^2.5",
         "filament/filament": "^3.2",
-        "filament/spatie-laravel-settings-plugin": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
+        "geo-sot/filament-env-editor": "^0.0.5",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
-        "stechstudio/filament-impersonate": "^3.14",
-        "valentin-morice/filament-json-column": "^1.5"
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "novadaemon/filament-pretty-json": "^2.3",
+        "owenvoke/blade-fontawesome": "^2.6",
+        "ralphjsmit/laravel-seo": "^1.6",
+        "rmsramos/activitylog": "^1.0",
+        "stechstudio/filament-impersonate": "^3.14"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

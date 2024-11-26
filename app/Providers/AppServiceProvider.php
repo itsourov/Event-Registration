@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\Settings\SiteSettings;
+
+use App\Models\Registration;
+use App\Observers\RegistrationObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -21,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('site_settings', app(SiteSettings::class));
+        Registration::observe(RegistrationObserver::class);
 
     }
 }

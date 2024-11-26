@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\NewUserRegistered;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -38,7 +39,7 @@ class GoogleLoginController extends Controller
                 if ($googleUser['verified_email']) {
                     $new_user->markEmailAsVerified();
                 }
-//                event(new NewUserRegistered($new_user,$password));
+                event(new NewUserRegistered($new_user));
 
                 return redirect()->route('home');
             } else {
