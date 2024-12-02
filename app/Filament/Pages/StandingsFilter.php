@@ -9,6 +9,7 @@ use App\Models\Registration;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -69,13 +70,40 @@ class StandingsFilter extends Page implements HasForms, HasTable
                             ->placeholder('Standings URL')
                             ->required(),
                         Select::make('contest_id')
-                            ->default(Contest::first()->id)
                             ->label('Contest')
                             ->options(Contest::pluck('name', 'id'))
-                            ->required(),
-                        TextInput::make('rank_from')->numeric(),
-                        TextInput::make('rank_to')->numeric(),
-                        Toggle::make('female_only')->label('Female Only'),
+                            ->required()
+                            ->reactive(), // Make it reactive to trigger visibility changes
+                        TextInput::make('rank_from')
+                            ->numeric(),
+                        TextInput::make('rank_to')
+                            ->numeric(),
+                        Select::make('genders')
+                            ->label('Genders')
+                            ->options(function (callable $get) {
+                                $contestId = $get('contest_id');
+                                if ($contestId) {
+
+                                    return cache()->remember(
+                                        'genders_of_contest_' . $contestId,
+                                        7200,
+                                        fn() => Registration::where('contest_id', $contestId)
+                                            ->pluck('gender')
+                                            ->unique()
+                                            ->filter()
+                                            ->values()
+                                            ->mapWithKeys(fn($gender) => [$gender => ucfirst($gender)])
+                                            ->toArray()
+                                    );
+                                    // Fetch unique genders from the Registration model for the selected contest
+
+                                }
+                                return [];
+                            })
+                            ->multiple()
+                            ->hidden(fn(callable $get) => !$get('contest_id')), // Only show when a contest is selected
+
+//                        Toggle::make('female_only')->label('Female Only'),
                     ]),
             ])
             ->statePath('data');
@@ -97,6 +125,8 @@ class StandingsFilter extends Page implements HasForms, HasTable
                     }),
                 TextColumn::make('name')->toggleable()->searchable(),
                 TextColumn::make('student_id')->label('Student ID')->toggleable()->searchable(),
+                TextColumn::make('section')->toggleable(),
+                TextColumn::make('department')->toggleable(),
             ])
             ->headerActions([
                 ExportAction::make()
@@ -143,7 +173,7 @@ class StandingsFilter extends Page implements HasForms, HasTable
 
                 $registration = $registrations->where('student_id', $rank['id'])->first();
 
-                if ($this->data['female_only'] && ($registration->gender ?? '') !== 'Female') {
+                if ($this->data['genders'] && !in_array(($registration->gender ?? "N/A"), $this->data['genders'])) {
                     continue;
                 }
 
