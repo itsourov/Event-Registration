@@ -115,7 +115,7 @@ class StandingsFilter extends Page implements HasForms, HasTable
     {
         return $table
             ->query($this->getFilteredRegistrations())
-            ->paginated([10, 25, 50])
+//            ->paginated([10, 25, 50])
             ->recordUrl(
                 fn(Model $record): string => route('filament.admin.resources.registrations.edit', $record),
             )
