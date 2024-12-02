@@ -37,6 +37,12 @@ class StandingsFilter extends Page implements HasForms, HasTable
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static string $view = 'filament.pages.standings-filter';
 
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasPermissionTo('page_StandingsFilter');
+    }
+
     public function mount(): void
     {
         $this->form->fill();

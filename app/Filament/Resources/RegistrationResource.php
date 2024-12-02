@@ -58,9 +58,10 @@ class RegistrationResource extends Resource
                 TextInput::make('phone')
                     ->required(),
 
-                TextInput::make('section'),
+                TextInput::make('section')
+                ->required(),
 
-                TextInput::make('department'),
+                TextInput::make('department')->required(),
 
                 TextInput::make('lab_teacher_name'),
 
