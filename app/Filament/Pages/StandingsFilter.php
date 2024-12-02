@@ -25,6 +25,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Model;
 use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -115,6 +116,9 @@ class StandingsFilter extends Page implements HasForms, HasTable
         return $table
             ->query($this->getFilteredRegistrations())
             ->paginated([10, 25, 50])
+            ->recordUrl(
+                fn(Model $record): string => route('filament.admin.resources.registrations.edit', $record),
+            )
             ->columns([
                 TextColumn::make('rank')
                     ->label('Rank')
