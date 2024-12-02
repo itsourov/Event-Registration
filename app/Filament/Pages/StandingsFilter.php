@@ -155,9 +155,15 @@ class StandingsFilter extends Page implements HasForms, HasTable
     {
         return Registration::query()
             ->where('contest_id', $this->data['contest_id'] ?? 0)
-            ->when(!empty($this->filteredIDs), fn($query) => $query->whereIn('student_id', $this->filteredIDs))
+            ->when(!empty($this->filteredIDs), function ($query) {
+                // Ensure the IDs are properly formatted as strings
+                return $query
+                    ->whereIn('student_id', $this->filteredIDs)
+                    ->orderByRaw('FIELD(student_id, ' . implode(',', array_map(fn($id) => "'$id'", $this->filteredIDs)) . ')');
+            })
             ->when(empty($this->filteredIDs), fn($query) => $query->whereIn('student_id', []));
     }
+
 
     public function process(): void
     {
@@ -182,13 +188,19 @@ class StandingsFilter extends Page implements HasForms, HasTable
                     continue;
                 }
 
+                if (!$registration) continue;
                 $this->standingsData[] = [
                     'rank' => $rank['rank'],
                     'name' => $rank['name'],
-                    'student_id' => $registration->student_id ?? 'Not Found',
-                    'gender' => $registration->gender ?? 'Not Found',
+                    'student_id' => $registration->student_id,
+                    'gender' => $registration->gender,
                 ];
             }
+            // **Sort standingsData by rank**
+            usort($this->standingsData, function ($a, $b) {
+                return $a['rank'] <=> $b['rank'];
+            });
+
 
             $this->filteredIDs = array_column($this->standingsData, 'student_id');
             $this->resetTable();
@@ -197,6 +209,7 @@ class StandingsFilter extends Page implements HasForms, HasTable
                 ->body("Found " . count($this->filteredIDs) . " IDs.")
                 ->success()
                 ->send();
+
         } catch (\Exception $exception) {
             // Handle exceptions gracefully
         }
