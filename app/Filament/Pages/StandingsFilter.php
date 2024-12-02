@@ -15,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\ExportAction;
@@ -187,6 +188,11 @@ class StandingsFilter extends Page implements HasForms, HasTable
 
             $this->filteredIDs = array_column($this->standingsData, 'student_id');
             $this->resetTable();
+            Notification::make()
+                ->title("Processing Success")
+                ->body("Found " . count($this->filteredIDs) . " IDs.")
+                ->success()
+                ->send();
         } catch (\Exception $exception) {
             // Handle exceptions gracefully
         }
