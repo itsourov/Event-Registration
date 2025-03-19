@@ -43,7 +43,7 @@ class StandingsFilter extends Page implements HasForms, HasTable
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasPermissionTo('page_StandingsFilter');
+        return auth()->user()?->hasPermissionTo('page_StandingsFilter') ?? false;
     }
 
     public function mount(): void
