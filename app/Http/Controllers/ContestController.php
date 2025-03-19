@@ -15,7 +15,7 @@ class ContestController extends Controller
      */
     public function index()
     {
-        $contests = Contest::where('public', true)->query()->with(['media'])
+        $contests = Contest::where('public', true)->with(['media'])
             ->paginate(9);
         return view('contests.index', compact('contests'));
     }
@@ -39,7 +39,7 @@ class ContestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Contest $contest,Request $request)
+    public function show(Contest $contest, Request $request)
     {
         // Get the previous URL
         $previousUrl = url()->previous();
@@ -63,10 +63,10 @@ class ContestController extends Controller
 
         $SEOData = new \RalphJSmit\Laravel\SEO\Support\SEOData(
             title: $contest->name,
-            description:  Str::limit(strip_tags($contest->description)) ,
+            description: Str::limit(strip_tags($contest->description)),
             image: $contest->getFirstMediaUrl('contest-banner-images'),
         );
-        return view('contests.show', compact('contest', 'registered','SEOData'));
+        return view('contests.show', compact('contest', 'registered', 'SEOData'));
     }
 
 

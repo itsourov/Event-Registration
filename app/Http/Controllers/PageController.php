@@ -16,7 +16,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $contests = cache()->remember('home', 7200, function () {
+        $contests = cache()->remember('home-page', 7200, function () {
             return Contest::where('public', true)->take(2)->with(['media'])->get();
         });
 
