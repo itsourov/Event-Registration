@@ -86,7 +86,7 @@ class RegistrationForm extends Component implements HasForms
                                 ->required(),
                             Placeholder::make('T-shirt Sizes')
                                 ->content(
-                                    fn() => new HtmlString($this->contest->getFirstMedia('tshirt-sizes')?->img()->attributes(["class" => "w-full object-cover rounded-xl"]))
+                                    fn() => new HtmlString('<img src="' . $this->contest->getFirstMedia('tshirt-sizes') . '" alt="" />')
                                 ),
                             Select::make('tshirt_size')
                                 ->options($this->getTShirtSizeOptions())
