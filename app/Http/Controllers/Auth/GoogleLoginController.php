@@ -19,7 +19,9 @@ class GoogleLoginController extends Controller
 
         try {
             $googleUser = Socialite::driver('google')->user();
-            if (!($googleUser->getEmail() . endsWith('@diu.edu.bd')) && !($googleUser->getEmail() . endsWith('@s.diu.edu.bd'))) {
+
+
+            if (!(str_ends_with($googleUser->getEmail(), '@diu.edu.bd')) && !(str_ends_with($googleUser->getEmail(), '@s.diu.edu.bd'))) {
                 Notification::make()
                     ->title("You are not allowed to login.")
                     ->body("Only DIU students are allowed to login.")
@@ -27,6 +29,8 @@ class GoogleLoginController extends Controller
                     ->send();
                 return redirect()->intended(route('home'));
             }
+
+
             $user = User::where('email', $googleUser->getEmail())->withTrashed()->first();
             if (!$user) {
 
