@@ -28,6 +28,7 @@ return new class extends Migration {
             $table->json('room_data')->nullable();
             $table->json('extra')->nullable();
             $table->integer('registration_limit')->nullable();
+            $table->boolean('public')->default('false');
             $table->timestamps();
             $table->softDeletes();
         });

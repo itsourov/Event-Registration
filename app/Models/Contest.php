@@ -47,6 +47,7 @@ class Contest extends Model implements HasMedia
         'extra',
         'manual_payment_methods',
         'registration_limit',
+        'public'
     ];
 
     protected function casts(): array
@@ -62,7 +63,9 @@ class Contest extends Model implements HasMedia
             'room_data' => 'array',
             'pickup_points' => 'array',
             'extra' => 'array',
+            'public' => 'boolean'
         ];
+
     }
     public function registerMediaCollections(): void
     {

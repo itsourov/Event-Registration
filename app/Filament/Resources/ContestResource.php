@@ -54,6 +54,7 @@ class ContestResource extends Resource
                 TextInput::make('slug')
                     ->required()
                     ->unique(Contest::class, 'slug', fn($record) => $record),
+                Toggle::make('public'),
 
                 SpatieMediaLibraryFileUpload::make('Banner Image')
                     ->hint("use https://imagecompressor.com/ compressor if larger file size.")
@@ -228,6 +229,7 @@ class ContestResource extends Resource
             Pages\ManageContestRegistrations::class,
         ]);
     }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
