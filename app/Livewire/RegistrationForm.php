@@ -268,7 +268,7 @@ class RegistrationForm extends Component implements HasForms
 
     private function getTShirtSizeOptions(): array
     {
-        return ['M' => 'M', 'L' => 'L', 'XL' => 'XL', 'XXL' => 'XXL', 'XXXL' => 'XXXL'];
+        return ['S' => 'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL', 'XXL' => 'XXL', 'XXXL' => 'XXXL'];
     }
 
     private function getLabTeacherOptions(): array
