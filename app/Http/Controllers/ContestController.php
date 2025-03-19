@@ -15,7 +15,7 @@ class ContestController extends Controller
      */
     public function index()
     {
-        $contests = Contest::query()->with(['media'])
+        $contests = Contest::where('public', true)->query()->with(['media'])
             ->paginate(9);
         return view('contests.index', compact('contests'));
     }
