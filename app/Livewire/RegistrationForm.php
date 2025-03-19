@@ -14,7 +14,9 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
@@ -79,13 +81,18 @@ class RegistrationForm extends Component implements HasForms
                             Select::make('gender')
                                 ->options($this->getGenderOptions())
                                 ->required(),
+                            Select::make('lab_teacher_name')
+                                ->options($this->getLabTeacherOptions())
+                                ->required(),
+                            Placeholder::make('T-shirt Sizes')
+                                ->content(
+                                    fn() => new HtmlString('<img src="' . $this->contest->getFirstMediaUrl('tshirt-sizes') . '" alt="" />')
+                                ),
                             Select::make('tshirt_size')
                                 ->options($this->getTShirtSizeOptions())
                                 ->required(),
 
-                            Select::make('lab_teacher_name')
-                                ->options($this->getLabTeacherOptions())
-                                ->required(),
+
                         ]),
                     Wizard\Step::make('Extra')
                         ->columns(['sm' => 2])

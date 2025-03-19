@@ -67,6 +67,16 @@ class ContestResource extends Resource
                     ->imageEditor()
                     ->visibility('public')
                     ->required(),
+                SpatieMediaLibraryFileUpload::make('Tshirt Sized')
+                    ->disk('tshirt-sizes')
+                    ->collection('tshirt-sizes')
+                    ->preserveFilenames()
+                    ->responsiveImages()
+                    ->maxSize(1024 * 3)
+                    ->image()
+                    ->imageEditor()
+                    ->visibility('public')
+                    ->required(),
                 TextInput::make('semester')
                     ->required(),
 
