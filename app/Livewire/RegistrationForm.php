@@ -19,11 +19,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
-
-;
-
 use Filament\Forms\Components\Wizard;
-
 
 class RegistrationForm extends Component implements HasForms
 {
@@ -34,17 +30,14 @@ class RegistrationForm extends Component implements HasForms
     public ?array $data = [];
     public bool $hasRegistration = false;
 
-
     public function mount(Contest $contest): void
     {
-
         $this->contest = $contest;
         $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $this->contest->id)->first();
         if ($registration) {
             $this->hasRegistration = true;
         }
         $this->form->fill($registration?->toArray());
-
     }
 
     public function form(Form $form): Form
@@ -76,14 +69,26 @@ class RegistrationForm extends Component implements HasForms
                                 ->default('CSE')
                                 ->required(),
                             Select::make('section')
-                                ->options($this->getSectionOptions())
+                                ->options($this->getSectionOptionsWithOther())
+                                ->reactive()
                                 ->required(),
+                            TextInput::make('custom_section')
+                                ->label('Enter your section')
+                                ->placeholder('Enter your section name')
+                                ->required()
+                                ->visible(fn(callable $get) => $get('section') === 'Other'),
                             Select::make('gender')
                                 ->options($this->getGenderOptions())
                                 ->required(),
                             Select::make('lab_teacher_name')
-                                ->options($this->getLabTeacherOptions())
+                                ->options($this->getLabTeacherOptionsWithOther())
+                                ->reactive()
                                 ->required(),
+                            TextInput::make('custom_lab_teacher_name')
+                                ->label('Enter lab teacher name')
+                                ->placeholder('Enter your lab teacher\'s name')
+                                ->required()
+                                ->visible(fn(callable $get) => $get('lab_teacher_name') === 'Other'),
                             Placeholder::make('T-shirt Sizes')
                                 ->content(
                                     fn() => new HtmlString('<img src="' . $this->contest->getFirstMediaUrl('tshirt-sizes') . '" alt="" />')
@@ -91,8 +96,6 @@ class RegistrationForm extends Component implements HasForms
                             Select::make('tshirt_size')
                                 ->options($this->getTShirtSizeOptions())
                                 ->required(),
-
-
                         ]),
                     Wizard\Step::make('Extra')
                         ->columns(['sm' => 2])
@@ -105,8 +108,14 @@ class RegistrationForm extends Component implements HasForms
                                 ->reactive()
                                 ->required(),
                             Select::make('pickup_point')
-                                ->options($this->getPickupPoints())
+                                ->options($this->getPickupPointsWithOther())
+                                ->reactive()
                                 ->visible(fn(callable $get) => $get('transportation_service') === 'Yes')
+                                ->required(),
+                            TextInput::make('custom_pickup_point')
+                                ->label('Enter pickup point')
+                                ->placeholder('Enter your preferred pickup location')
+                                ->visible(fn(callable $get) => $get('transportation_service') === 'Yes' && $get('pickup_point') === 'Other')
                                 ->required(),
                         ]),
                     Wizard\Step::make('Payment')
@@ -132,18 +141,14 @@ class RegistrationForm extends Component implements HasForms
                             TextInput::make('payment_transaction_id')
                                 ->label(($this->data['payment_method'] ?? "") . ' Transaction ID')
                                 ->required(),
-
                         ]),
-
                 ])
                     ->registerListeners([
                         'wizard::nextStep' => [
                             function (Wizard $component, string $statePath, int $currentStepIndex): void {
-
                                 if ($statePath !== $component->getStatePath()) {
                                     return;
                                 }
-
 
                                 // Validation rules for each step
                                 if ($currentStepIndex == 0) {
@@ -154,8 +159,6 @@ class RegistrationForm extends Component implements HasForms
                                         'data.student_id.regex' => $this->contest->student_id_rules_guide,
                                     ]);
                                 }
-
-
                             },
                         ],
                     ])
@@ -179,10 +182,27 @@ class RegistrationForm extends Component implements HasForms
             'data.student_id.regex' => $this->contest->student_id_rules_guide,
         ]);
 
-        // Check if transportation_service is "No" and clear pickup_point if needed
+        // Get form data
         $formData = $this->form->getState();
+
+        // Handle custom section if "Other" is selected
+        if ($formData['section'] === 'Other' && isset($formData['custom_section'])) {
+            $formData['section'] = $formData['custom_section'];
+            unset($formData['custom_section']);
+        }
+
+        // Handle custom lab teacher if "Other" is selected
+        if ($formData['lab_teacher_name'] === 'Other' && isset($formData['custom_lab_teacher_name'])) {
+            $formData['lab_teacher_name'] = $formData['custom_lab_teacher_name'];
+            unset($formData['custom_lab_teacher_name']);
+        }
+
+        // Handle transportation service and custom pickup point
         if ($formData['transportation_service'] === 'No') {
-            $formData['pickup_point'] = null; // Clear pickup_point if transportation_service is "No"
+            $formData['pickup_point'] = null;
+        } else if ($formData['pickup_point'] === 'Other' && isset($formData['custom_pickup_point'])) {
+            $formData['pickup_point'] = $formData['custom_pickup_point'];
+            unset($formData['custom_pickup_point']);
         }
 
         // Save to the database
@@ -202,7 +222,6 @@ class RegistrationForm extends Component implements HasForms
             ->send();
         $this->redirect(route('contests.registration.myRegistration', $this->contest));
     }
-
 
     public function payNow(): void
     {
@@ -229,31 +248,58 @@ class RegistrationForm extends Component implements HasForms
         return view('livewire.registration-form');
     }
 
+    private function getSectionOptionsWithOther(): array
+    {
+        $sections = array_combine(
+            array_column($this->contest->sections, 'name'),
+            array_column($this->contest->sections, 'name')
+        );
+
+        // Add "Other" option to the sections array
+        $sections['Other'] = 'Other';
+
+        return $sections;
+    }
+
+    private function getLabTeacherOptionsWithOther(): array
+    {
+        $labTeachers = $this->contest->lab_teacher_names;
+
+        // Use array_map to transform each lab teacher's data
+        $formattedTeachers = array_map(function ($teacher) {
+            $formattedName = "{$teacher['full_name']} ({$teacher['initial']})";
+            return [$formattedName => $formattedName];
+        }, $labTeachers);
+
+        // Merge all formatted entries into a single array
+        $options = array_merge(...$formattedTeachers);
+
+        // Add "Other" option
+        $options['Other'] = 'Other';
+
+        return $options;
+    }
+
+    private function getPickupPointsWithOther(): array
+    {
+        $pickupPoints = $this->contest->pickup_points ?? []; // Default to empty array if null
+
+        $options = !empty($pickupPoints) ? array_combine(
+            array_column($pickupPoints, 'name'),
+            array_column($pickupPoints, 'name')
+        ) : [];
+
+        // Add "Other" option
+        $options['Other'] = 'Other';
+
+        return $options;
+    }
 
     private function getDepartmentOptions(): array
     {
         return array_combine(
             array_column($this->contest->departments, 'name'),
             array_column($this->contest->departments, 'name')
-        );
-    }
-
-    private function getPickupPoints(): array
-    {
-        $pickupPoints = $this->contest->pickup_points ?? []; // Default to empty array if null
-
-        return array_combine(
-            array_column($pickupPoints, 'name'),
-            array_column($pickupPoints, 'name')
-        ) ?: []; // Return an empty array if array_combine fails
-    }
-
-
-    private function getSectionOptions(): array
-    {
-        return array_combine(
-            array_column($this->contest->sections, 'name'),
-            array_column($this->contest->sections, 'name')
         );
     }
 
@@ -271,20 +317,6 @@ class RegistrationForm extends Component implements HasForms
         return ['S' => 'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL', 'XXL' => 'XXL', 'XXXL' => 'XXXL'];
     }
 
-    private function getLabTeacherOptions(): array
-    {
-        $labTeachers = $this->contest->lab_teacher_names;
-
-        // Use array_map to transform each lab teacher's data
-        $formattedTeachers = array_map(function ($teacher) {
-            $formattedName = "{$teacher['full_name']} ({$teacher['initial']})";
-            return [$formattedName => $formattedName];
-        }, $labTeachers);
-
-        // Merge all formatted entries into a single array
-        return array_merge(...$formattedTeachers);
-    }
-
     private function getManualPaymentOptions(): array
     {
         return array_combine(
@@ -300,5 +332,4 @@ class RegistrationForm extends Component implements HasForms
         return collect($this->contest->manual_payment_methods)
             ->firstWhere('name', $selectedMethod)['info'] ?? 'Please select a payment method to see the instructions.';
     }
-
 }
