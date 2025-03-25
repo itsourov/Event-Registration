@@ -68,5 +68,11 @@
                 Pending means you submitted the form successfully. Now we will verify your payment and update the registration status. It may take some time because we are checking everything manually.
             </div>
         @endif
+        <div
+            class="mt-4 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500"
+            role="alert" tabindex="-1" aria-labelledby="hs-soft-color-info-label">
+            For payment related issues, please contact <a href="mailto:didarul15-4679@diu.edu.bd">didarul15-4679@diu.edu.bd</a>  (Md. Didarul Islam, CPC Treasurer)
+        </div>
+
     </div>
 </x-web-layout>
