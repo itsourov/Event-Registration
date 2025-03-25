@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Enums\RegistrationStatuses;
 use App\Filament\Exports\RegistrationExporter;
 use App\Filament\Resources\RegistrationResource\Pages;
-use App\Filament\Resources\RegistrationResource\RelationManagers;
 use App\Models\Registration;
 use Filament\Forms;
 use Filament\Forms\Components\Placeholder;
@@ -22,12 +21,8 @@ use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Filament\Tables\Filters\TrashedFilter;
+
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -37,6 +32,7 @@ use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 class RegistrationResource extends Resource
 {
     protected static ?string $model = Registration::class;
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
