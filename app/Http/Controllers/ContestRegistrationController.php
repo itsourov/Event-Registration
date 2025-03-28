@@ -66,10 +66,7 @@ class ContestRegistrationController extends Controller
             }
         }
         
-        // Validate section format to prevent SQL injection
-        if (!preg_match('/^[A-Za-z0-9_\-]+$/', $section)) {
-            abort(400, 'Invalid section format');
-        }
+    
 
         $registrations = Registration::where('contest_id', $contest->id)
             ->where('section', $section)
