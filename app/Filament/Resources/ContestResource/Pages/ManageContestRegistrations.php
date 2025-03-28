@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\ContestResource\Pages;
 
+use App\Enums\RegistrationStatuses;
 use App\Filament\Exports\RegistrationExporter;
 use App\Filament\Resources\ContestResource;
 use App\Filament\Resources\RegistrationResource;
+use App\Models\Registration;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,11 +14,15 @@ use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Actions\RestoreBulkAction;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 
 class ManageContestRegistrations extends ManageRelatedRecords
 {
@@ -47,7 +53,45 @@ class ManageContestRegistrations extends ManageRelatedRecords
 
     public function table(Table $table): Table
     {
-       return RegistrationResource::table($table);
+        return $table
+            ->recordTitleAttribute('name')
+            ->columns(RegistrationResource::table($table)->getColumns())
+            ->filters([
+                SelectFilter::make('status')
+                    ->options(RegistrationStatuses::class),
+                SelectFilter::make('section')
+                    ->label('Section')
+                    ->options(function () use ($table) {
+                        return $table->getQuery()->pluck('section')
+                            ->filter(fn ($section) => !is_null($section) && $section !== '')
+                            ->unique()->mapWithKeys(fn ($section) => [$section => $section]);
+
+                    }),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->fileDisk('export-file')
+                    ->exporter(RegistrationExporter::class),
+            ])
+            ->paginated([10, 25, 50])
+            ->actions([
+                ActivityLogTimelineTableAction::make('Activities'),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->label("export Data")
+                        ->fileDisk('export-file')
+                        ->exporter(RegistrationExporter::class),
+                ]),
+            ]);
     }
 
     public function getTitle(): string
