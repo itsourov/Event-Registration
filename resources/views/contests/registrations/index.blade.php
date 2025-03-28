@@ -55,15 +55,7 @@
                                 <span class="ml-2">{{ $contest->registrations->count() }}</span>
                             </div>
                         </div>
-                        <div class="flex items-center text-gray-700 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            <div>
-                                <span class="font-semibold text-gray-900 dark:text-white">Registration Limit:</span>
-                                <span class="ml-2">{{ $contest->registration_limit ?? 'Unlimited' }}</span>
-                            </div>
-                        </div>
+                      
                     </div>
                 </div>
 
