@@ -13,14 +13,40 @@ class ContestRegistrationController extends Controller
      */
     public function index(Contest $contest)
     {
-        // Get section counts and sort by count in descending order
-        $sectionCounts = Registration::where('contest_id', $contest->id)
+        // Get sections and count
+        $registrations = Registration::where('contest_id', $contest->id)
             ->select('section', \DB::raw('count(*) as count'))
             ->groupBy('section')
-            ->orderByDesc('count')
-            ->get()
-            ->pluck('count', 'section')
-            ->toArray();
+            ->get();
+
+        // Create an array with section as key and count as value
+        $sectionsWithCounts = $registrations->mapWithKeys(function ($item) {
+            return [$item->section => $item->count];
+        })->toArray();
+
+        // Get the sections as an array of keys
+        $sections = array_keys($sectionsWithCounts);
+        
+        // Custom sorting function for sections
+        usort($sections, function ($a, $b) {
+            // For sections like 66_A, 66_B or 66-A, 66-B: compare the character after the separator
+            if (preg_match('/^\d+[_\-][A-Za-z]/', $a) && preg_match('/^\d+[_\-][A-Za-z]/', $b)) {
+                // Extract the character after the separator (either _ or -)
+                $charA = preg_match('/^\d+[_\-]([A-Za-z])/', $a, $matchesA) ? $matchesA[1] : '';
+                $charB = preg_match('/^\d+[_\-]([A-Za-z])/', $b, $matchesB) ? $matchesB[1] : '';
+                return strcmp($charA, $charB);
+            } 
+            // For simple sections like A, B, C: compare from the first character
+            else {
+                return strcmp($a, $b);
+            }
+        });
+        
+        // Rebuild the array with the sorted keys
+        $sectionCounts = [];
+        foreach ($sections as $section) {
+            $sectionCounts[$section] = $sectionsWithCounts[$section];
+        }
             
         return view('contests.registrations.index', compact('contest', 'sectionCounts'));
     }

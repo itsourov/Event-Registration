@@ -13,7 +13,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-colors mb-8">
             <div class="relative">
                 @if($contest->getFirstMediaUrl('contest-banner-images'))
-                    <div class="aspect-w-16 aspect-h-5 max-h-48">
+                    <div class="aspect-w-16 aspect-h-9 max-h-72">
                         <img
                             src="{{ $contest->getFirstMediaUrl('contest-banner-images', 'medium') }}"
                             alt="{{ $contest->name }}"
@@ -65,6 +65,7 @@
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Student ID</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Department</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Section</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Lab Teacher</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">T-Shirt</th>
                         </tr>
@@ -91,6 +92,9 @@
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-white">{{ $registration->section }}</div>
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900 dark:text-white">{{ $registration->lab_teacher_name ?? 'N/A' }}</div>
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     @if($registration->status->value === 'paid')
@@ -135,36 +139,6 @@
                     </div>
                 </div>
             @endif
-        </div>
-
-        <!-- Note about registrations being processed -->
-        <div class="mt-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 text-amber-800 dark:text-amber-300 rounded-xl p-5" role="alert">
-            <div class="flex items-start">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <h4 class="text-amber-800 dark:text-amber-300 font-semibold mb-1">Registration Processing</h4>
-                    <p class="text-sm">Please note that pending registrations are being manually reviewed by the CPC Treasurer. This process may take some time as payment details are verified.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payment Support Note -->
-        <div class="mt-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/30 text-blue-800 dark:text-blue-300 rounded-xl p-5" role="alert">
-            <div class="flex items-start">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <h4 class="text-blue-800 dark:text-blue-300 font-semibold mb-1">Payment Support</h4>
-                    <p class="text-sm">For payment related issues, please contact <a href="mailto:didarul15-4679@diu.edu.bd" class="underline font-medium">didarul15-4679@diu.edu.bd</a> (Md. Didarul Islam, CPC Treasurer)</p>
-                </div>
-            </div>
         </div>
     </div>
 </x-web-layout>
