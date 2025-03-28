@@ -24,7 +24,7 @@
             </div>
 
             <div class="p-6 md:p-8">
-                <h1 class="text-white font-bold text-2xl md:text-3xl drop-shadow-sm pb-6">{{ $contest->name }}</h1>
+                <h1 class=" font-bold text-2xl md:text-3xl drop-shadow-sm pb-6">{{ $contest->name }}</h1>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-4">
@@ -75,7 +75,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
-                    Registration Statistics by Section
+                    Section Wise Registration 
                 </h2>
 
                 @if(count($sectionCounts) > 0)
@@ -92,6 +92,14 @@
                                         Section
                                     </span>
                                 </div>
+                                @if(!empty($sectionTeachers[$section]))
+                                <div class="mb-3 text-gray-600 dark:text-gray-400 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    <span class="truncate text-sm">{{ $sectionTeachers[$section] }}</span>
+                                </div>
+                                @endif
                                 <p class="text-indigo-600 dark:text-indigo-400 font-bold text-2xl flex items-center">
                                     <span class="mr-2">{{ $count }}</span>
                                     <span class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ Str::plural('Registration', $count) }}</span>

@@ -44,11 +44,37 @@ class ContestRegistrationController extends Controller
         
         // Rebuild the array with the sorted keys
         $sectionCounts = [];
+        $sectionTeachers = [];
+        
         foreach ($sections as $section) {
             $sectionCounts[$section] = $sectionsWithCounts[$section];
+            
+            // Find the most frequently used teacher for this section
+            $teacherCounts = [];
+            $sectionRegistrations = Registration::where('contest_id', $contest->id)
+                ->where('section', $section)
+                ->get();
+                
+            foreach ($sectionRegistrations as $registration) {
+                if (!empty($registration->lab_teacher_name)) {
+                    $teacherCounts[$registration->lab_teacher_name] = ($teacherCounts[$registration->lab_teacher_name] ?? 0) + 1;
+                }
+            }
+            
+            $mostFrequentTeacher = null;
+            $maxCount = 0;
+            
+            foreach ($teacherCounts as $teacher => $count) {
+                if ($count > $maxCount) {
+                    $mostFrequentTeacher = $teacher;
+                    $maxCount = $count;
+                }
+            }
+            
+            $sectionTeachers[$section] = $mostFrequentTeacher;
         }
             
-        return view('contests.registrations.index', compact('contest', 'sectionCounts'));
+        return view('contests.registrations.index', compact('contest', 'sectionCounts', 'sectionTeachers'));
     }
 
     /**
