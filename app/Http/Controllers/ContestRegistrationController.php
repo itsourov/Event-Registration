@@ -51,8 +51,16 @@ class ContestRegistrationController extends Controller
         return view('contests.registrations.index', compact('contest', 'sectionCounts'));
     }
 
-    public function section(Contest $contest, $section)
+    /**
+     * Display the specified resource.
+     */
+    public function section(Contest $contest, Request $request)
     {
+      
+        
+        $section =$request->section;
+
+
         $registrations = Registration::where('contest_id', $contest->id)
             ->where('section', $section)
             ->get();

@@ -13,7 +13,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-colors mb-8">
             <div class="relative">
                 @if($contest->getFirstMediaUrl('contest-banner-images'))
-                    <div class="aspect-w-16 aspect-h-9 max-h-72">
+                    <div class="aspect-w-10 aspect-h-7 max-h-72">
                         <img
                             src="{{ $contest->getFirstMediaUrl('contest-banner-images', 'medium') }}"
                             alt="{{ $contest->name }}"

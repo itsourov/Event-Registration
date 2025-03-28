@@ -4,7 +4,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-colors mb-8">
             <div class="relative">
                 @if($contest->getFirstMediaUrl('contest-banner-images'))
-                    <div class="aspect-w-16 aspect-h-9 max-h-72">
+                    <div class="aspect-w-10 aspect-h-7 max-h-72">
                         <img
                             src="{{ $contest->getFirstMediaUrl('contest-banner-images', 'medium') }}"
                             alt="{{ $contest->name }}"
@@ -13,8 +13,8 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-6">
                             <span class="inline-block px-3 py-1 mb-3 text-xs font-medium tracking-wider uppercase bg-indigo-600 bg-opacity-85 text-white rounded-full">Contest</span>
-                            <h1 class="text-white font-bold text-2xl md:text-3xl drop-shadow-sm">{{ $contest->name }}</h1>
                         </div>
+                        
                     </div>
                 @else
                     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
@@ -24,8 +24,11 @@
             </div>
 
             <div class="p-6 md:p-8">
+                <h1 class="text-white font-bold text-2xl md:text-3xl drop-shadow-sm pb-6">{{ $contest->name }}</h1>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-4">
+                        
                         <div class="flex items-center text-gray-700 dark:text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -78,7 +81,7 @@
                 @if(count($sectionCounts) > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($sectionCounts as $section => $count)
-                            <a href="{{ route('contests.registrations.section', ['contest' => $contest->slug, 'section' => $section]) }}"
+                            <a href="{{ route('contests.registrations.section', ['contest' => $contest->slug]) }}?section={{ $section }}"
                                class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 
                                       rounded-xl p-5 border border-indigo-100 dark:border-indigo-800/30
                                       hover:shadow-md transition-all transform hover:-translate-y-1 
