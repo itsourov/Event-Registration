@@ -160,6 +160,7 @@ class RegistrationResource extends Resource
                     ->label('Payment Phone')
                     ->toggleable(),
                 TextColumn::make('status')
+                ->sortable()
                     ->action(Action::make('update_status')
                         ->form([
                             Placeholder::make('payment_method')
