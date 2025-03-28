@@ -87,13 +87,14 @@ class ContestResource extends Resource
                     ->integer(),
 
                 DateTimePicker::make('registration_deadline')
-                    ->timezone('Asia/Damascus')
+                    ->timezone('Asia/Dhaka')
                     ->required()
                     ->seconds(false),
 
                 Textarea::make('countdown_text'),
 
                 DateTimePicker::make('countdown_time')
+                    ->timezone('Asia/Dhaka')
                     ->required()
                     ->seconds(false),
 

@@ -50,6 +50,7 @@ class RegistrationResource extends Resource
                     ->required(),
 
                 TextInput::make('student_id')
+
 //                    ->rule(function (\Filament\Forms\Get $get) {
 //                        $contestId = $get('contest_id');
 //
