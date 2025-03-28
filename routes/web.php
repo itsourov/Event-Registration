@@ -43,6 +43,7 @@ Route::name('contests.')->group(callback: function () {
     Route::get('/{contest:slug}', [ContestController::class, 'show'])->middleware([])->name('show');
     Route::prefix('{contest:slug}/registrations')->name('registrations.')->group(callback: function () {
         Route::get('/', [ContestRegistrationController::class, 'index'])->middleware([])->name('index');
+        Route::get('/{section}', [ContestRegistrationController::class, 'section'])->middleware([])->name('section.old');
         Route::get('/section-wise', [ContestRegistrationController::class, 'section'])->middleware([])->name('section');
     });
     Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth', 'verified'])->group(callback: function () {
