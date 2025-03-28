@@ -32,7 +32,7 @@
                             </svg>
                             <div>
                                 <span class="font-semibold text-gray-900 dark:text-white">Registration Deadline:</span>
-                                <span class="ml-2">{{ $contest->registration_deadline ? $contest->registration_deadline->format('M d, Y h:i A') : 'N/A' }}</span>
+                                <span class="ml-2">{{ $contest->registration_deadline ? $contest->registration_deadline->format('M d, Y') : 'N/A' }}</span>
                             </div>
                         </div>
                         <div class="flex items-center text-gray-700 dark:text-gray-300">
