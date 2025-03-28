@@ -83,18 +83,6 @@
                     Registration Statistics by Section
                 </h2>
 
-                @php
-                    $sectionCounts = [];
-                    foreach ($contest->registrations as $registration) {
-                        $section = $registration->section ?? 'No Section';
-                        if (!isset($sectionCounts[$section])) {
-                            $sectionCounts[$section] = 0;
-                        }
-                        $sectionCounts[$section]++;
-                    }
-                    ksort($sectionCounts);
-                @endphp
-
                 @if(count($sectionCounts) > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($sectionCounts as $section => $count)

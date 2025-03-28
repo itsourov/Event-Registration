@@ -13,7 +13,16 @@ class ContestRegistrationController extends Controller
      */
     public function index(Contest $contest)
     {
-       return view('contests.registrations.index', compact('contest'));
+        // Get section counts and sort by count in descending order
+        $sectionCounts = Registration::where('contest_id', $contest->id)
+            ->select('section', \DB::raw('count(*) as count'))
+            ->groupBy('section')
+            ->orderByDesc('count')
+            ->get()
+            ->pluck('count', 'section')
+            ->toArray();
+            
+        return view('contests.registrations.index', compact('contest', 'sectionCounts'));
     }
 
     public function section(Contest $contest, $section)

@@ -25,21 +25,13 @@
                 <div class="p-6 md:p-8 @if($contest->getFirstMediaUrl('contest-banner-images')) -mt-16 relative z-10 @endif">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <div class="flex items-center mb-2">
-                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                </span>
-                                <div>
-                                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Section: {{ $section }}</h1>
-                                    <p class="text-gray-600 dark:text-gray-400">{{ $contest->name }}</p>
-                                </div>
-                            </div>
+                            <span class="inline-block px-3 py-1 mb-3 text-xs font-medium tracking-wider uppercase bg-indigo-600 bg-opacity-85 text-white rounded-full">Section</span>
+                            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">{{ $section }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400">{{ $contest->name }}</p>
                         </div>
 
                         <div class="flex gap-3">
-                            <div class="flex flex-col items-center justify-center p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
+                            <div class="flex flex-col items-center justify-center p-4 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl border border-indigo-100 dark:border-indigo-800/30">
                                 <span class="font-bold text-2xl text-indigo-600 dark:text-indigo-400">{{ $registrations->count() }}</span>
                                 <span class="text-sm text-gray-600 dark:text-gray-400">{{ Str::plural('Registration', $registrations->count()) }}</span>
                             </div>
@@ -51,13 +43,17 @@
 
         <!-- Students List -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-colors">
-            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    Student Information
-                </h2>
+            <div class="p-6 md:p-8 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        Student Information
+                    </h2>
+                    
+                  
+                </div>
             </div>
 
             @if($registrations->count() > 0)
@@ -97,26 +93,30 @@
                                     <div class="text-sm text-gray-900 dark:text-white">{{ $registration->section }}</div>
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    @if($registration->status->value === 'approved')
-                                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">
-                                            Approved
+                                    @if($registration->status->value === 'paid')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-green-500"></span>
+                                            Paid
                                         </span>
                                     @elseif($registration->status->value === 'pending')
-                                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-yellow-500"></span>
                                             Pending
                                         </span>
-                                    @elseif($registration->status->value === 'rejected')
-                                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300">
-                                            Rejected
+                                    @elseif($registration->status->value === 'unpaid')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-red-500"></span>
+                                            Unpaid
                                         </span>
                                     @else
-                                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-gray-500"></span>
                                             {{ $registration->status->value ?? 'Unknown' }}
                                         </span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300">
+                                    <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300">
                                         {{ $registration->tshirt_size ?? 'N/A' }}
                                     </span>
                                 </td>
