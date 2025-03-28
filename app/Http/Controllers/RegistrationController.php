@@ -12,11 +12,21 @@ class RegistrationController extends Controller
 {
     public function create(Contest $contest)
     {
+
+        if ($contest->registration_deadline < now()) {
+
+            Notification::make()
+                ->title("You are late!")
+                ->body("Contest registration deadline has been passed.")
+                ->warning()
+                ->send();
+            return redirect(route('contests.show', $contest));
+        }
         $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $contest->id)->first();
 
         if ($registration?->status == RegistrationStatuses::PAID || $registration?->status == RegistrationStatuses::PENDING) {
 
-            return redirect(route('contests.registration.myRegistration',$contest));
+            return redirect(route('contests.registration.myRegistration', $contest));
         }
         return view('contests.registration.create', compact('contest'));
     }
@@ -26,9 +36,9 @@ class RegistrationController extends Controller
 
         $registration = Registration::where('user_id', auth()->user()->id)->where('contest_id', $contest->id)->first();
 
-        if(!$registration){
-            return redirect(route('contests.registration.form',$contest));
+        if (!$registration) {
+            return redirect(route('contests.registration.form', $contest));
         }
-        return view('registration.my-registration',compact('registration'));
+        return view('registration.my-registration', compact('registration'));
     }
 }
