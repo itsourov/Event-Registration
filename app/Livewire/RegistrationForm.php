@@ -152,6 +152,8 @@ class RegistrationForm extends Component implements HasForms
 
                                 // Validation rules for each step
                                 if ($currentStepIndex == 0) {
+                                    $this->data['student_id'] = trim($this->data['student_id']);
+
                                     // Step 1: Basic Information
                                     $this->validate([
                                         'data.student_id' => [$this->contest->student_id_rules],
