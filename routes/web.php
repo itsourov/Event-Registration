@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ContestController;
+use App\Http\Controllers\ContestRegistrationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Payment\RegistrationPaymentController;
 use App\Http\Controllers\RegistrationController;
@@ -9,9 +10,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleLoginController;
 use Laravel\Socialite\Facades\Socialite;
 
-Route::get('/',[PageController::class, 'home'] )->name('home');
+Route::get('/', [PageController::class, 'home'])->name('home');
 //Route::get('/temp',[PageController::class, 'temp'] )->name('temp');
-Route::get('/update-payment',[PageController::class, 'updatePayment'] )->middleware(['auth','verified'])->name('update-payment');
+Route::get('/update-payment', [PageController::class, 'updatePayment'])->middleware(['auth', 'verified'])->name('update-payment');
 
 Route::get('/php', function () {
     return phpinfo();
@@ -21,9 +22,6 @@ require __DIR__ . '/auth.php';
 
 //Route::get('/registration/create', [RegistrationController::class,'create'])->middleware(['auth', 'verified'])->name('registration.create');
 //Route::get('/registration/my-registration', [RegistrationController::class,'myRegistration'])->middleware(['auth', 'verified'])->name('registration.my-registration');
-
-
-
 
 
 //
@@ -43,7 +41,12 @@ Route::prefix('pages')->middleware([])->group(function () {
 Route::name('contests.')->group(callback: function () {
     Route::get('/all', [ContestController::class, 'index'])->name('index');
     Route::get('/{contest:slug}', [ContestController::class, 'show'])->middleware([])->name('show');
-    Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth','verified'])->group(callback: function () {
+    Route::prefix('{contest:slug}/registrations')->name('registrations.')->group(callback: function () {
+        Route::get('/', [ContestRegistrationController::class, 'index'])->middleware([])->name('index');
+        Route::get('/{section}', [ContestRegistrationController::class, 'section'])->middleware([])->name('section');
+
+    });
+    Route::prefix('{contest:slug}/registration')->name('registration.')->middleware(['auth', 'verified'])->group(callback: function () {
         Route::get('/form', [RegistrationController::class, 'create'])->middleware([])->name('form');
         Route::get('/myRegistration', [RegistrationController::class, 'myRegistration'])->middleware([])->name('myRegistration');
 
