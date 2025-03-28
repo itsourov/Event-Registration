@@ -50,15 +50,15 @@ class RegistrationResource extends Resource
                     ->required(),
 
                 TextInput::make('student_id')
-                    ->rule(function (\Filament\Forms\Get $get) {
-                        $contestId = $get('contest_id');
-
-                        return [
-                            'required',
-                            'unique:registrations,student_id,NULL,id,contest_id,' . $contestId,
-                        ];
-                    })
-                    ->helperText('The Student ID must be unique for the selected contest.')
+//                    ->rule(function (\Filament\Forms\Get $get) {
+//                        $contestId = $get('contest_id');
+//
+//                        return [
+//                            'required',
+//                            'unique:registrations,student_id,NULL,id,contest_id,' . $contestId,
+//                        ];
+//                    })
+//                    ->helperText('The Student ID must be unique for the selected contest.')
                     ->required(),
 
                 TextInput::make('phone')
