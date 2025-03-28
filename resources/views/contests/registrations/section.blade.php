@@ -101,7 +101,7 @@
                                     @elseif($registration->status->value === 'pending')
                                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300">
                                             <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-yellow-500"></span>
-                                            Not checked
+                                            Under Review
                                         </span>
                                     @elseif($registration->status->value === 'unpaid')
                                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300">
