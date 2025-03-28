@@ -27,6 +27,16 @@
                         <div>
                             <span class="inline-block px-3 py-1 mb-3 text-xs font-medium tracking-wider uppercase bg-indigo-600 bg-opacity-85 text-white rounded-full">Section</span>
                             <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1">{{ $section }}</h1>
+                            @if($mostFrequentTeacher)
+                                <div class="bg-indigo-50 dark:bg-indigo-900/30 px-3 py-2 rounded-lg border border-indigo-100 dark:border-indigo-800/30 mb-2">
+                                    <p class="font-medium text-indigo-700 dark:text-indigo-300 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        <span class="mr-1">Lab Teacher:</span> <span class="font-bold">{{ $mostFrequentTeacher }}</span>
+                                    </p>
+                                </div>
+                            @endif
                             <p class="text-gray-600 dark:text-gray-400">{{ $contest->name }}</p>
                         </div>
 

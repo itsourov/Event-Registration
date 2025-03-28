@@ -54,18 +54,41 @@ class ContestRegistrationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function section(Contest $contest, Request $request)
+    public function section(Contest $contest, $section = null)
     {
-      
-        
-        $section =$request->section;
-
+        // Check if section is null, try to get it from query parameters
+        if ($section === null) {
+            $section = request()->query('section');
+            
+            // If section is still null, redirect back to index
+            if ($section === null) {
+                return redirect()->route('contests.registrations.index', $contest->slug);
+            }
+        }
 
         $registrations = Registration::where('contest_id', $contest->id)
             ->where('section', $section)
             ->get();
+            
+        // Find the most frequently used teacher name for this section
+        $teacherCounts = [];
+        foreach ($registrations as $registration) {
+            if (!empty($registration->lab_teacher_name)) {
+                $teacherCounts[$registration->lab_teacher_name] = ($teacherCounts[$registration->lab_teacher_name] ?? 0) + 1;
+            }
+        }
+        
+        $mostFrequentTeacher = null;
+        $maxCount = 0;
+        
+        foreach ($teacherCounts as $teacher => $count) {
+            if ($count > $maxCount) {
+                $mostFrequentTeacher = $teacher;
+                $maxCount = $count;
+            }
+        }
 
-        return view('contests.registrations.section', compact('contest', 'section', 'registrations'));
+        return view('contests.registrations.section', compact('contest', 'section', 'registrations', 'mostFrequentTeacher'));
     }
     
     /**
