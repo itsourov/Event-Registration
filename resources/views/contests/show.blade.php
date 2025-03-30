@@ -47,7 +47,7 @@
                         </div>
                     </a>
 
-                    <a href="{{route('contests.registration.form',$contest)}}"
+                    <a href="{{route('contests.registration.myRegistration',$contest)}}"
                        class="bg-cyan-900 flex-grow rounded-md px-3 py-4 flex items-center">
                         <span
                             class="rounded-full bg-yellow-500 h-8 md:h-10 w-8 md:w-10 mx-2 md:mx-3 text-lg md:text-xl flex items-center flex-shrink-0 justify-center font-semibold">
