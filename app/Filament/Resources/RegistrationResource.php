@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\RegistrationStatuses;
 use App\Filament\Exports\RegistrationExporter;
+use App\Filament\Resources\ContestResource\Pages\ManageContestRegistrations;
 use App\Filament\Resources\RegistrationResource\Pages;
 use App\Models\Registration;
 use Filament\Forms;
@@ -114,6 +115,7 @@ class RegistrationResource extends Resource
                     ->preload()
                     ->searchable()
                     ->relationship('contest', 'name')
+                    ->hiddenOn(ManageContestRegistrations::class)
                     ->required(),
                 Textarea::make('extra')->columnSpan([
                     'md' => 2

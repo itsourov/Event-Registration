@@ -13,6 +13,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ExportBulkAction;
@@ -63,12 +64,13 @@ class ManageContestRegistrations extends ManageRelatedRecords
                     ->label('Section')
                     ->options(function () use ($table) {
                         return $table->getQuery()->pluck('section')
-                            ->filter(fn ($section) => !is_null($section) && $section !== '')
-                            ->unique()->mapWithKeys(fn ($section) => [$section => $section]);
+                            ->filter(fn($section) => !is_null($section) && $section !== '')
+                            ->unique()->mapWithKeys(fn($section) => [$section => $section]);
 
                     }),
             ])
             ->headerActions([
+               CreateAction::make(),
                 ExportAction::make()
                     ->fileDisk('export-file')
                     ->exporter(RegistrationExporter::class),
