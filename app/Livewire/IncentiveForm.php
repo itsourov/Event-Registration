@@ -65,7 +65,7 @@ class IncentiveForm extends Component implements HasForms
                             ->required(),
 
                         TextInput::make('total_solved')
-                            ->label('Total Solved Problems')
+                            ->label('Total Solved Problems (This Semester only)')
                             ->numeric()
                             ->required(),
 
