@@ -133,7 +133,9 @@ class IncentiveForm extends Component implements HasForms
     {
         $data = $this->form->getState();
 
-        Submission::create($data);
+        Submission::create(array_merge($data, [
+            'email' => auth()->user()?->email,
+        ]));
 
         $this->form->fill();
 
