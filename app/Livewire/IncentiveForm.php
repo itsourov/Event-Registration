@@ -59,6 +59,7 @@ class IncentiveForm extends Component implements HasForms
                         TextInput::make('phone')
                             ->label('Phone Number')
                             ->tel()
+                            ->length(11)  
                             ->placeholder('Enter your contact number')
                             ->required(),
 
@@ -96,11 +97,15 @@ class IncentiveForm extends Component implements HasForms
                                     ->required(),
                                     TextInput::make('teacher_mail')
                                     ->label('Teacher Email')
+                                    ->email()
+                                    ->endsWith('@diu.edu.bd')
                                     ->placeholder('e.g. abc@diu.edu.bd')
                                     ->required(),
                                     TextInput::make('teacher_phone')
                                     ->label('Teacher Phone')
-                                    ->tel()                                    
+                                    ->tel()
+                                    ->length(11)  
+                                    ->placeholder('e.g. 017XXXXXXXX')                                  
                                     ->required(),
                                     
                                 TextInput::make('course_name')
