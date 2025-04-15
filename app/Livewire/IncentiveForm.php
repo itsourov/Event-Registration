@@ -41,14 +41,15 @@ class IncentiveForm extends Component implements HasForms
                             ->required(),
 
                         TextInput::make('batch')
-                        ->label('Batch')
-                        ->placeholder('CSE 65')
-                        ->required(),
+                            ->label('Batch')
+                            ->placeholder('CSE 65')
+                            ->required(),
+
 
                         TextInput::make('email')
-                            ->label('Email Address')
-                            ->placeholder('your.email@example.com')
-                            ->email()
+                            ->default(auth()->user()?->email)
+                            ->suffixIcon('heroicon-o-at-symbol')
+                            ->disabled()
                             ->required(),
 
                         TextInput::make('semester')
@@ -59,19 +60,18 @@ class IncentiveForm extends Component implements HasForms
                         TextInput::make('phone')
                             ->label('Phone Number')
                             ->tel()
-                            ->length(11)  
+                            ->length(11)
                             ->placeholder('Enter your contact number')
                             ->required(),
 
                         TextInput::make('total_solved')
-                        ->label('Total Solved Problems')
-                        ->numeric()
-                        ->required(),
+                            ->label('Total Solved Problems')
+                            ->numeric()
+                            ->required(),
 
 
-                            TextInput::make('tracker_url')
+                        TextInput::make('tracker_url')
                             ->label('Personal Tracker URl')
-            
                             ->required(),
                     ])
                     ->columns(2),
@@ -86,34 +86,34 @@ class IncentiveForm extends Component implements HasForms
                                     ->label('Teacher Name')
                                     ->placeholder('Full name of the teacher')
                                     ->required(),
-                                    
+
                                 TextInput::make('teacher_initial')
                                     ->label('Teacher Initial')
                                     ->placeholder('e.g. ABC')
                                     ->required(),
-                                    TextInput::make('section')
+                                TextInput::make('section')
                                     ->label('Section')
                                     ->placeholder('e.g. A')
                                     ->required(),
-                                    TextInput::make('teacher_mail')
+                                TextInput::make('teacher_mail')
                                     ->label('Teacher Email')
                                     ->email()
                                     ->endsWith('@diu.edu.bd')
                                     ->placeholder('e.g. abc@diu.edu.bd')
                                     ->required(),
-                                    TextInput::make('teacher_phone')
+                                TextInput::make('teacher_phone')
                                     ->label('Teacher Phone')
                                     ->tel()
-                                    ->length(11)  
-                                    ->placeholder('e.g. 017XXXXXXXX')                                  
+                                    ->length(11)
+                                    ->placeholder('e.g. 017XXXXXXXX')
                                     ->required(),
-                                    
+
                                 TextInput::make('course_name')
                                     ->label('Course Name')
                                     ->placeholder('Full name of the course')
                                     ->required(),
-                                    
-                                    
+
+
                                 TextInput::make('course_code')
                                     ->label('Course Code')
                                     ->placeholder('e.g. CSE101')
@@ -121,7 +121,7 @@ class IncentiveForm extends Component implements HasForms
                             ])
                             ->columns(2)
                             ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['course_name'] ?? null)
+                            ->itemLabel(fn(array $state): ?string => $state['course_name'] ?? null)
                             ->addActionLabel('Add Another Course')
                             ->defaultItems(1)
                     ])
@@ -132,11 +132,11 @@ class IncentiveForm extends Component implements HasForms
     public function create(): void
     {
         $data = $this->form->getState();
-        
+
         Submission::create($data);
-        
+
         $this->form->fill();
-        
+
         Notification::make()
             ->title("Application Submitted Successfully")
             ->body("Thank you for submitting your incentive application.")
