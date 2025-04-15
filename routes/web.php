@@ -37,6 +37,7 @@ Route::prefix('pages')->middleware([])->group(function () {
     Route::get('privacy-policy', [PageController::class, 'privacyPolicy'])->name('pages.privacy-policy');
     Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('pages.terms-and-conditions');
 });
+Route::get('incentive', [PageController::class, 'incentive'])->name('incentive');
 
 Route::name('contests.')->group(callback: function () {
     Route::get('/all', [ContestController::class, 'index'])->name('index');

@@ -22,6 +22,11 @@ class PageController extends Controller
 
         return view('home', compact('contests'));
     }
+    public function incentive()
+    {
+
+        return view('incentive',);
+    }
 
     public function faq()
     {
