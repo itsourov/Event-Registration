@@ -14,6 +14,8 @@ class Submission extends Model
         'semester',
         'courses',
         'batch',
+        'tracker_url',
+        'total_solved',
     ];
 
     protected function casts(): array

@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('semester');
             $table->string('batch');
+            $table->string('tracker_url');
+            $table->integer('total_solved');
             $table->json('courses');
             $table->timestamps();
         });

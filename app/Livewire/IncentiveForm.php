@@ -61,6 +61,17 @@ class IncentiveForm extends Component implements HasForms
                             ->tel()
                             ->placeholder('Enter your contact number')
                             ->required(),
+
+                        TextInput::make('total_solved')
+                        ->label('Total Solved Problems')
+                        ->numeric()
+                        ->required(),
+
+
+                            TextInput::make('tracker_url')
+                            ->label('Personal Tracker URl')
+            
+                            ->required(),
                     ])
                     ->columns(2),
 
