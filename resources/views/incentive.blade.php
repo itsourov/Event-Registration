@@ -23,7 +23,7 @@
                     <ul class="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-3">
                         <li>Make sure to provide accurate teacher information</li>
                         <li>All fields are required to process your application</li>
-                        <li>You will receive a confirmation email after successful submission</li>
+                        <li>Your performance and participation info will be collected from <a class="text-blue-500" href="https://diuacm.com">diuacm.com</a></li>
                     </ul>
                 </div>
             </div>

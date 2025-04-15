@@ -13,6 +13,7 @@ class Submission extends Model
         'phone',
         'semester',
         'courses',
+        'batch',
     ];
 
     protected function casts(): array

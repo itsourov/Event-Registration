@@ -40,6 +40,11 @@ class IncentiveForm extends Component implements HasForms
                             ->placeholder('Enter your student ID')
                             ->required(),
 
+                        TextInput::make('batch')
+                        ->label('Batch')
+                        ->placeholder('CSE 65')
+                        ->required(),
+
                         TextInput::make('email')
                             ->label('Email Address')
                             ->placeholder('your.email@example.com')
@@ -74,11 +79,20 @@ class IncentiveForm extends Component implements HasForms
                                     ->label('Teacher Initial')
                                     ->placeholder('e.g. ABC')
                                     ->required(),
+                                    TextInput::make('teacher_mail')
+                                    ->label('Teacher Email')
+                                    ->placeholder('e.g. abc@diu.edu.bd')
+                                    ->required(),
+                                    TextInput::make('teacher_phone')
+                                    ->label('Teacher Phone')
+                                    ->tel()                                    
+                                    ->required(),
                                     
                                 TextInput::make('course_name')
                                     ->label('Course Name')
                                     ->placeholder('Full name of the course')
                                     ->required(),
+                                    
                                     
                                 TextInput::make('course_code')
                                     ->label('Course Code')

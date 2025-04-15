@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('email');
             $table->string('phone');
             $table->string('semester');
+            $table->string('batch');
             $table->json('courses');
             $table->timestamps();
         });
