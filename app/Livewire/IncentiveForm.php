@@ -98,7 +98,7 @@ class IncentiveForm extends Component implements HasForms
                                 TextInput::make('teacher_mail')
                                     ->label('Teacher Email')
                                     ->email()
-                                    ->endsWith('@diu.edu.bd')
+                                    ->endsWith(['@diu.edu.bd', '@daffodilvarsity.edu.bd'])
                                     ->placeholder('e.g. abc@diu.edu.bd')
                                     ->required(),
                                 TextInput::make('teacher_phone')
