@@ -34,6 +34,7 @@ class Contest extends Model implements HasMedia
         'description',
         'registration_fee',
         'registration_deadline',
+        'registration_start_time',
         'countdown_text',
         'countdown_time',
         'sections',
@@ -54,6 +55,7 @@ class Contest extends Model implements HasMedia
     {
         return [
             'registration_deadline' => 'datetime',
+            'registration_start_time' => 'datetime',
             'countdown_time' => 'datetime',
             'sections' => 'array',
             'departments' => 'array',

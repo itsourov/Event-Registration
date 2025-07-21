@@ -11,7 +11,16 @@ use Illuminate\Http\Request;
 class RegistrationController extends Controller
 {
     public function create(Contest $contest)
-    {
+    {   
+
+        if($contest->registration_start_time && $contest->registration_start_time > now()) {
+            Notification::make()
+                ->title("Registration not started yet!")
+                ->body("Contest registration will start after " . $contest->registration_start_time->diffForHumans())
+                ->warning()
+                ->send();
+            return redirect(route('contests.show', $contest));
+        }
 
         if ($contest->registration_deadline < now()) {
 

@@ -90,6 +90,9 @@ class ContestResource extends Resource
                     ->timezone('Asia/Dhaka')
                     ->required()
                     ->seconds(false),
+                DateTimePicker::make('registration_start_time')
+                    ->timezone('Asia/Dhaka')
+                    ->seconds(false),
 
                 Textarea::make('countdown_text'),
 

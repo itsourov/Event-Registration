@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->string('semester');
             $table->string('description')->nullable();
             $table->integer('registration_fee');
-            $table->dateTime('registration_deadline');
+            $table->dateTime('registration_deadline')->nullable();
+            $table->dateTime('registration_start_time')->nullable();
             $table->string('countdown_text')->nullable();
             $table->dateTime('countdown_time')->nullable();
             $table->json('departments');
