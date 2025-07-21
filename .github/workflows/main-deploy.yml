@@ -16,7 +16,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3' # Adjust to your PHP version
+          php-version: "8.3" # Adjust to your PHP version
           extensions: mbstring, sqlite3
           tools: composer
 
@@ -50,7 +50,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Adjust to your Node.js version
+          node-version: "20" # Adjust to your Node.js version
 
       - name: Install NPM Dependencies
         run: npm ci
@@ -81,7 +81,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /var/www/contest-diuacm
-#            php artisan down || true
+            php artisan down || true
             if [ ! -f .env ]; then
               cp .env.example .env
             fi
