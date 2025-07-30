@@ -73,6 +73,7 @@ class RegistrationForm extends Component implements HasForms
                                 ->reactive()
                                 ->required(),
                             TextInput::make('custom_section')
+                                ->hint("Sample section name '69_A'")
                                 ->label('Enter your section')
                                 ->placeholder('Enter your section name')
                                 ->required()
